@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "708099326015",
+    "project_id": "friday-bar",
+    "storage_bucket": "friday-bar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708099326015:android:d1d7e63972e545986d388a",
+        "android_client_info": {
+          "package_name": "dk.au.mad21fall.appproject.group3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708099326015-rapu16r2f4j3083jq2lmf6u18j1imflk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSaeOeurLFV3lM7d1-OA8xwURl4RLW2pc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "708099326015-rapu16r2f4j3083jq2lmf6u18j1imflk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
