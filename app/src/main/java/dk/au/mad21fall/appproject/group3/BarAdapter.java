@@ -9,8 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 
@@ -48,7 +46,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
     @Override
     public BarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
-        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bar_item, parent, false);
         BarViewHolder vh = new BarViewHolder(v, listener);
         return vh;
     }

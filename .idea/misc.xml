@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Bertram/GitHub/AuBarFinder/app/src/main/res/layout/activity_main.xml" value="0.10572916666666667" />
+        <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/1. Uni/5. Semester/Mobile app development/AuBarFinder github/app/src/main/res/drawable/circle.xml" value="0.2703125" />
+        <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/1. Uni/5. Semester/Mobile app development/AuBarFinder github/app/src/main/res/drawable/circle_red.xml" value="0.2703125" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/1. Uni/5. Semester/Mobile app development/AuBarFinder github/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/1. Uni/5. Semester/Mobile app development/AuBarFinder github/app/src/main/res/layout/bar_item.xml" value="0.4" />
       </map>
     </option>
   </component>
