@@ -10,7 +10,7 @@ public class Bar {
     private String Facebook;
     private String Instagram;
     private String Location;
-    
+
     //In coordinates? Use this to calculate distance at least, if we
     //cant do it by the address.
 
