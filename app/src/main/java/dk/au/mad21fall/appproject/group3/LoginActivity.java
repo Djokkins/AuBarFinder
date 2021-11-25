@@ -47,28 +47,32 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        setupAuth();
+
     }
 
-    private void Login() {
+    private void setupAuth() {
         if(auth==null){
             auth = FirebaseAuth.getInstance();
         }
         if(auth.getCurrentUser() != null){
             GoToMain();
         }
-        else{
+    }
 
-            List<AuthUI.IdpConfig> providers = Arrays.asList(
-                    new AuthUI.IdpConfig.EmailBuilder().build()
-                    //new AuthUI.IdpConfig.FacebookBuilder().build()
-            );
+    private void Login() {
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.FacebookBuilder().build()
+        );
 
-            launcher.launch(
-                    AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .build());
-        }
+        launcher.launch(
+                AuthUI.getInstance()
+                    .createSignInIntentBuilder()
+                    .setAvailableProviders(providers)
+                    .build()
+        );
+
     }
 
     private void GoToMain() {

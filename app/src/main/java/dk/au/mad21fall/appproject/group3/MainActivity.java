@@ -7,10 +7,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.util.ArrayList;
 
 import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 
@@ -18,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     FirebaseAuth auth;
+    MainViewModel mainVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,16 @@ public class MainActivity extends AppCompatActivity {
         if(auth == null){
             auth = FirebaseAuth.getInstance();
         }
+
+        mainVM = new ViewModelProvider(this).get(MainViewModel.class);
+        mainVM.getBars().observe(this, new Observer<ArrayList<Bar>>() {
+            @Override
+            public void onChanged(ArrayList<Bar> bars) {
+                //TODO: make this update recycler view!
+                //TODO: Perhaps move this to the fragments?
+            }
+        });
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
