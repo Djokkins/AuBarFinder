@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,13 +42,14 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
 
-    implementation 'android.multidex:multidex:latest.release'
+    implementation 'androidx.multidex:multidex:latest.release'
 
     //Firebase stuff
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
     implementation 'com.google.firebase:firebase-firestore:24.0.0'
     implementation 'com.facebook.android:facebook-login:latest.release'
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
     implementation platform('com.google.firebase:firebase-bom:29.0.0')
 
     testImplementation 'junit:junit:4.+'

@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 
+//TODO: add color accent in custom button <solid android:color="@color/" https://www.youtube.com/watch?v=WUJ6Ve7_mA0&ab_channel=Stevdza-San 4:25
+
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -28,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        auth = FirebaseAuth.getInstance();
         if(auth == null){
             auth = FirebaseAuth.getInstance();
         }

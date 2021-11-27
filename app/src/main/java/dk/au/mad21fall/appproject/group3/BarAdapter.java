@@ -57,9 +57,8 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         //TODO: make this display items
 
         //Set the text and picture.
-        //holder.txtName.setText(movieList.get(position).getName());
-        //holder.txtYear.setText(""+ movieList.get(position).getYear());
-        //holder.txtScore.setText(""+ movieList.get(position).getUserRating());
+        holder.txtName.setText(barList.get(position).getName());
+        holder.txtRating.setText("5.0");//""+ movieList.get(position).getUserRating());
         //I wanted to make this check for internext, and post the standard genre if not present, via
         //via the function i made on the Constants file.
         //I couldn't get the context to work properly though, so I didn't implement it.
@@ -82,9 +81,9 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
 
         //Set up the widgets for the UI view.
         TextView txtName;
-        TextView txtYear;
-        TextView txtScore;
+        TextView txtRating;
         ImageView imgIcon;
+        ImageView imgColor;
 
         //custom callback interface for user actions done the view holder item
         IBarItemClickedListener listener;
@@ -96,10 +95,10 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
             //get references from the layout file
 
             //TODO: Fix the picture (if internet, picture, if not, standard genre icon).
-            //imgIcon = itemView.findViewById(R.id.imgIcon);
-            //txtName = itemView.findViewById(R.id.txtTitle);
-            //txtYear = itemView.findViewById(R.id.txtYear);
-            //txtScore = itemView.findViewById(R.id.txtUserRating);
+            imgIcon = itemView.findViewById(R.id.imgIcon);
+            imgColor = itemView.findViewById(R.id.imgColor);
+            txtName = itemView.findViewById(R.id.txtName);
+            txtRating = itemView.findViewById(R.id.txtRating);
 
             listener = barItemClickedListener;
 

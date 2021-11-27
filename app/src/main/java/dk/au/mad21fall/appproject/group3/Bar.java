@@ -11,6 +11,16 @@ public class Bar {
     private String Instagram;
     private String Location;
 
+    public String getBarID() {
+        return barID;
+    }
+
+    public void setBarID(String barID) {
+        this.barID = barID;
+    }
+
+    private String barID;
+
     //In coordinates? Use this to calculate distance at least, if we
     //cant do it by the address.
 

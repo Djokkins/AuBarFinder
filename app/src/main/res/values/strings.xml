@@ -4,7 +4,11 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_map">Map</string>
-    <string name="btnLogin">Login</string>
+    <string name="btnLoginEmail">Sign in with email</string>
     <string name="txtName">Bar Name</string>
     <string name="txtRating">Bar Rating</string>
+    <string name="facebook_app_id">418907156604002</string>
+    <string name="fb_login_protocol_scheme">fb418907156604002</string>
+    <string name="btnLoginFacebook">Sign in with Facebook</string>
+
 </resources>
