@@ -90,10 +90,10 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     public void onBarClicked(int index) {
         Bar bar = bars.getValue().get(index);
         Toast.makeText(getActivity(), "You clicked bar" + bar.getName(), Toast.LENGTH_SHORT).show();
-        /*String id = bars.getValue().get(index).getBarID();
+        String id = bars.getValue().get(index).getBarID();
         Intent intent = new Intent(getActivity(), DetailsActivity.class);
         intent.putExtra(BAR_ID, id);
-        startActivity(intent);*/
+        startActivity(intent);
 
     }
 }

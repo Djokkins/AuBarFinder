@@ -80,21 +80,12 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
-        StorageReference.child(barList.get(position).getName() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+        DownloadUrl downloadClass = new DownloadUrl();
+        Uri downloadeUrl = downloadClass.getUrlAsync(barList.get(position).getName());
 
-
+        Glide.with(holder.imgIcon.getContext()).load(downloadeUrl).into(holder.imgIcon);
         Log.d("TEST", "onBindViewHolder: " + storageReference.getDownloadUrl());
-        Glide.with(holder.imgIcon.getContext()).load(storageReference.child(barList.get(position).getName() + ".png")).into(holder.imgIcon);
+        //Glide.with(holder.imgIcon.getContext()).load(storageReference.child(barList.get(position).getName() + ".png")).into(holder.imgIcon);
 
         if(circleColor()) holder.imgColor.setImageResource(R.drawable.circle_green);
         else holder.imgColor.setImageResource(R.drawable.circle_red);
