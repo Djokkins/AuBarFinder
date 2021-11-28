@@ -9,7 +9,10 @@ public class Bar {
     private String Faculties;
     private String Facebook;
     private String Instagram;
-    private String Location;
+    private String Open;
+    private String Close;
+
+
 
     public String getBarID() {
         return barID;
@@ -32,10 +35,11 @@ public class Bar {
         Faculties = "";
         Facebook = "";
         Instagram = "";
-        Location = "";
+        Open = "";
+        Close = "";
     }
 
-    public Bar(String name, String description, String address, String openingHours, String faculties, String facebook, String instagram, String location) {
+    public Bar(String name, String description, String address, String openingHours, String faculties, String facebook, String instagram, String open, String close) {
         Name = name;
         Description = description;
         Address = address;
@@ -43,7 +47,8 @@ public class Bar {
         Faculties = faculties;
         Facebook = facebook;
         Instagram = instagram;
-        Location = location;
+        Open = open;
+        Close = close;
     }
 
     public void setName(String name) {
@@ -74,8 +79,12 @@ public class Bar {
         Instagram = instagram;
     }
 
-    public void setLocation(String location) {
-        Location = location;
+    public void setOpen(String open) {
+        Open = open;
+    }
+
+    public void setClose(String close) {
+        Close = close;
     }
 
     public String getName() {
@@ -106,7 +115,16 @@ public class Bar {
         return Instagram;
     }
 
-    public String getLocation() {
-        return Location;
+    public String getOpen() {
+        return Open;
     }
+
+    public String getClose() {
+        return Close;
+    }
+
+
+
+
+
 }

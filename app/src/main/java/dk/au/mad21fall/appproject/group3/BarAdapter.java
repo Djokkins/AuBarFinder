@@ -1,5 +1,8 @@
 package dk.au.mad21fall.appproject.group3;
 
+
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +11,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 
 import java.util.List;
 
@@ -51,6 +62,13 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         return vh;
     }
 
+    private Boolean circleColor(){
+        Boolean open;
+
+
+        return false;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull BarViewHolder holder, int position) {
 
@@ -59,6 +77,30 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         //Set the text and picture.
         holder.txtName.setText(barList.get(position).getName());
         holder.txtRating.setText("5.0");//""+ movieList.get(position).getUserRating());
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+        StorageReference.child(barList.get(position).getName() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
+
+        Log.d("TEST", "onBindViewHolder: " + storageReference.getDownloadUrl());
+        Glide.with(holder.imgIcon.getContext()).load(storageReference.child(barList.get(position).getName() + ".png")).into(holder.imgIcon);
+
+        if(circleColor()) holder.imgColor.setImageResource(R.drawable.circle_green);
+        else holder.imgColor.setImageResource(R.drawable.circle_red);
+
+
+
         //I wanted to make this check for internext, and post the standard genre if not present, via
         //via the function i made on the Constants file.
         //I couldn't get the context to work properly though, so I didn't implement it.
@@ -84,6 +126,9 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         TextView txtRating;
         ImageView imgIcon;
         ImageView imgColor;
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
 
         //custom callback interface for user actions done the view holder item
         IBarItemClickedListener listener;
