@@ -1,6 +1,5 @@
-package dk.au.mad21fall.appproject.group3;
+package dk.au.mad21fall.appproject.group3.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -16,9 +15,21 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.util.ArrayList;
 
+import dk.au.mad21fall.appproject.group3.Models.Bar;
+import dk.au.mad21fall.appproject.group3.ViewModels.MainViewModel;
+import dk.au.mad21fall.appproject.group3.R;
 import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 
 //TODO: add color accent in custom button <solid android:color="@color/" https://www.youtube.com/watch?v=WUJ6Ve7_mA0&ab_channel=Stevdza-San 4:25
+//TODO: make a repository class
+//TODO: make a ViewModel for the details class
+//TODO: make details get data from the viewmodel via the barID and post the info
+//TODO: get pictures down via gradle
+//TODO: Fix the mail
+//TODO: make the compass
+//TODO: Make the map
+//TODO: Fix links to facebook and instagram on details
+
 
 
 public class MainActivity extends AppCompatActivity {

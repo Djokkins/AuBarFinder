@@ -1,4 +1,4 @@
-package dk.au.mad21fall.appproject.group3;
+package dk.au.mad21fall.appproject.group3.Models;
 
 public class Bar {
 
@@ -11,7 +11,7 @@ public class Bar {
     private String Instagram;
     private String Open;
     private String Close;
-
+    private String barID;
 
 
     public String getBarID() {
@@ -22,7 +22,7 @@ public class Bar {
         this.barID = barID;
     }
 
-    private String barID;
+
 
     //In coordinates? Use this to calculate distance at least, if we
     //cant do it by the address.

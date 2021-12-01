@@ -1,4 +1,4 @@
-package dk.au.mad21fall.appproject.group3;
+package dk.au.mad21fall.appproject.group3.Other;
 
 
 import android.net.Uri;
@@ -13,18 +13,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import dk.au.mad21fall.appproject.group3.Models.Bar;
+import dk.au.mad21fall.appproject.group3.R;
 
 
 public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
 
+
+    private static final String TAG = "GLIDE TEST";
 
     public interface IBarItemClickedListener{
         void onBarClicked(int index);
@@ -64,7 +70,9 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
 
     private Boolean circleColor(){
         Boolean open;
-
+        //TODO: link below
+        //https://stackoverflow.com/questions/17697908/check-if-a-given-time-lies-between-two-times-regardless-of-date
+        // Date time1 = new SimpleDateFormat("HH:mm").parse(string1);
 
         return false;
     }
@@ -78,14 +86,20 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         holder.txtName.setText(barList.get(position).getName());
         holder.txtRating.setText("5.0");//""+ movieList.get(position).getUserRating());
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
-        DownloadUrl downloadClass = new DownloadUrl();
-        Uri downloadeUrl = downloadClass.getUrlAsync(barList.get(position).getName());
+        //https://firebase.google.com/docs/storage/android/download-files#download_data_via_url
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference dateRef = storageRef.child("/" + barList.get(position).getName() + ".png");
+        dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+        {
+            @Override
+            public void onSuccess(Uri downloadUrl)
+            {
+                Log.d(TAG, "onSuccess: We have success!" + downloadUrl);
+                Glide.with(holder.imgIcon.getContext()).load(downloadUrl).into(holder.imgIcon);
+            }
+        });
 
-        Glide.with(holder.imgIcon.getContext()).load(downloadeUrl).into(holder.imgIcon);
-        Log.d("TEST", "onBindViewHolder: " + storageReference.getDownloadUrl());
-        //Glide.with(holder.imgIcon.getContext()).load(storageReference.child(barList.get(position).getName() + ".png")).into(holder.imgIcon);
 
         if(circleColor()) holder.imgColor.setImageResource(R.drawable.circle_green);
         else holder.imgColor.setImageResource(R.drawable.circle_red);
@@ -113,10 +127,8 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
     public class BarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         //Set up the widgets for the UI view.
-        TextView txtName;
-        TextView txtRating;
-        ImageView imgIcon;
-        ImageView imgColor;
+        TextView txtName, txtRating;
+        ImageView imgIcon, imgColor;
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
 

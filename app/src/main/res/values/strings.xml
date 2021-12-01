@@ -10,8 +10,9 @@
     <string name="facebook_app_id">418907156604002</string>
     <string name="fb_login_protocol_scheme">fb418907156604002</string>
     <string name="btnLoginFacebook">Sign in with Facebook</string>
-    <string name="txtOpen">Open:</string>
-    <string name="txtClose">Close:</string>
-    <string name="txtFacebook">Facebook</string>
+    <string name="txtOpen">Open: </string>
+    <string name="txtClose">Close: </string>
+    <string name="txtFacebook">Facebook </string>
+    <string name="txtInstagram">Instagram </string>
 
 </resources>

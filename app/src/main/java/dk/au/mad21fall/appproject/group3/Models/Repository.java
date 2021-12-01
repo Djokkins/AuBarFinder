@@ -1,36 +1,51 @@
-package dk.au.mad21fall.appproject.group3;
+package dk.au.mad21fall.appproject.group3.Models;
 
+import android.content.Context;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
+import com.android.volley.RequestQueue;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
 
-public class MainViewModel extends ViewModel {
+public class Repository {
 
-    MutableLiveData<ArrayList<Bar>> bars;
+    private static final String TAG = "Repository";
+
     FirebaseFirestore database;
+    MutableLiveData<ArrayList<Bar>> bars;   //Livedata
+    private static Repository instance;     //for Singleton pattern
 
-    public LiveData<ArrayList<Bar>> getBars() {
-        if(bars == null){
-            LoadData();
+
+    public static Repository getInstance() {
+        if (instance == null) {
+            instance = new Repository();
         }
+        return instance;
+    }
 
-        return bars;
+    private Repository() {
+        LoadData();
     }
 
     private void LoadData() {
-        bars = new MediatorLiveData<ArrayList<Bar>>();
 
+        bars = new MediatorLiveData<ArrayList<Bar>>();
         if(database == null){
             database = FirebaseFirestore.getInstance();
         }
@@ -52,8 +67,25 @@ public class MainViewModel extends ViewModel {
                 });
     }
 
+    public Bar getBar(String name){
+        Log.d(TAG, "getBar: We get here at least?!" + name);
+        Log.d(TAG, "getBar: " + bars.getValue());
+        for(Bar bar : bars.getValue()){
+            Log.d(TAG, "getBar: Bar = " + bar.getName());
+            Log.d(TAG, "getBar: Bar = " + name);
+            if(bar.getName().equals(name)){
+                Log.d(TAG, "getBar: We got here!");
+                return bar;
+            }
+        }
+        return new Bar();
+    }
 
 
-    //MainViewModel(){}
+    public LiveData<ArrayList<Bar>> getBars(){
+        return bars;
+    }
+
+
 
 }

@@ -1,4 +1,4 @@
-package dk.au.mad21fall.appproject.group3;
+package dk.au.mad21fall.appproject.group3.Activities;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -32,9 +32,10 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+
+import dk.au.mad21fall.appproject.group3.R;
 
 public class LoginActivity extends AppCompatActivity {
 
