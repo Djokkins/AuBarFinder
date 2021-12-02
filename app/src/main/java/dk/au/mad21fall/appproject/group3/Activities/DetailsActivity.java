@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -69,6 +70,10 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void gotoUrl(String url) {
         //https://stackoverflow.com/questions/2762861/android-goto-http-url-on-button-click
+        if(url.equals("N/A") || url.equals("")){
+            Toast.makeText(getApplicationContext(), "That sadly doesn't exists.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(url) );
         startActivity( browse );
     }
@@ -87,8 +92,7 @@ public class DetailsActivity extends AppCompatActivity {
             public void onSuccess(Uri downloadUrl)
             {
                 Log.d(TAG, "onSuccess: We have success!" + downloadUrl);
-                Glide.with(imgIcon.getContext()).load(downloadUrl).into(imgIcon);
-            }
+                Glide.with(imgIcon.getContext()).load(downloadUrl).into(imgIcon);}
         });
     }
 }
