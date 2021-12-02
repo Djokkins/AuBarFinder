@@ -33,18 +33,20 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/srcBars"
-            android:layout_width="fill_parent"
-            android:layout_height="78dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            app:iconifiedByDefault="false"
+            app:layout_constraintBottom_toBottomOf="@+id/filterDrawerBtn"
             app:layout_constraintEnd_toStartOf="@+id/filterDrawerBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/filterDrawerBtn" />
 
         <ImageButton
             android:id="@+id/filterDrawerBtn"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/filter_drawer"
             app:layout_constraintBottom_toBottomOf="@+id/srcBars"
