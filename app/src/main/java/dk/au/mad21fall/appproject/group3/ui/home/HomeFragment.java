@@ -65,7 +65,8 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         Log.d(TAG, "onCreateView: " + v.findViewById(R.id.srcBars));
 
 
-        //srcBar = v.findViewById(R.id.srcBars);
+        //TODO fix this bullcrap
+        //srcBar = (SearchView) v.findViewById(R.id.srcBars);
         /*
         srcBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
