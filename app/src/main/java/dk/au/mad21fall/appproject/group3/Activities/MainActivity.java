@@ -38,7 +38,6 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 
 
 
-
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
