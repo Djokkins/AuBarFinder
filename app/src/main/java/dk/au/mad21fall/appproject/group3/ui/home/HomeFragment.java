@@ -3,6 +3,7 @@ package dk.au.mad21fall.appproject.group3.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +84,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             }
         });
 
-        filterDrawer = v.findViewById(R.id.NavigationView);
+        filterDrawer = v.findViewById(R.id.drawerlayout);
 
         //TODO fix this bullcrap
         srcBar = (SearchView) v.findViewById(R.id.srcBars);
@@ -127,7 +128,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     public void OnClickFilterDrawer()
     {
         Log.d("BRUH", "testetsetsetse");
-
+        filterDrawer.openDrawer(Gravity.RIGHT);
     }
 
 }
