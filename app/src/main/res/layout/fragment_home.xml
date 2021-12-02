@@ -33,10 +33,11 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/srcBars"
-            android:layout_width="300dp"
+            android:layout_width="fill_parent"
             android:layout_height="78dp"
             android:layout_marginStart="10dp"
-
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/filterDrawerBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,11 +45,11 @@
             android:id="@+id/filterDrawerBtn"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/filter_drawer"
             app:layout_constraintBottom_toBottomOf="@+id/srcBars"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/srcBars"
-            app:layout_constraintTop_toTopOf="@+id/srcBars"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
