@@ -1,0 +1,27 @@
+com/swmad/fredagsbar/databinding/FragmentNotificationsBinding.java
+ com.swmad.fredagsbar.databinding.FragmentNotificationsBinding
+com/swmad/fredagsbar/ui/dashboard/DashboardFragment.java
+ com.swmad.fredagsbar.ui.dashboard.DashboardFragment
+ com.swmad.fredagsbar.ui.dashboard.DashboardFragment$1
+com/swmad/fredagsbar/MainActivity.java
+ com.swmad.fredagsbar.MainActivity
+com/swmad/fredagsbar/ui/dashboard/DashboardViewModel.java
+ com.swmad.fredagsbar.ui.dashboard.DashboardViewModel
+com/swmad/fredagsbar/ui/home/HomeViewModel.java
+ com.swmad.fredagsbar.ui.home.HomeViewModel
+com/swmad/fredagsbar/databinding/FragmentHomeBinding.java
+ com.swmad.fredagsbar.databinding.FragmentHomeBinding
+com/swmad/fredagsbar/databinding/FragmentDashboardBinding.java
+ com.swmad.fredagsbar.databinding.FragmentDashboardBinding
+com/swmad/fredagsbar/databinding/ActivityMainBinding.java
+ com.swmad.fredagsbar.databinding.ActivityMainBinding
+com/swmad/fredagsbar/ui/notifications/NotificationsViewModel.java
+ com.swmad.fredagsbar.ui.notifications.NotificationsViewModel
+com/swmad/fredagsbar/ui/home/HomeFragment.java
+ com.swmad.fredagsbar.ui.home.HomeFragment
+ com.swmad.fredagsbar.ui.home.HomeFragment$1
+com/swmad/fredagsbar/BuildConfig.java
+ com.swmad.fredagsbar.BuildConfig
+com/swmad/fredagsbar/ui/notifications/NotificationsFragment.java
+ com.swmad.fredagsbar.ui.notifications.NotificationsFragment
+ com.swmad.fredagsbar.ui.notifications.NotificationsFragment$1

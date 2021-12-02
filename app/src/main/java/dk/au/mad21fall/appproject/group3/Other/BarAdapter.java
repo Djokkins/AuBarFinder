@@ -20,8 +20,11 @@ import com.google.firebase.storage.StorageReference;
 
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.R;
@@ -68,13 +71,56 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         return vh;
     }
 
-    private Boolean circleColor(){
+    private Boolean circleColor(int position){
         Boolean open;
         //TODO: link below
         //https://stackoverflow.com/questions/17697908/check-if-a-given-time-lies-between-two-times-regardless-of-date
         // Date time1 = new SimpleDateFormat("HH:mm").parse(string1);
 
-        return false;
+        // Getting the current time as a string 'HH:MM:SS'
+        Calendar currentTime = Calendar.getInstance();
+        String currentTimeString = currentTime.get(Calendar.HOUR_OF_DAY) + ":" +
+                                   currentTime.get(Calendar.MINUTE) +
+                                   ":00";
+
+        Log.d(TAG, "Current time: " + currentTimeString);
+
+        String openHrs  = barList.get(position).getOpen() + ":00";
+        String closeHrs = barList.get(position).getClose() + ":00";
+
+        // Getting the target time as a LocalTime to use 'isBefore' & 'isAfter'
+        //LocalTime targetTime = LocalTime.parse( currentTimeString );
+        LocalTime targetTime = LocalTime.parse( "23:59:00" );
+
+        if(currentTime.get(Calendar.DAY_OF_WEEK) == 6) // Day of the week (Friday == 6)
+        {
+            // We check if the bar closes after midnight, as this will mess with the isBefore() function
+            int afterMidnightCheck = Integer.parseInt(String.valueOf(closeHrs.charAt(0))); // Assume that no bar is open to past 10am the next day
+
+            if(afterMidnightCheck == 0)
+            {
+                open = targetTime.isAfter( LocalTime.parse( openHrs ));
+            }
+            else // If the bar closes before midnight we also check if targetTime is after closing hours
+            {
+                open = (
+                        targetTime.isAfter( LocalTime.parse( openHrs ) )
+                                &&
+                                targetTime.isBefore( LocalTime.parse( closeHrs ) )
+                );
+            }
+        }   else if (currentTime.get(Calendar.DAY_OF_WEEK) == 7) // Day of the week (Saturday == 7)
+        {
+            if (Integer.parseInt(String.valueOf(closeHrs.charAt(0))) == 0) {
+                open = targetTime.isBefore(LocalTime.parse(closeHrs));
+            } else
+                open = false;
+        }
+        else
+            open = false;
+
+
+        return open;
     }
 
     @Override
@@ -101,7 +147,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         });
 
 
-        if(circleColor()) holder.imgColor.setImageResource(R.drawable.circle_green);
+        if(circleColor(position)) holder.imgColor.setImageResource(R.drawable.circle_green);
         else holder.imgColor.setImageResource(R.drawable.circle_red);
 
 
