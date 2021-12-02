@@ -21,13 +21,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.R;
@@ -123,7 +120,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
     };
 
 
-    private Boolean circleColor(int position){
+    private Boolean isOpen(int position){
         Boolean open;
         //TODO: link below
         //https://stackoverflow.com/questions/17697908/check-if-a-given-time-lies-between-two-times-regardless-of-date
@@ -199,7 +196,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         });
 
 
-        if(circleColor(position)) holder.imgColor.setImageResource(R.drawable.circle_green);
+        if(isOpen(position)) holder.imgColor.setImageResource(R.drawable.circle_green);
         else holder.imgColor.setImageResource(R.drawable.circle_red);
 
 

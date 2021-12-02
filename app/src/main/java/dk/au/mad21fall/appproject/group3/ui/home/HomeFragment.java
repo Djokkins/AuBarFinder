@@ -66,8 +66,8 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
 
 
         //TODO fix this bullcrap
-        //srcBar = (SearchView) v.findViewById(R.id.srcBars);
-        /*
+        srcBar = (SearchView) v.findViewById(R.id.srcBars);
+
         srcBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                 return false;
             }
         });
-        */
+
 
         return v;
     }
