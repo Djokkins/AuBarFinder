@@ -25,7 +25,7 @@ import dk.au.mad21fall.appproject.group3.ViewModels.DetailsViewModel;
 public class DetailsActivity extends AppCompatActivity {
     private static final String TAG = "DetailsViewModel";
 
-    TextView txtName, txtOpen, txtClose, txtAddress;
+    TextView txtName, txtOpening, txtAddress, txtDescription;
     Button btnFacebook, btnInstagram;
     ImageView imgIcon;
     private DetailsViewModel detailsViewModel;
@@ -47,8 +47,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void setupView() {
         txtName = findViewById(R.id.txtNameDetails);
-        txtOpen = findViewById(R.id.txtOpen);
-        txtClose = findViewById(R.id.txtClose);
+        txtOpening = findViewById(R.id.txtOpening);
+        txtDescription = findViewById(R.id.txtDescription);
         txtAddress = findViewById(R.id.txtAddress);
         btnFacebook = findViewById(R.id.btnFacebook);
         btnFacebook.setOnClickListener(new View.OnClickListener() {
@@ -75,8 +75,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void setupUI() {
         txtName.setText(bar.getName());
-        txtOpen.setText(getString(R.string.txtOpen) + " " + bar.getOpen());
-        txtClose.setText(getString(R.string.txtClose) + " " + bar.getClose());
+        txtOpening.setText(bar.getOpen() + " - " + bar.getClose());
+        txtDescription.setText('"' + bar.getDescription() + '"');
         txtAddress.setText(bar.getAddress());
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();

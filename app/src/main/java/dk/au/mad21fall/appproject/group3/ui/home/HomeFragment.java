@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
@@ -40,7 +41,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        Log.d(TAG, "onCreateView: Checkpoint 0");
 
         adapter = new BarAdapter(this);
         View v = inflater.inflate(R.layout.fragment_home, container, false);

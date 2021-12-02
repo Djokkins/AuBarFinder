@@ -19,5 +19,6 @@
     <string name="txtDescription">Description: </string>
     <string name="txtFaculty">Faculty</string>
     <string name="txtDistance">Distance</string>
+    <string name="btnNavigate">Navigate</string>
 
 </resources>

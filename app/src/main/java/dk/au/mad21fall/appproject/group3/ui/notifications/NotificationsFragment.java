@@ -40,7 +40,7 @@ public class NotificationsFragment extends Fragment {
                 new ViewModelProvider(this).get(NotificationsViewModel.class);
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
-        compasspointer.findViewById(R.id.compasspointer);
+        //compasspointer.findViewById(R.id.compasspointer);
         //sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         View root = binding.getRoot();
 
