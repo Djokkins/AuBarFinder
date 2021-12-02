@@ -194,7 +194,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
                 Glide.with(holder.imgIcon.getContext()).load(downloadUrl).into(holder.imgIcon);
             }
         });
-
+        Log.d(TAG, "onBindViewHolder: " + barList.size());
 
         if(isOpen(position)) holder.imgColor.setImageResource(R.drawable.circle_green);
         else holder.imgColor.setImageResource(R.drawable.circle_red);
