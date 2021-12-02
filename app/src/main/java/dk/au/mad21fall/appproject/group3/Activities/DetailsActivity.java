@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,12 +21,12 @@ import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.Models.Constants;
 import dk.au.mad21fall.appproject.group3.R;
 import dk.au.mad21fall.appproject.group3.ViewModels.DetailsViewModel;
-import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 
 public class DetailsActivity extends AppCompatActivity {
     private static final String TAG = "DetailsViewModel";
 
-    TextView txtName, txtOpen, txtClose, txtFacebook, txtInstagram;
+    TextView txtName, txtOpen, txtClose;
+    Button btnFacebook, btnInstagram;
     ImageView imgIcon;
     private DetailsViewModel detailsViewModel;
     Bar bar;
@@ -41,18 +43,33 @@ public class DetailsActivity extends AppCompatActivity {
         bar = detailsViewModel.getBar(barName);
         setupView();
         setupUI();
-
-
-
     }
 
     private void setupView() {
         txtName = findViewById(R.id.txtNameDetails);
         txtOpen = findViewById(R.id.txtOpen);
         txtClose = findViewById(R.id.txtClose);
-        txtFacebook = findViewById(R.id.txtFacebook);
-        txtInstagram = findViewById(R.id.txtInstagram);
+        btnFacebook = findViewById(R.id.btnFacebook);
+        btnFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoUrl(bar.getFacebook());
+            }
+        });
+        btnInstagram = findViewById(R.id.btnInstagram);
+        btnInstagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoUrl(bar.getInstagram());
+            }
+        });
         imgIcon = findViewById(R.id.imgLogoDetails);
+    }
+
+    private void gotoUrl(String url) {
+        //https://stackoverflow.com/questions/2762861/android-goto-http-url-on-button-click
+        Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(url) );
+        startActivity( browse );
     }
 
     private void setupUI() {

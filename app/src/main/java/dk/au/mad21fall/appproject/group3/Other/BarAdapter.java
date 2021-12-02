@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,17 +22,23 @@ import com.google.firebase.storage.StorageReference;
 
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.R;
 
 
-public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
+public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> implements Filterable  {
 
 
     private static final String TAG = "GLIDE TEST";
+
+
 
     public interface IBarItemClickedListener{
         void onBarClicked(int index);
@@ -41,6 +49,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
 
     //data in the adapter
     private List<Bar> barList;
+    private List<Bar> storedBars;
 
     public List<Bar> Bars(){
         return barList;
@@ -54,6 +63,9 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
     //a method for updating the list - causes the adapter/recyclerview to update
     public void updateBarList(List<Bar> lists){
         barList = lists;
+
+        storedBars = new ArrayList<>(lists);
+
         notifyDataSetChanged();
     }
 
@@ -68,13 +80,99 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         return vh;
     }
 
-    private Boolean circleColor(){
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Bar> filteredList = new ArrayList<Bar>(); //only contain filtered items
+
+            //if nothing is entered in the searchfield then all the movies shall be shown in recyclerview
+            if (charSequence == null || charSequence.length() == 0) {
+                filteredList.addAll(storedBars);
+            } else {
+                String filterPattern = charSequence.toString().toLowerCase().trim(); //variable which holds the value of the searchfield
+
+                //going through all the movies in the recyclerview
+                for (Bar item : storedBars) {
+                    //adds the movies to the list if the text in the searchview is in either the title or the genres
+                    if (item.getName().toLowerCase().contains(filterPattern) || item.getFaculties().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            //adding the results
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+
+
+        //updating the recyclerview
+        @Override
+        protected void publishResults(CharSequence charSequence, Filter.FilterResults filterResults) {
+            barList.clear();
+            barList.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
+
+    private Boolean circleColor(int position){
         Boolean open;
         //TODO: link below
         //https://stackoverflow.com/questions/17697908/check-if-a-given-time-lies-between-two-times-regardless-of-date
         // Date time1 = new SimpleDateFormat("HH:mm").parse(string1);
 
-        return false;
+        // Getting the current time as a string 'HH:MM:SS'
+        Calendar currentTime = Calendar.getInstance();
+        String currentTimeString = currentTime.get(Calendar.HOUR_OF_DAY) + ":" +
+                                   currentTime.get(Calendar.MINUTE) +
+                                   ":00";
+
+        Log.d(TAG, "Current time: " + currentTimeString);
+
+        String openHrs  = barList.get(position).getOpen() + ":00";
+        String closeHrs = barList.get(position).getClose() + ":00";
+
+        // Getting the target time as a LocalTime to use 'isBefore' & 'isAfter'
+        //LocalTime targetTime = LocalTime.parse( currentTimeString );
+        LocalTime targetTime = LocalTime.parse( "23:59:00" );
+
+        if(currentTime.get(Calendar.DAY_OF_WEEK) == 6) // Day of the week (Friday == 6)
+        {
+            // We check if the bar closes after midnight, as this will mess with the isBefore() function
+            int afterMidnightCheck = Integer.parseInt(String.valueOf(closeHrs.charAt(0))); // Assume that no bar is open to past 10am the next day
+
+            if(afterMidnightCheck == 0)
+            {
+                open = targetTime.isAfter( LocalTime.parse( openHrs ));
+            }
+            else // If the bar closes before midnight we also check if targetTime is after closing hours
+            {
+                open = (
+                        targetTime.isAfter( LocalTime.parse( openHrs ) )
+                                &&
+                                targetTime.isBefore( LocalTime.parse( closeHrs ) )
+                );
+            }
+        }   else if (currentTime.get(Calendar.DAY_OF_WEEK) == 7) // Day of the week (Saturday == 7)
+        {
+            if (Integer.parseInt(String.valueOf(closeHrs.charAt(0))) == 0) {
+                open = targetTime.isBefore(LocalTime.parse(closeHrs));
+            } else
+                open = false;
+        }
+        else
+            open = false;
+
+
+        return open;
     }
 
     @Override
@@ -101,7 +199,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         });
 
 
-        if(circleColor()) holder.imgColor.setImageResource(R.drawable.circle_green);
+        if(circleColor(position)) holder.imgColor.setImageResource(R.drawable.circle_green);
         else holder.imgColor.setImageResource(R.drawable.circle_red);
 
 

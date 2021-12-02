@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private RecyclerView rcvList;
     private BarAdapter adapter;
     private LiveData<ArrayList<Bar>> bars;
+    private SearchView srcBar;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,6 +62,20 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                 adapter.updateBarList(bars);
             }
         });
+        srcBar = v.findViewById(R.id.srcBars);
+        srcBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
 
         return v;
     }

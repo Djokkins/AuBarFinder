@@ -23,16 +23,18 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 //TODO: add color accent in custom button <solid android:color="@color/" https://www.youtube.com/watch?v=WUJ6Ve7_mA0&ab_channel=Stevdza-San 4:25
 //TODO: make a repository class
 //TODO: make a ViewModel for the details class
+//TODO: make details get data from the viewmodel via the barID and post the info
 //TODO: get pictures down via gradle
 //TODO: Fix the mail
 //TODO: make the compass
 //TODO: Make the map
 //TODO: Fix links to facebook and instagram on details
+
 //TODO: Distance to the bars on a service
 //TODO: Filter search
 //TODO: Tablet version
 //TODO: Custom logo
-//TODO:
+//TODO: Dark theme
 
 
 
