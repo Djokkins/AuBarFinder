@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="dk.au.mad21fall.appproject.group3">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+   <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!--Used for google maps location-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -13,6 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AarhusUniversityFreitagBarGezucken">
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_key"/>
         <activity
             android:name=".Activities.LoginActivity"
             android:exported="true">
@@ -48,7 +56,7 @@
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name"/>
     </application>
 
 </manifest>

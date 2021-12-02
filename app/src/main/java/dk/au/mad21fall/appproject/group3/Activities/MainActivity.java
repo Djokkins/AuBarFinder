@@ -29,14 +29,12 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 //TODO: make the compass
 //TODO: Make the map
 //TODO: Fix links to facebook and instagram on details
-<<<<<<< Updated upstream
-=======
+
 //TODO: Distance to the bars on a service
 //TODO: Filter search
 //TODO: Tablet version
 //TODO: Custom logo
 //TODO: Dark theme
->>>>>>> Stashed changes
 
 
 
