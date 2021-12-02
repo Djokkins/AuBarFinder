@@ -12,7 +12,15 @@ public class Bar {
     private String Open;
     private String Close;
     private String barID;
+    private Number Average_Rating;
 
+    public Number getAverage_Rating() {
+        return Average_Rating;
+    }
+
+    public void setAverage_Rating(Number average_Rating) {
+        Average_Rating = average_Rating;
+    }
 
     public String getBarID() {
         return barID;
