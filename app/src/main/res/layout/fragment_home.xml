@@ -14,7 +14,8 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="10"
         tools:layout_editor_absoluteX="1dp"
-        tools:listitem="@layout/bar_item" />
+        tools:listitem="@layout/bar_item"
+        tools:ignore="MissingConstraints" />
 
     <SearchView
         android:id="@+id/srcBars"

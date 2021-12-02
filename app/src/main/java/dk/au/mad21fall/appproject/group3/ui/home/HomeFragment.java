@@ -31,7 +31,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private static final String TAG = "1";
 
     private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
     private RecyclerView rcvList;
     private BarAdapter adapter;
     private LiveData<ArrayList<Bar>> bars;
@@ -42,10 +41,11 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         Log.d(TAG, "onCreateView: Checkpoint 0");
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
 
         adapter = new BarAdapter(this);
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+
         rcvList = v.findViewById(R.id.rcvBars);
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvList.setAdapter(adapter);
@@ -62,7 +62,11 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                 adapter.updateBarList(bars);
             }
         });
-        srcBar = v.findViewById(R.id.srcBars);
+        Log.d(TAG, "onCreateView: " + v.findViewById(R.id.srcBars));
+
+
+        //srcBar = v.findViewById(R.id.srcBars);
+        /*
         srcBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -75,7 +79,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                 return false;
             }
         });
-
+        */
 
         return v;
     }
@@ -83,7 +87,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 
     @Override

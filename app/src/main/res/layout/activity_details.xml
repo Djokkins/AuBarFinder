@@ -82,6 +82,17 @@
         app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:textColor="#000000"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline9" />
+
     <Button
         android:id="@+id/btnInstagram"
         android:layout_width="0dp"
@@ -182,6 +193,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.7" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,7 +25,7 @@ import dk.au.mad21fall.appproject.group3.ViewModels.DetailsViewModel;
 public class DetailsActivity extends AppCompatActivity {
     private static final String TAG = "DetailsViewModel";
 
-    TextView txtName, txtOpen, txtClose;
+    TextView txtName, txtOpen, txtClose, txtAddress;
     Button btnFacebook, btnInstagram;
     ImageView imgIcon;
     private DetailsViewModel detailsViewModel;
@@ -49,6 +49,7 @@ public class DetailsActivity extends AppCompatActivity {
         txtName = findViewById(R.id.txtNameDetails);
         txtOpen = findViewById(R.id.txtOpen);
         txtClose = findViewById(R.id.txtClose);
+        txtAddress = findViewById(R.id.txtAddress);
         btnFacebook = findViewById(R.id.btnFacebook);
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +77,7 @@ public class DetailsActivity extends AppCompatActivity {
         txtName.setText(bar.getName());
         txtOpen.setText(getString(R.string.txtOpen) + " " + bar.getOpen());
         txtClose.setText(getString(R.string.txtClose) + " " + bar.getClose());
+        txtAddress.setText(bar.getAddress());
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference dateRef = storageRef.child("/" + bar.getName() + ".png");
