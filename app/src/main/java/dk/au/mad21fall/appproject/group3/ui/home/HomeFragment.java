@@ -6,18 +6,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.legacy.app.ActionBarDrawerToggle;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+//import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
@@ -36,6 +42,11 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private BarAdapter adapter;
     private LiveData<ArrayList<Bar>> bars;
     private SearchView srcBar;
+    private ImageView filterBtn;
+    private DrawerLayout filterDrawer;
+
+
+    //var toggle: ActionBarDrawerToggle? = null;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,7 +61,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvList.setAdapter(adapter);
 
-        //To make a list between each element in the list, for prettyness
+        //To make a list between each element in the list, for prettynes    s
         DividerItemDecoration itemDecor = new DividerItemDecoration(rcvList.getContext(), LinearLayout.VERTICAL);
         rcvList.addItemDecoration(itemDecor);
 
@@ -64,6 +75,15 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         });
         Log.d(TAG, "onCreateView: " + v.findViewById(R.id.srcBars));
 
+        filterBtn = v.findViewById(R.id.filterDrawerBtn);
+        filterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnClickFilterDrawer();
+            }
+        });
+
+        filterDrawer = v.findViewById(R.id.NavigationView);
 
         //TODO fix this bullcrap
         srcBar = (SearchView) v.findViewById(R.id.srcBars);
@@ -80,6 +100,8 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                 return false;
             }
         });
+
+
 
 
         return v;
@@ -101,4 +123,11 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         startActivity(intent);
 
     }
+
+    public void OnClickFilterDrawer()
+    {
+        Log.d("BRUH", "testetsetsetse");
+
+    }
+
 }

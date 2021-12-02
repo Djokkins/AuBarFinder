@@ -43,6 +43,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.3.5'
 
     implementation 'androidx.multidex:multidex:latest.release'
+    implementation 'com.google.android.material:material:1.4.0'
 
     //Firebase stuff
     implementation 'com.google.firebase:firebase-auth:21.0.1'
