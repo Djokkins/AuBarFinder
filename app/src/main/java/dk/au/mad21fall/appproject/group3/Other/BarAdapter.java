@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -30,10 +33,12 @@ import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.R;
 
 
-public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
+public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> implements Filterable  {
 
 
     private static final String TAG = "GLIDE TEST";
+
+
 
     public interface IBarItemClickedListener{
         void onBarClicked(int index);
@@ -44,6 +49,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
 
     //data in the adapter
     private List<Bar> barList;
+    private List<Bar> storedBars;
 
     public List<Bar> Bars(){
         return barList;
@@ -57,6 +63,9 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
     //a method for updating the list - causes the adapter/recyclerview to update
     public void updateBarList(List<Bar> lists){
         barList = lists;
+
+        storedBars = new ArrayList<>(lists);
+
         notifyDataSetChanged();
     }
 
@@ -70,6 +79,49 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         BarViewHolder vh = new BarViewHolder(v, listener);
         return vh;
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Bar> filteredList = new ArrayList<Bar>(); //only contain filtered items
+
+            //if nothing is entered in the searchfield then all the movies shall be shown in recyclerview
+            if (charSequence == null || charSequence.length() == 0) {
+                filteredList.addAll(storedBars);
+            } else {
+                String filterPattern = charSequence.toString().toLowerCase().trim(); //variable which holds the value of the searchfield
+
+                //going through all the movies in the recyclerview
+                for (Bar item : storedBars) {
+                    //adds the movies to the list if the text in the searchview is in either the title or the genres
+                    if (item.getName().toLowerCase().contains(filterPattern) || item.getFaculties().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            //adding the results
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+
+
+        //updating the recyclerview
+        @Override
+        protected void publishResults(CharSequence charSequence, Filter.FilterResults filterResults) {
+            barList.clear();
+            barList.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
 
     private Boolean circleColor(int position){
         Boolean open;

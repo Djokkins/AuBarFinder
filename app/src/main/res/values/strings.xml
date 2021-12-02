@@ -14,12 +14,10 @@
     <string name="txtClose">Close </string>
     <string name="txtFacebook">Facebook </string>
     <string name="txtInstagram">Instagram </string>
-<<<<<<< Updated upstream
-=======
+
     <string name="txtCompass">Compass</string>
     <string name="txtDescription">Description: </string>
     <string name="txtFaculty">Faculty</string>
     <string name="txtDistance">Distance</string>
->>>>>>> Stashed changes
 
 </resources>

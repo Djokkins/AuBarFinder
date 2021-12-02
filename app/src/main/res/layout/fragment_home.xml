@@ -10,8 +10,20 @@
         android:id="@+id/rcvBars"
         android:layout_width="409dp"
         android:layout_height="729dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="10"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
         tools:listitem="@layout/bar_item" />
+
+    <SearchView
+        android:id="@+id/srcBars"
+        android:layout_width="409dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/rcvBars"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
