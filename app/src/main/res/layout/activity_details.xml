@@ -48,26 +48,53 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
+        android:gravity="center"
         android:text="@string/txtDistance"
         android:textColor="#000000"
         android:textSize="22sp"
-        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toEndOf="@+id/imgLogoDetails"
         app:layout_constraintStart_toStartOf="@+id/imgLogoDetails"
         app:layout_constraintTop_toBottomOf="@+id/imgLogoDetails" />
 
+    <SeekBar
+        android:id="@+id/skbRating"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="50"
+        android:progress="1"
+        app:layout_constraintBottom_toTopOf="@+id/guideline15"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+    <TextView
+        android:id="@+id/txtMyRating"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/txtMyRating"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/guideline15"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toTopOf="@+id/guideline6"
+        android:textSize="16sp" />
+
+
     <TextView
         android:id="@+id/txtDescription"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#E0E0E0"
+        android:scrollbars="vertical"
         android:text="@string/txtDescription"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
-        app:layout_constraintEnd_toStartOf="@+id/guideline11"
-        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintEnd_toEndOf="@+id/btnNavigate"
+        app:layout_constraintStart_toStartOf="@+id/btnFacebook"
         app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
     <TextView
@@ -79,7 +106,7 @@
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintStart_toStartOf="@+id/btnFacebook"
         app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
     <Button
@@ -131,6 +158,9 @@
         app:layout_constraintTop_toTopOf="@+id/guideline10"
         app:layout_constraintVertical_bias="0.0" />
 
+
+
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
@@ -164,7 +194,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
@@ -199,7 +229,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.75" />
 
 
 

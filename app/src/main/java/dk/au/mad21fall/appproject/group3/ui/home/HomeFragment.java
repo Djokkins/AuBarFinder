@@ -25,8 +25,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 //import com.google.android.material.navigation.NavigationView;
 
+import com.facebook.login.Login;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 
+import dk.au.mad21fall.appproject.group3.Activities.MainActivity;
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.Other.BarAdapter;
 import dk.au.mad21fall.appproject.group3.Models.Constants;
@@ -45,7 +49,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private SearchView srcBar;
     private ImageView filterBtn;
     private DrawerLayout filterDrawer;
-
+    private FirebaseAuth mAuth;
 
     //var toggle: ActionBarDrawerToggle? = null;
 
@@ -57,6 +61,11 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         adapter = new BarAdapter(this);
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser() == null){
+            gotoLogin();
+        }
+        Log.d(TAG, "onCreateView: UserID = " + mAuth.getCurrentUser().getUid());
 
         rcvList = v.findViewById(R.id.rcvBars);
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -86,7 +95,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
 
         filterDrawer = v.findViewById(R.id.drawerlayout);
 
-        //TODO fix this bullcrap
         srcBar = (SearchView) v.findViewById(R.id.srcBars);
 
         srcBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -106,6 +114,11 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
 
 
         return v;
+    }
+
+    private void gotoLogin() {
+        Intent i = new Intent(getActivity(), Login.class);
+        startActivity(i);
     }
 
     @Override

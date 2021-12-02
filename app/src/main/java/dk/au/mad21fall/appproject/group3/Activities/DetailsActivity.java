@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +28,13 @@ import dk.au.mad21fall.appproject.group3.ViewModels.DetailsViewModel;
 public class DetailsActivity extends AppCompatActivity {
     private static final String TAG = "DetailsViewModel";
 
-    TextView txtName, txtOpening, txtAddress, txtDescription;
+    TextView txtName, txtOpening, txtAddress, txtDescription, txtMyRating;
     Button btnFacebook, btnInstagram;
     ImageView imgIcon;
+    SeekBar skbRating;
     private DetailsViewModel detailsViewModel;
     Bar bar;
+    double Score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class DetailsActivity extends AppCompatActivity {
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         bar = detailsViewModel.getBar(barName);
         setupView();
-        setupUI();
+        updateUI();
     }
 
     private void setupView() {
@@ -51,6 +55,9 @@ public class DetailsActivity extends AppCompatActivity {
         txtOpening = findViewById(R.id.txtOpening);
         txtDescription = findViewById(R.id.txtDescription);
         txtAddress = findViewById(R.id.txtAddress);
+        txtMyRating = findViewById(R.id.txtMyRating);
+        txtMyRating.setText(getString(R.string.txtMyRating) + " 0.0");
+        skbRating = findViewById(R.id.skbRating);
         btnFacebook = findViewById(R.id.btnFacebook);
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +73,25 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
         imgIcon = findViewById(R.id.imgLogoDetails);
+
+        skbRating.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                Score = ((double)i / 10.0);
+                updateScoreUI(Score);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                detailsViewModel.rateBar(Score, bar.getBarID());
+            }
+        });
+
     }
 
     private void gotoUrl(String url) {
@@ -78,11 +104,17 @@ public class DetailsActivity extends AppCompatActivity {
         startActivity( browse );
     }
 
-    private void setupUI() {
+    private void updateScoreUI(Double score){
+        txtMyRating.setText(getString(R.string.txtMyRating) + " " + score);
+    }
+
+    private void updateUI() {
         txtName.setText(bar.getName());
         txtOpening.setText(bar.getOpen() + " - " + bar.getClose());
         txtDescription.setText('"' + bar.getDescription() + '"');
+        txtDescription.setMovementMethod(new ScrollingMovementMethod());
         txtAddress.setText(bar.getAddress());
+
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference dateRef = storageRef.child("/" + bar.getName() + ".png");

@@ -140,7 +140,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         // Getting the target time as a LocalTime to use 'isBefore' & 'isAfter'
         //LocalTime targetTime = LocalTime.parse( currentTimeString );
         LocalTime targetTime = LocalTime.parse( "23:59:00" );
-
+        try{
         if(currentTime.get(Calendar.DAY_OF_WEEK) == 6) // Day of the week (Friday == 6)
         {
             // We check if the bar closes after midnight, as this will mess with the isBefore() function
@@ -167,9 +167,12 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         }
         else
             open = false;
-
-
         return open;
+        }
+
+        catch(Exception e){
+            return false;
+        }
     }
 
     @Override
@@ -180,7 +183,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         //Set the text and picture.
         holder.txtName.setText(barList.get(position).getName());
         holder.txtRating.setText("5.0");//""+ movieList.get(position).getUserRating());
-
+        Log.d(TAG, "onBindViewHolder: " + barList.get(position).toString());
 
         //https://firebase.google.com/docs/storage/android/download-files#download_data_via_url
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
@@ -194,7 +197,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
                 Glide.with(holder.imgIcon.getContext()).load(downloadUrl).into(holder.imgIcon);
             }
         });
-        Log.d(TAG, "onBindViewHolder: " + barList.size());
+
 
         if(isOpen(position)) holder.imgColor.setImageResource(R.drawable.circle_green);
         else holder.imgColor.setImageResource(R.drawable.circle_red);
