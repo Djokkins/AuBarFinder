@@ -16,15 +16,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.api.LogDescriptor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.R;
@@ -122,26 +127,26 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
 
     private Boolean isOpen(int position){
         Boolean open;
-        //TODO: link below
+
         //https://stackoverflow.com/questions/17697908/check-if-a-given-time-lies-between-two-times-regardless-of-date
-        // Date time1 = new SimpleDateFormat("HH:mm").parse(string1);
 
         // Getting the current time as a string 'HH:MM:SS'
-        Calendar currentTime = Calendar.getInstance();
-        String currentTimeString = currentTime.get(Calendar.HOUR_OF_DAY) + ":" +
-                                   currentTime.get(Calendar.MINUTE) +
-                                   ":00";
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        String currentTimeString = sdf.format(new Date());
+        int weekDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 
-        Log.d(TAG, "Current time: " + currentTimeString);
+
+        // Log.d(TAG, "Current time: " + currentTimeString);
+
 
         String openHrs  = barList.get(position).getOpen() + ":00";
         String closeHrs = barList.get(position).getClose() + ":00";
 
         // Getting the target time as a LocalTime to use 'isBefore' & 'isAfter'
-        //LocalTime targetTime = LocalTime.parse( currentTimeString );
-        LocalTime targetTime = LocalTime.parse( "23:59:00" );
+        LocalTime targetTime = LocalTime.parse( currentTimeString );
+
         try{
-        if(currentTime.get(Calendar.DAY_OF_WEEK) == 6) // Day of the week (Friday == 6)
+        if(weekDay == 6) // Day of the week (Friday == 6)
         {
             // We check if the bar closes after midnight, as this will mess with the isBefore() function
             int afterMidnightCheck = Integer.parseInt(String.valueOf(closeHrs.charAt(0))); // Assume that no bar is open to past 10am the next day
@@ -149,6 +154,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
             if(afterMidnightCheck == 0)
             {
                 open = targetTime.isAfter( LocalTime.parse( openHrs ));
+                Log.d(TAG, "isOpen: ");
             }
             else // If the bar closes before midnight we also check if targetTime is after closing hours
             {
@@ -158,7 +164,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
                                 targetTime.isBefore( LocalTime.parse( closeHrs ) )
                 );
             }
-        }   else if (currentTime.get(Calendar.DAY_OF_WEEK) == 7) // Day of the week (Saturday == 7)
+        }   else if (weekDay == 7) // Day of the week (Saturday == 7)
         {
             if (Integer.parseInt(String.valueOf(closeHrs.charAt(0))) == 0) {
                 open = targetTime.isBefore(LocalTime.parse(closeHrs));
