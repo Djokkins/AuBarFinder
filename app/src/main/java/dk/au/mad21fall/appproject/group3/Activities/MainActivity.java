@@ -37,6 +37,7 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 //TODO: Tablet version
 //TODO: Custom logo
 //TODO: Dark theme
+//TODO: Fix fragment icon 'Notification' to fit the compas fragment better
 
 
 

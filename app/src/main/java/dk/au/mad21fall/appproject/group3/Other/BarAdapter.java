@@ -37,7 +37,7 @@ import dk.au.mad21fall.appproject.group3.R;
 
 public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> implements Filterable  {
 
-    private static final String TAG = "GLIDE TEST";
+    private static final String TAG = "BAR_ADAPTER";
 
 
     public interface IBarItemClickedListener{
@@ -90,7 +90,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<Bar> filteredList = new ArrayList<Bar>(); //only contain filtered items
 
-            //if nothing is entered in the searchfield then all the movies shall be shown in recyclerview
+            //if nothing is entered in the search field then all the movies shall be shown in recyclerview
             if (charSequence == null || charSequence.length() == 0) {
                 filteredList.addAll(storedBars);
             } else {
@@ -98,7 +98,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
 
                 //going through all the movies in the recyclerview
                 for (Bar item : storedBars) {
-                    //adds the movies to the list if the text in the searchview is in either the title or the genres
+                    //adds the movies to the list if the text in the searchView is in either the title or the genres
                     if (item.getName().toLowerCase().contains(filterPattern) || item.getFaculty().toLowerCase().contains(filterPattern) || item.getAddress().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
@@ -138,6 +138,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
     };
 
 
+    // Sorting all elements of barList in alphabetical order
     public void sortAlphabetically()
     {
         Collections.sort(barList, new Comparator<Bar>() {
@@ -146,46 +147,54 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
                 return lhs.getName().compareTo(rhs.getName());
             }
         });
-        notifyDataSetChanged();
+
+        notifyDataSetChanged(); // Updating the recyclerView
+
+        Log.d(TAG, "sortAlphabetically: Bars successfully sorted alphabetically");
     }
 
+
+    // Sorting the list with the highest rated bars at the top
     public void sortByRating()
     {
-
         Collections.sort(barList, new Comparator<Bar>() {
             @Override
             public int compare(Bar lhs, Bar rhs) {
                 return rhs.getAverage_Rating().toString().compareTo(lhs.getAverage_Rating().toString());
             }
         });
-        //Collections.sort(barList, Collections.reverseOrder());
-        notifyDataSetChanged();
+
+        notifyDataSetChanged(); // Updating the recyclerView
+
+        Log.d(TAG, "sortByRating: Bars successfully sorted by rating");
     }
+
     // TODO: Check if this works for re-entering the removed bars
     public void sortByOpen(boolean checked) {
 
+        // If the checkbox is 'true' we remove the closed bars
         if (checked)
         {
             List<Bar> sortedList = new ArrayList<>();
 
             for (int i = 0; i < barList.size(); i++) {
                 if (isOpen(i))
-                    Log.d("OpenSort", "Kept: " + barList.get(i).getName());
                     sortedList.add(barList.get(i));
             }
 
             barList = sortedList;
-            Log.d("OpenSort", "Size of list: " + barList.size());
             notifyDataSetChanged();
 
-            return;
-        } else {
+            Log.d(TAG, "sortByOpen: Closed bars removed from list");
+
+        } else // If the checkbox is 'false' we set the barList to be the entire list again
+        {
             barList = storedBars;
-            Log.d("OpenSort", "Size of list: " + barList.size());
             notifyDataSetChanged();
 
-            return;
+            Log.d(TAG, "sortByOpen: Closed bars added back into list");
         }
+        return;
 
     }
 
@@ -195,19 +204,16 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
 
         //https://stackoverflow.com/questions/17697908/check-if-a-given-time-lies-between-two-times-regardless-of-date
 
-        // Getting the current time as a string 'HH:MM:SS'
+        // Getting the current time as a string 'HH:MM:SS' and getting the weekday
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         String currentTimeString = sdf.format(new Date());
-        int weekDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-
-
-        // Log.d(TAG, "Current time: " + currentTimeString);
+        int weekDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK); //Weekday starts with sunday = 1 to saturday = 7
 
 
         String openHrs  = barList.get(position).getOpen() + ":00";
         String closeHrs = barList.get(position).getClose() + ":00";
 
-        // Getting the target time as a LocalTime to use 'isBefore' & 'isAfter'
+        // Getting the target time as a LocalTime-type to use 'isBefore' & 'isAfter'
         LocalTime targetTime = LocalTime.parse( currentTimeString );
 
         try{
@@ -221,7 +227,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
                 open = targetTime.isAfter( LocalTime.parse( openHrs ));
                 Log.d(TAG, "isOpen: ");
             }
-            else // If the bar closes before midnight we also check if targetTime is after closing hours
+            else // If the bar closes before midnight we additionally check if targetTime is after closing hours
             {
                 open = (
                         targetTime.isAfter( LocalTime.parse( openHrs ) )
@@ -242,6 +248,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         }
 
         catch(Exception e){
+            Log.d(TAG, "ERROR in isOpen(). Unable to calculate for: " + barList.get(position).getName());
             return false;
         }
     }
@@ -276,7 +283,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         else holder.imgColor.setImageResource(R.drawable.circle_red);
 
 
-
+        // TODO: Should this comment be here?
         //I wanted to make this check for internext, and post the standard genre if not present, via
         //via the function i made on the Constants file.
         //I couldn't get the context to work properly though, so I didn't implement it.
@@ -327,7 +334,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
             //set click listener specifically for the invite button
         }
 
-        //react to user clicking the listitem (implements OnClickListener)
+        //react to user clicking the listItem (implements OnClickListener)
         @Override
         public void onClick(View view) {
             listener.onBarClicked(getAdapterPosition());
