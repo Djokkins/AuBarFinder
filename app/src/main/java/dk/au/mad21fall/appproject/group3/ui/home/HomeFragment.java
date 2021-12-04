@@ -146,9 +146,8 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
 
     public void OnClickFilterDrawer()
     {
-        Log.d("BRUH", "testetsetsetse");
-        // filterDrawer.openDrawer(Gravity.RIGHT);
-        //adapter.sortAlphabetically();
+        filterDrawer.openDrawer(Gravity.RIGHT);
+        //adapter.sortByRating();
     }
 
 

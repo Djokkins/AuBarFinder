@@ -134,7 +134,19 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
             }
         });
         notifyDataSetChanged();
+    }
 
+    public void sortByRating()
+    {
+
+        Collections.sort(barList, new Comparator<Bar>() {
+            @Override
+            public int compare(Bar lhs, Bar rhs) {
+                return rhs.getAverage_Rating().toString().compareTo(lhs.getAverage_Rating().toString());
+            }
+        });
+        //Collections.sort(barList, Collections.reverseOrder());
+        notifyDataSetChanged();
     }
 
 
