@@ -1,5 +1,6 @@
 package dk.au.mad21fall.appproject.group3.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,7 +30,7 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 //TODO: make the compass
 //TODO: Make the map
 //TODO: Fix links to facebook and instagram on details
-
+//TODO: Make Splash screen pretty
 //TODO: Distance to the bars on a service
 //TODO: Filter search
 //TODO: Tablet version
@@ -48,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(auth == null){
-            auth = FirebaseAuth.getInstance();
-        }
 
         mainVM = new ViewModelProvider(this).get(MainViewModel.class);
         mainVM.getBars().observe(this, new Observer<ArrayList<Bar>>() {

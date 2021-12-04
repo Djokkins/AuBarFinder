@@ -21,5 +21,6 @@
     <string name="txtDistance">Distance</string>
     <string name="btnNavigate">Navigate</string>
     <string name="txtMyRating">My rating: </string>
+    <string name="txtWelcome">Welcome!</string>
 
 </resources>

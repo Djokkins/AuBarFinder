@@ -58,6 +58,11 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
+
+
+
+
+
         adapter = new BarAdapter(this);
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -128,7 +133,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
 
     @Override
     public void onBarClicked(int index) {
-        Bar bar = bars.getValue().get(index);
         //Toast.makeText(getActivity(), "You clicked bar" + bar.getName(), Toast.LENGTH_SHORT).show();
         String id = bars.getValue().get(index).getName();
         Intent intent = new Intent(getActivity(), DetailsActivity.class);

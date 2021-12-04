@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.api.LogDescriptor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -24,7 +23,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -101,7 +99,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
                 //going through all the movies in the recyclerview
                 for (Bar item : storedBars) {
                     //adds the movies to the list if the text in the searchview is in either the title or the genres
-                    if (item.getName().toLowerCase().contains(filterPattern) || item.getFaculties().toLowerCase().contains(filterPattern)) {
+                    if (item.getName().toLowerCase().contains(filterPattern) || item.getFaculty().toLowerCase().contains(filterPattern) || item.getAddress().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
@@ -188,7 +186,14 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
 
         //Set the text and picture.
         holder.txtName.setText(barList.get(position).getName());
-        holder.txtRating.setText("5.0");//""+ movieList.get(position).getUserRating());
+        Number rating = barList.get(position).getAverage_Rating();
+        if(rating == null){
+            //
+        }
+        else {
+            holder.txtRating.setVisibility(View.VISIBLE);
+            holder.txtRating.setText("" + rating + "/5");//""+ movieList.get(position).getUserRating());
+        }
         Log.d(TAG, "onBindViewHolder: " + barList.get(position).toString());
 
         //https://firebase.google.com/docs/storage/android/download-files#download_data_via_url
