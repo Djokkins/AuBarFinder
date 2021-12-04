@@ -37,6 +37,9 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 //TODO: Tablet version
 //TODO: Custom logo
 //TODO: Dark theme
+//TODO: Make facebook login work?!
+//TODO: make a second language
+//TODO: Comments!
 
 
 
