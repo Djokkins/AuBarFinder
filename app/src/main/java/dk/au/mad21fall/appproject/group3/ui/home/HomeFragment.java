@@ -29,6 +29,8 @@ import com.facebook.login.Login;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import dk.au.mad21fall.appproject.group3.Activities.MainActivity;
 import dk.au.mad21fall.appproject.group3.Models.Bar;
@@ -51,8 +53,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private DrawerLayout filterDrawer;
     private FirebaseAuth mAuth;
 
-    //var toggle: ActionBarDrawerToggle? = null;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvList.setAdapter(adapter);
 
-        //To make a list between each element in the list, for prettynes    s
+        //To make a list between each element in the list, for prettiness
         DividerItemDecoration itemDecor = new DividerItemDecoration(rcvList.getContext(), LinearLayout.VERTICAL);
         rcvList.addItemDecoration(itemDecor);
 
@@ -110,9 +110,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             }
         });
 
-
-
-
         return v;
     }
 
@@ -141,7 +138,14 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     public void OnClickFilterDrawer()
     {
         Log.d("BRUH", "testetsetsetse");
-        filterDrawer.openDrawer(Gravity.RIGHT);
+        // filterDrawer.openDrawer(Gravity.RIGHT);
+        //adapter.sortAlphabetically();
     }
+
+
+
+
+
+
 
 }

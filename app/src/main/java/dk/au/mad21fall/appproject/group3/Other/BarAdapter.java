@@ -27,6 +27,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -123,6 +125,20 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
             notifyDataSetChanged();
         }
     };
+
+
+    public void sortAlphabetically()
+    {
+        Collections.sort(barList, new Comparator<Bar>() {
+            @Override
+            public int compare(Bar lhs, Bar rhs) {
+                return lhs.getName().compareTo(rhs.getName());
+            }
+        });
+        notifyDataSetChanged();
+
+    }
+
 
 
     private Boolean isOpen(int position){
