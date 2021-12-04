@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +52,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private LiveData<ArrayList<Bar>> bars;
     private SearchView srcBar;
     private ImageView filterBtn;
+    private RadioGroup filtersgroup;
     private DrawerLayout filterDrawer;
     private FirebaseAuth mAuth;
 
@@ -72,9 +75,14 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         }
         Log.d(TAG, "onCreateView: UserID = " + mAuth.getCurrentUser().getUid());
 
+        filterDrawer = v.findViewById(R.id.drawerlayout);
+        srcBar = (SearchView) v.findViewById(R.id.srcBars);
         rcvList = v.findViewById(R.id.rcvBars);
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvList.setAdapter(adapter);
+        filtersgroup = (RadioGroup) v.findViewById(R.id.filtergrup);
+        filterBtn = v.findViewById(R.id.filterDrawerBtn);
+
 
         //To make a list between each element in the list, for prettiness
         DividerItemDecoration itemDecor = new DividerItemDecoration(rcvList.getContext(), LinearLayout.VERTICAL);
@@ -90,7 +98,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         });
         Log.d(TAG, "onCreateView: " + v.findViewById(R.id.srcBars));
 
-        filterBtn = v.findViewById(R.id.filterDrawerBtn);
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,9 +105,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             }
         });
 
-        filterDrawer = v.findViewById(R.id.drawerlayout);
 
-        srcBar = (SearchView) v.findViewById(R.id.srcBars);
 
         srcBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

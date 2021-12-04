@@ -1,11 +1,12 @@
 package dk.au.mad21fall.appproject.group3.Activities;
 
 import android.content.Intent;
+import static android.content.ContentValues.TAG;
 import android.os.Bundle;
-
+import android.util.Log;
+import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -75,6 +76,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onClickSortByAlfabetical(View view) {
+        Log.d(TAG, "Sortbyalfabetical");
+    }
 
+    public void onClickSortByRating(View view) {
+        Log.d(TAG, "Sortbyrating");
+    }
 
+    public void onClickSortByDistance(View view) {
+        Log.d(TAG, "Sortbydistance");
+    }
 }
