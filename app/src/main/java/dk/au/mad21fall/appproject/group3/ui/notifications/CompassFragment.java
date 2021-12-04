@@ -51,21 +51,19 @@ public class CompassFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_notifications, container, false);
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         compasspointer = v.findViewById(R.id.compasspointer);
-        sensorManager = (SensorManager) mContext.getSystemService(SENSOR_SERVICE);
-        locationManager = (LocationManager)mContext.getSystemService(mContext.LOCATION_SERVICE);
-
+        sensorManager = (SensorManager)v.getContext().getSystemService(v.getContext().SENSOR_SERVICE);
+        locationManager = (LocationManager)v.getContext().getSystemService(v.getContext().LOCATION_SERVICE);
         sensoraccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensormagneticfield = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-
         View root = binding.getRoot();
 
         SensorEventListener sensorEventListeneraccelerometer = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
                 Gravity = sensorEvent.values;
-                SensorManager.getRotationMatrix(Rotation,null,Gravity,GeoMagnetic);
-                SensorManager.getOrientation(Rotation,Orientation);
-                compasspointer.setRotation((float) (-Orientation[0]*180/3.14159));
+                //SensorManager.getRotationMatrix(Rotation,null,Gravity,GeoMagnetic);
+                //SensorManager.getOrientation(Rotation,Orientation);
+                //compasspointer.setRotation((float) (-Orientation[0]*180/3.14159));
             }
 
             @Override
@@ -77,8 +75,8 @@ public class CompassFragment extends Fragment {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
             GeoMagnetic = sensorEvent.values;
-            SensorManager.getRotationMatrix(Rotation,null,Gravity,GeoMagnetic);
-            SensorManager.getOrientation(Rotation,Orientation);
+            //SensorManager.getRotationMatrix(Rotation,null,Gravity,GeoMagnetic);
+            //SensorManager.getOrientation(Rotation,Orientation);
             }
 
             @Override
