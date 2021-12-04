@@ -37,9 +37,7 @@ import dk.au.mad21fall.appproject.group3.R;
 
 public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> implements Filterable  {
 
-
     private static final String TAG = "GLIDE TEST";
-
 
 
     public interface IBarItemClickedListener{
@@ -114,6 +112,21 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
             return filterResults;
         }
 
+        /*
+        protected FilterResults sortByOpen() {
+            List<Bar> filteredList = new ArrayList<Bar>(); //only contain filtered items
+
+            for (int i = 0; i < barList.size(); i++) {
+                if (isOpen(i))
+                    filteredList.add(barList.get(i));
+            }
+            //adding the results
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+        */
 
         //updating the recyclerview
         @Override
@@ -148,10 +161,36 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         //Collections.sort(barList, Collections.reverseOrder());
         notifyDataSetChanged();
     }
+    // TODO: Check if this works for re-entering the removed bars
+    public void sortByOpen(boolean checked) {
+
+        if (checked)
+        {
+            List<Bar> sortedList = new ArrayList<>();
+
+            for (int i = 0; i < barList.size(); i++) {
+                if (isOpen(i))
+                    Log.d("OpenSort", "Kept: " + barList.get(i).getName());
+                    sortedList.add(barList.get(i));
+            }
+
+            barList = sortedList;
+            Log.d("OpenSort", "Size of list: " + barList.size());
+            notifyDataSetChanged();
+
+            return;
+        } else {
+            barList = storedBars;
+            Log.d("OpenSort", "Size of list: " + barList.size());
+            notifyDataSetChanged();
+
+            return;
+        }
+
+    }
 
 
-
-    private Boolean isOpen(int position){
+        private Boolean isOpen(int position){
         Boolean open;
 
         //https://stackoverflow.com/questions/17697908/check-if-a-given-time-lies-between-two-times-regardless-of-date
