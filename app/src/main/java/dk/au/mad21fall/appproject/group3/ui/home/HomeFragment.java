@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +31,8 @@ import com.facebook.login.Login;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import dk.au.mad21fall.appproject.group3.Activities.MainActivity;
 import dk.au.mad21fall.appproject.group3.Models.Bar;
@@ -48,10 +52,9 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private LiveData<ArrayList<Bar>> bars;
     private SearchView srcBar;
     private ImageView filterBtn;
+    private RadioGroup filtersgroup;
     private DrawerLayout filterDrawer;
     private FirebaseAuth mAuth;
-
-    //var toggle: ActionBarDrawerToggle? = null;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -72,11 +75,16 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         }
         Log.d(TAG, "onCreateView: UserID = " + mAuth.getCurrentUser().getUid());
 
+        filterDrawer = v.findViewById(R.id.drawerlayout);
+        srcBar = (SearchView) v.findViewById(R.id.srcBars);
         rcvList = v.findViewById(R.id.rcvBars);
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvList.setAdapter(adapter);
+        filtersgroup = (RadioGroup) v.findViewById(R.id.filtergrup);
+        filterBtn = v.findViewById(R.id.filterDrawerBtn);
 
-        //To make a list between each element in the list, for prettynes    s
+
+        //To make a list between each element in the list, for prettiness
         DividerItemDecoration itemDecor = new DividerItemDecoration(rcvList.getContext(), LinearLayout.VERTICAL);
         rcvList.addItemDecoration(itemDecor);
 
@@ -90,7 +98,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         });
         Log.d(TAG, "onCreateView: " + v.findViewById(R.id.srcBars));
 
-        filterBtn = v.findViewById(R.id.filterDrawerBtn);
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,9 +105,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             }
         });
 
-        filterDrawer = v.findViewById(R.id.drawerlayout);
 
-        srcBar = (SearchView) v.findViewById(R.id.srcBars);
 
         srcBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -114,9 +119,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                 return false;
             }
         });
-
-
-
 
         return v;
     }
@@ -145,7 +147,14 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     public void OnClickFilterDrawer()
     {
         Log.d("BRUH", "testetsetsetse");
-        filterDrawer.openDrawer(Gravity.RIGHT);
+        // filterDrawer.openDrawer(Gravity.RIGHT);
+        //adapter.sortAlphabetically();
     }
+
+
+
+
+
+
 
 }

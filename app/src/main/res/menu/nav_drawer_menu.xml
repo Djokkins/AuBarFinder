@@ -4,13 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <item
-            android:title="Filter By:">
-                <menu>
-                        <item
-                            android:id="@+id/nav_radios"
-                            android:title=""
-                            app:actionLayout="@layout/filterlayouts" />
-                </menu>
-        </item>
+            android:id="@+id/nav_radios"
+            android:title=""
+            app:actionLayout="@layout/filterlayouts" />
 
 </menu>
