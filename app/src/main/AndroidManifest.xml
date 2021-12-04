@@ -17,12 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AarhusUniversityFreitagBarGezucken">
 
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/map_key"/>
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".Activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +26,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_key"/>
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:exported="true"/>
+
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             tools:replace="android:value"
             android:value="@string/facebook_app_id"/>
