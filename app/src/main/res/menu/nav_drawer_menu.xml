@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/miItem1"
-        android:title="Is Open"
-        android:checkable="true"
-        android:checked="true"/>
-
-    <item
-        android:id="@+id/miItem2"
-        android:title="Item 2"
-        android:checkable="true"
-        android:checked="true"/>
-
-    <item
-        android:id="@+id/miItem3"
-        android:title="Item 3"
-        android:checkable="true"
-        android:checked="true"/>
+        <item
+            android:title="Filter By:">
+                <menu>
+                        <item
+                            android:id="@+id/nav_radios"
+                            android:title=""
+                            app:actionLayout="@layout/filterlayouts" />
+                </menu>
+        </item>
 
 </menu>
