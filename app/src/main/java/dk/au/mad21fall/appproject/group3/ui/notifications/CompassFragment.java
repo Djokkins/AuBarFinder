@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,9 +23,9 @@ import androidx.lifecycle.ViewModelProvider;
 import dk.au.mad21fall.appproject.group3.R;
 import dk.au.mad21fall.appproject.group3.databinding.FragmentNotificationsBinding;
 
-public class NotificationsFragment extends Fragment {
+public class CompassFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private CompassViewModel compassViewModel;
     private FragmentNotificationsBinding binding;
     private ImageView compasspointer;
     private SensorManager sensorManager;
@@ -40,17 +39,18 @@ public class NotificationsFragment extends Fragment {
     private float[] Orientation = new float[3];
     private float[] Rotation = new float[3];
 
-    public NotificationsFragment(Context mContext) {
+    public CompassFragment(Context mContext) {
         this.mContext = mContext;
     }
 
+    public CompassFragment(){}
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
-
+        compassViewModel = new ViewModelProvider(this).get(CompassViewModel.class);
+        View v = inflater.inflate(R.layout.fragment_notifications, container, false);
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
-        compasspointer.findViewById(R.id.compasspointer);
+        compasspointer = v.findViewById(R.id.compasspointer);
         sensorManager = (SensorManager) mContext.getSystemService(SENSOR_SERVICE);
         locationManager = (LocationManager)mContext.getSystemService(mContext.LOCATION_SERVICE);
 
@@ -90,7 +90,7 @@ public class NotificationsFragment extends Fragment {
         sensorManager.registerListener(sensorEventListenermagneticfield,sensormagneticfield,SensorManager.SENSOR_DELAY_NORMAL);
 
         //final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        compassViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String direction)
             {
