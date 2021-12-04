@@ -136,4 +136,11 @@ public class DetailsActivity extends AppCompatActivity {
                 Glide.with(imgIcon.getContext()).load(downloadUrl).into(imgIcon);}
         });
     }
+
+    public void Navigate(View view) {
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q="+bar.getAddress());
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+    }
 }

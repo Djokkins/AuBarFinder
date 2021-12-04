@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RadioGroup
+        android:id="@+id/filtergrup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <RadioButton
+            android:id="@+id/radioButtonAlfabetical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Alfabetical" />
+
+        <RadioButton
+            android:id="@+id/radioButtonRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Rating" />
+
+        <RadioButton
+            android:id="@+id/radioButtonDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Distance" />
+        <CheckBox
+            android:id="@+id/bob"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="check"
+            android:checked="true"
+            />
+        <CheckBox
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="check"
+            android:checked="true"
+            />
+        <CheckBox
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="check"
+            android:checked="true"
+            />
+
+    </RadioGroup>
+
+
+
+
