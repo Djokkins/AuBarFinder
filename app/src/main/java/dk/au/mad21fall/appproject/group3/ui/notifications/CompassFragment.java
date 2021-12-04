@@ -61,7 +61,7 @@ public class CompassFragment extends Fragment {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
                 Gravity = sensorEvent.values;
-                //SensorManager.getRotationMatrix(Rotation,null,Gravity,GeoMagnetic);
+                SensorManager.getRotationMatrix(Rotation,null,Gravity,GeoMagnetic);
                 //SensorManager.getOrientation(Rotation,Orientation);
                 //compasspointer.setRotation((float) (-Orientation[0]*180/3.14159));
             }
@@ -75,7 +75,7 @@ public class CompassFragment extends Fragment {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
             GeoMagnetic = sensorEvent.values;
-            //SensorManager.getRotationMatrix(Rotation,null,Gravity,GeoMagnetic);
+            SensorManager.getRotationMatrix(Rotation,null,Gravity,GeoMagnetic);
             //SensorManager.getOrientation(Rotation,Orientation);
             }
 
