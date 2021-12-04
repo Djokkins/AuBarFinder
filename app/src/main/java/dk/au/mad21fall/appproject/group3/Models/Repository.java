@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +66,7 @@ public class Repository {
                         ArrayList<Bar> updatedBars = new ArrayList<>();
                         if(value != null && !value.isEmpty()){
                             for(DocumentSnapshot snap : value.getDocuments()){
+                                Log.d(TAG, "onEvent: DATA = " + snap.getData());
                                 Bar bar = snap.toObject(Bar.class);
                                 bar.setBarID(snap.getId());
                                 if(bar != null){
@@ -75,18 +77,66 @@ public class Repository {
                         }
                     }
                 });
+        database.collection("bars")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        ArrayList<Bar> updatedBars = new ArrayList<>();
+                        if(value != null && !value.isEmpty()){
+                            for(DocumentSnapshot snap : value.getDocuments()){
+                                Bar bar = snap.toObject(Bar.class);
+                                if(bar != null){
+                                    bar.setBarID(snap.getId());
+                                    setAverage(bar);
+                                    Log.d(TAG, "onEvent: BAR AVERAGE = " + bar.getAverage_Rating());
+                                    updatedBars.add(bar);
+                                }
+                            }
+                            bars.setValue(updatedBars);
+                        }
+                    }
+                });
+    }
+
+    public void setAverage(Bar bar){
+
+        database.collection("bars").document(bar.getBarID()).collection("ratings")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        //ArrayList<Bar> updatedBars = new ArrayList<>();
+                        if(value != null && !value.isEmpty()){
+                            double average = 0;
+                            int counter = 0;
+                            for(DocumentSnapshot snap : value.getDocuments()){
+                                if(snap.getId().equals(mAuth.getUid())){
+                                    bar.setUserRating(snap.getDouble("rating"));
+                                }
+                                average = average + snap.getDouble("rating");
+                                counter++;
+                                Log.d(TAG, "onEvent: RATINGS DATA = " + snap.getDouble("rating"));
+
+                            }
+                            //Round and store the number
+                            average = round(average/counter, 1);
+
+                            bar.setAverage_Rating(average);
 
 
+                        } else bar.setAverage_Rating(0.0);
+                    }
+                });
+    }
+
+    //https://stackoverflow.com/questions/22186778/using-math-round-to-round-to-one-decimal-place
+    private static double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
     }
 
     public Bar getBar(String name){
-        Log.d(TAG, "getBar: We get here at least?!" + name);
-        Log.d(TAG, "getBar: " + bars.getValue());
         for(Bar bar : bars.getValue()){
-            Log.d(TAG, "getBar: Bar = " + bar.getName());
-            Log.d(TAG, "getBar: Bar = " + name);
             if(bar.getName().equals(name)){
-                Log.d(TAG, "getBar: We got here!");
                 return bar;
             }
         }
@@ -98,7 +148,7 @@ public class Repository {
         return bars;
     }
 
-    public void rateBar(double rating, String barID){
+    public void rateBar(Number rating, String barID){
         String uID = mAuth.getCurrentUser().getUid();
         Log.d(TAG, "rateBar: Rating = " + rating);
         Log.d(TAG, "rateBar: UserID = " + uID);

@@ -6,13 +6,22 @@ public class Bar {
     private String Description;
     private String Address;
     private String OpeningHours;
-    private String Faculties;
+    private String Faculty;
     private String Facebook;
     private String Instagram;
     private String Open;
     private String Close;
     private String barID;
     private Number Average_Rating;
+    private Number userRating;
+
+    public Number getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(Number userRating) {
+        this.userRating = userRating;
+    }
 
     public Number getAverage_Rating() {
         return Average_Rating;
@@ -40,19 +49,19 @@ public class Bar {
         Description = "";
         Address = "";
         OpeningHours = "";
-        Faculties = "";
+        Faculty = "";
         Facebook = "";
         Instagram = "";
         Open = "";
         Close = "";
     }
 
-    public Bar(String name, String description, String address, String openingHours, String faculties, String facebook, String instagram, String open, String close) {
+    public Bar(String name, String description, String address, String openingHours, String faculty, String facebook, String instagram, String open, String close) {
         Name = name;
         Description = description;
         Address = address;
         OpeningHours = openingHours;
-        Faculties = faculties;
+        Faculty = faculty;
         Facebook = facebook;
         Instagram = instagram;
         Open = open;
@@ -75,8 +84,8 @@ public class Bar {
         OpeningHours = openingHours;
     }
 
-    public void setFaculties(String faculties) {
-        Faculties = faculties;
+    public void setFaculty(String faculty) {
+        Faculty = faculty;
     }
 
     public void setFacebook(String facebook) {
@@ -111,8 +120,8 @@ public class Bar {
         return OpeningHours;
     }
 
-    public String getFaculties() {
-        return Faculties;
+    public String getFaculty() {
+        return Faculty;
     }
 
     public String getFacebook() {

@@ -35,7 +35,7 @@ public class DetailsViewModel extends ViewModel {
         return repository.getBar(name);
     }
 
-    public void rateBar(double Rating, String barID){
+    public void rateBar(Number Rating, String barID){
         repository.rateBar(Rating, barID);
     }
 

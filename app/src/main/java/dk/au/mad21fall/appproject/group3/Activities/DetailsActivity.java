@@ -34,7 +34,8 @@ public class DetailsActivity extends AppCompatActivity {
     SeekBar skbRating;
     private DetailsViewModel detailsViewModel;
     Bar bar;
-    double Score;
+    Number Score;
+    int scoreInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,11 @@ public class DetailsActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: The name is " + barName);
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         bar = detailsViewModel.getBar(barName);
+
+        Score = bar.getUserRating();
+        if(Score == null) Score = 0.0;
+        scoreInt = Score.intValue() * 10;
+
         setupView();
         updateUI();
     }
@@ -56,7 +62,9 @@ public class DetailsActivity extends AppCompatActivity {
         txtDescription = findViewById(R.id.txtDescription);
         txtAddress = findViewById(R.id.txtAddress);
         txtMyRating = findViewById(R.id.txtMyRating);
-        txtMyRating.setText(getString(R.string.txtMyRating) + " 0.0");
+
+        Log.d(TAG, "setupView: Score = " + Score + " and scoreInt = " + scoreInt);
+        txtMyRating.setText(getString(R.string.txtMyRating) + Score);
         skbRating = findViewById(R.id.skbRating);
         btnFacebook = findViewById(R.id.btnFacebook);
         btnFacebook.setOnClickListener(new View.OnClickListener() {
@@ -74,10 +82,11 @@ public class DetailsActivity extends AppCompatActivity {
         });
         imgIcon = findViewById(R.id.imgLogoDetails);
 
+        skbRating.setProgress(scoreInt);
         skbRating.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Score = ((double)i / 10.0);
+                Score = (i / 10.0);
                 updateScoreUI(Score);
             }
 
@@ -104,7 +113,7 @@ public class DetailsActivity extends AppCompatActivity {
         startActivity( browse );
     }
 
-    private void updateScoreUI(Double score){
+    private void updateScoreUI(Number score){
         txtMyRating.setText(getString(R.string.txtMyRating) + " " + score);
     }
 
