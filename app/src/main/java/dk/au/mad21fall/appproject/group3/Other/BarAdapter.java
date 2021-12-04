@@ -187,13 +187,8 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         //Set the text and picture.
         holder.txtName.setText(barList.get(position).getName());
         Number rating = barList.get(position).getAverage_Rating();
-        if(rating == null){
-            //
-        }
-        else {
-            holder.txtRating.setVisibility(View.VISIBLE);
-            holder.txtRating.setText("" + rating + "/5");//""+ movieList.get(position).getUserRating());
-        }
+        holder.txtRating.setVisibility(View.VISIBLE);
+        holder.txtRating.setText("" + rating + "/5");//""+ movieList.get(position).getUserRating());
         Log.d(TAG, "onBindViewHolder: " + barList.get(position).toString());
 
         //https://firebase.google.com/docs/storage/android/download-files#download_data_via_url
