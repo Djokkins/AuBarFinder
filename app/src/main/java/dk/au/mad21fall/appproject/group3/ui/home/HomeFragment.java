@@ -33,6 +33,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
 
 import dk.au.mad21fall.appproject.group3.Activities.MainActivity;
 import dk.au.mad21fall.appproject.group3.Models.Bar;
@@ -60,10 +61,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
-
-
-
 
 
         adapter = new BarAdapter(this);
@@ -120,6 +117,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             }
         });
 
+
         return v;
     }
 
@@ -144,17 +142,13 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
 
     }
 
+
     public void OnClickFilterDrawer()
     {
-        Log.d("BRUH", "testetsetsetse");
-        // filterDrawer.openDrawer(Gravity.RIGHT);
+        //filterDrawer.openDrawer(Gravity.RIGHT);
+
         //adapter.sortAlphabetically();
+        adapter.sortByOpen(true);
     }
-
-
-
-
-
-
 
 }

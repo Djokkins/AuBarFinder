@@ -40,6 +40,7 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 //TODO: Make facebook login work?!
 //TODO: make a second language
 //TODO: Comments!
+//TODO: Fix fragment icon 'Notification' to fit the compas fragment better
 
 
 
