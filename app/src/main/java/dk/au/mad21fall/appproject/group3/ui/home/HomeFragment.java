@@ -133,13 +133,11 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
 
     @Override
     public void onBarClicked(int index) {
-        //Toast.makeText(getActivity(), "You clicked bar" + bar.getName(), Toast.LENGTH_SHORT).show();
         String id = bars.getValue().get(index).getName();
         Intent intent = new Intent(getActivity(), DetailsActivity.class);
         Log.d(TAG, "onBarClicked: " + id);
         intent.putExtra(Constants.BAR_NAME, id);
         startActivity(intent);
-
     }
 
     public void OnClickFilterDrawer()
