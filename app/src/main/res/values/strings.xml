@@ -4,6 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_map">Map</string>
+    <string name="title_closest_bar">Closest bar</string>
     <string name="btnLoginEmail">Sign in with email</string>
     <string name="txtName">Bar Name</string>
     <string name="txtRating">Bar Rating</string>
@@ -14,7 +15,7 @@
     <string name="txtClose">Close </string>
     <string name="txtFacebook">Facebook </string>
     <string name="txtInstagram">Instagram </string>
-
+    <string name="mapLocationDisplay">My location</string>
     <string name="txtCompass">Compass</string>
     <string name="txtDescription">Description: </string>
     <string name="txtFaculty">Faculty</string>

@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -63,6 +64,11 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private Location userLocation;
     private Marker marker;
     private Geocoder mGeocoder;
+    //Convert address to latitude/longitude to so we can add markers
+    private ArrayList<String> locations;
+    private MarkerOptions markerOptions = new MarkerOptions();
+    //only load map pins onto map once, so we toggle it after use
+    private boolean initMapPins = true;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -72,10 +78,12 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         View root = binding.getRoot();
         mGeocoder = new Geocoder(this.getContext());
         bars = mapViewModel.getBars();
+        locations = mapViewModel.getBarList();
+
 
         //initialize map
         initMap();
-
+        checkPermissions();
 
         return root;
     }
@@ -86,15 +94,12 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                     Manifest.permission.ACCESS_FINE_LOCATION}, 100);
         }
     }
-
+    //Initialize map asynchronously
     private void initMap() {
         if (mapFragment == null) {
             mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
             mapFragment.getMapAsync(this);
         }
-        checkPermissions();
-        getLocation();
-
     }
 
     //function that gets the users location,
@@ -119,52 +124,8 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
-        if(mMap == null){
-
-            mMap = googleMap;
-
-            //Convert address to latitude/longitude to so we can add markers
-            List<Address> addresses = new ArrayList<Address>();
-            ArrayList<String> locations = mapViewModel.getBarList();
-            Log.d(TAG, "onMapReady: " + locations.get(2) + "location size: " + locations.size());
-            Log.d(TAG, "onMapReady: " + Geocoder.isPresent());
-            MarkerOptions markerOptions = new MarkerOptions();
-
-            //translating addresses from human readable to coordinates and marks each bar on the map
-            for (int i = 0; i < locations.size(); i++) {
-                try {
-                    addresses = mGeocoder.getFromLocationName(locations.get(i), 1);
-                    Address address = addresses.get(0);
-                    Log.d(TAG, "onMapReady: " + address.toString());
-
-                    markerOptions
-                            .position(new LatLng(address.getLatitude(), address.getLongitude()))
-                            .title(bars.getValue().get(i).getName());
-                    mMap.addMarker(markerOptions);
-                } catch (IOException e) {
-                    Log.d(TAG, "There was an error trying to convert that address");
-                    e.printStackTrace();
-                }
-            }
-
-            //move camera to aarhus as default, set zoom level to be appropriate
-            if(userLocation == null) {
-                LatLng aarhus = new LatLng(56.16, 10.20);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aarhus, 14));
-            }
-            //creation of user marker and goes to where the user is.
-            else{
-                LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
-                markerOptions
-                        .position(new LatLng(user.latitude, user.longitude))
-                        .title("My location")
-                        .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location)));
-                marker = mMap.addMarker(markerOptions);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user, 14));
-            }
-
-
-        }
+        mMap = googleMap;
+        getLocation();
 
         //Todo: Make the moving of user marker a smooth animation.
         /// inspiration from https://stackoverflow.com/questions/13728041/move-markers-in-google-map-v2-android
@@ -179,6 +140,55 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                     //.snippet("My Snippet")
                     .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
 
+        }
+
+                    markerOptions
+                            .position(new LatLng(address.getLatitude(), address.getLongitude()))
+                            .title(bars.getValue().get(i).getName());
+                    mMap.addMarker(markerOptions);
+                } catch (IOException e) {
+                    Log.d(TAG, "There was an error trying to convert that address");
+                    e.printStackTrace();
+                }
+            }
+
+        if(initMapPins){
+            //move camera to aarhus as default, set zoom level to be appropriate
+            if(userLocation == null) {
+                LatLng aarhus = new LatLng(56.16, 10.20);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aarhus, 14));
+            }
+            //creation of user marker and goes to where the user is.
+            else{
+                LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+                markerOptions
+                        .position(new LatLng(user.latitude, user.longitude))
+                        .title("@string/mapLocationDisplay")
+                        .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location)));
+                marker = mMap.addMarker(markerOptions);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user, 14));
+            }
+
+            Log.d(TAG, "onMapReady: " + locations.get(2) + "location size: " + locations.size());
+            Log.d(TAG, "onMapReady: " + Geocoder.isPresent());
+
+            //translating addresses from human readable to coordinates and marks each bar on the map
+            for (int i = 0; i < locations.size(); i++) {
+                try {
+                    List<Address> addresses = Collections.unmodifiableList(mGeocoder.getFromLocationName(locations.get(i), 1));
+                    Address address = addresses.get(0);
+                    Log.d(TAG, "onMapReady: " + address.toString());
+
+                    markerOptions
+                            .position(new LatLng(address.getLatitude(), address.getLongitude()))
+                            .title(bars.getValue().get(i).getName());
+                    mMap.addMarker(markerOptions);
+                } catch (IOException e) {
+                    Log.d(TAG, "There was an error trying to convert that address");
+                    e.printStackTrace();
+                }
+            }
+            initMapPins = false;
         }
     }
 
