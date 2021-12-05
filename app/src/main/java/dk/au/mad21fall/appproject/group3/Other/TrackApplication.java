@@ -13,7 +13,6 @@ public class TrackApplication extends Application {
         super.onCreate();
         Log.d("BLA", "getAppContext: Is this what breaks it?! 1");
         instance = this;
-
     }
 
     public static Context getAppContext(){
