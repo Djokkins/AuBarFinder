@@ -186,24 +186,30 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
             //translating addresses from human readable to coordinates and marks each bar on the map
             for (int i = 0; i < locations.size(); i++) {
-                try {
-                    List<Address> addresses = Collections.unmodifiableList(mGeocoder.getFromLocationName(locations.get(i), 1));
-                    Address address = addresses.get(0);
-                    Log.d(TAG, "onMapReady: " + address.toString());
-                    Log.d(TAG, "setupBarMarkers penis: BAR:" + bars.getValue().get(i).getName());
-                    Log.d(TAG, "setupBarMarkers penis: LATITUDE+ " + address.getLatitude());
-                    Log.d(TAG, "setupBarMarkers penis: LONGITUDE+ " + address.getLongitude());
+                //This block of code is more scalable as it uses the geolocation to translate the readable address to google maps coordinates
+                //Unfortunately, this method is slow on even small data sizes (31 in our case) and therefore we chose to just hardcode mapcoordinates
+                //in firebase to give a greater user experience.
 
-                    markerOptions
-                            .position(new LatLng(address.getLatitude(), address.getLongitude()))
-                            .title(bars.getValue().get(i).getName())
-                            .icon(BitmapDescriptorFactory.defaultMarker());
+                
+                /*List<Address> addresses = Collections.unmodifiableList(mGeocoder.getFromLocationName(locations.get(i), 1));
+                Address address = addresses.get(0);
+                Log.d(TAG, "onMapReady: " + address.toString());
+                Log.d(TAG, "setupBarMarkers penis: BAR:" + bars.getValue().get(i).getName());
+                Log.d(TAG, "setupBarMarkers penis: LATITUDE+ " + address.getLatitude());
+                Log.d(TAG, "setupBarMarkers penis: LONGITUDE+ " + address.getLongitude());
 
-                    mMap.addMarker(markerOptions);
-                } catch (IOException e) {
-                    Log.d(TAG, "There was an error trying to convert that address");
-                    e.printStackTrace();
-                }
+                markerOptions
+                        .position(new LatLng(address.getLatitude(), address.getLongitude()))
+                        .title(bars.getValue().get(i).getName())
+                        .icon(BitmapDescriptorFactory.defaultMarker());
+
+                mMap.addMarker(markerOptions);*/
+                markerOptions
+                        .position(new LatLng(bars.getValue().get(i).getLat(), bars.getValue().get(i).getLon()))
+                        .title(bars.getValue().get(i).getName())
+                        .icon(BitmapDescriptorFactory.defaultMarker());
+
+                mMap.addMarker(markerOptions);
             }
             initMapPins = false;
         }

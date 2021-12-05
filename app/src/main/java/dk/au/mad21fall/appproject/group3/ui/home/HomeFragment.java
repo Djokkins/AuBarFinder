@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private RadioGroup filtersgroup;
     private DrawerLayout filterDrawer;
     private FirebaseAuth mAuth;
-    private Boolean mOpenBarsOnly = true;
+    private Boolean mOpenBarsOnly = false;
 
 
 
@@ -163,11 +163,10 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(TAG, "onOptionsItemSelected: loaded");
-        mOpenBarsOnly = false;
         int id = item.getItemId();
         if (id == R.id.isopenchbx) {
-            if (mOpenBarsOnly)
-            adapter.sortByOpen(true);
+            mOpenBarsOnly ^= true;
+            adapter.sortByOpen(mOpenBarsOnly);
             return true;
         }
         if (id == R.id.sortalphabetical) {

@@ -2,10 +2,14 @@ package dk.au.mad21fall.appproject.group3.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -50,6 +54,8 @@ public class SplashActivity extends AppCompatActivity {
         repository = Repository.getInstance();  //get Repository singleton
         TrackApplication test = new TrackApplication();
 
+
+        checkPermissions();
 
         imgBeerLeft = findViewById(R.id.imgBeerLeft);
         imgBeerRight = findViewById(R.id.imgBeerRight);
@@ -118,6 +124,12 @@ public class SplashActivity extends AppCompatActivity {
         }, 3000); //Time for it to run
 
 
+    }
+    private void checkPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        }
     }
 
 }
