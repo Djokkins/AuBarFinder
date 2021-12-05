@@ -167,6 +167,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         Log.d(TAG, "onOptionsItemSelected: loaded");
         int id = item.getItemId();
         if (id == R.id.isopenchbx) {
+            mMyRatedBarsOnly = false;
             mOpenBarsOnly ^= true;
             adapter.sortByOpen(mOpenBarsOnly);
             if(mOpenBarsOnly){item.setChecked(true);}
@@ -174,6 +175,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             return true;
         }
         if (id == R.id.sortmyrateditems) {
+            mOpenBarsOnly = false;
             mMyRatedBarsOnly ^= true;
             adapter.sortByOpen(mMyRatedBarsOnly);
             if(mMyRatedBarsOnly){item.setChecked(true);}
@@ -181,15 +183,21 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             return true;
         }
         if (id == R.id.sortalphabetical) {
+            mOpenBarsOnly = false;
+            mMyRatedBarsOnly = false;
             adapter.sortAlphabetically();
             Log.d(TAG, "onOptionsItemSelected: YESYEYSYESYES");
             return true;
         }
         if (id == R.id.sortratingitem) {
+            mOpenBarsOnly = false;
+            mMyRatedBarsOnly = false;
             adapter.sortByRating();
             return true;
         }
         if (id == R.id.sortdistanceitem) {
+            mOpenBarsOnly = false;
+            mMyRatedBarsOnly = false;
             adapter.sortByDistance();
             return true;
         }
