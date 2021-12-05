@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -63,6 +64,9 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private Location userLocation;
     private Marker marker;
     private Geocoder mGeocoder;
+    //Convert address to latitude/longitude to so we can add markers
+    private ArrayList<String> locations;
+    private MarkerOptions markerOptions = new MarkerOptions();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -72,9 +76,13 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         View root = binding.getRoot();
         mGeocoder = new Geocoder(this.getContext());
         bars = mapViewModel.getBars();
+        locations = mapViewModel.getBarList();
+
 
         //initialize map
         initMap();
+        checkPermissions();
+        getLocation();
 
 
         return root;
@@ -86,15 +94,12 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                     Manifest.permission.ACCESS_FINE_LOCATION}, 100);
         }
     }
-
+    //Initialize map asynchronously
     private void initMap() {
         if (mapFragment == null) {
             mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
             mapFragment.getMapAsync(this);
         }
-        checkPermissions();
-        getLocation();
-
     }
 
     //function that gets the users location,
@@ -119,21 +124,19 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
+        mMap = googleMap;
+
         if(mMap == null){
 
             mMap = googleMap;
 
-            //Convert address to latitude/longitude to so we can add markers
-            List<Address> addresses = new ArrayList<Address>();
-            ArrayList<String> locations = mapViewModel.getBarList();
             Log.d(TAG, "onMapReady: " + locations.get(2) + "location size: " + locations.size());
             Log.d(TAG, "onMapReady: " + Geocoder.isPresent());
-            MarkerOptions markerOptions = new MarkerOptions();
 
             //translating addresses from human readable to coordinates and marks each bar on the map
             for (int i = 0; i < locations.size(); i++) {
                 try {
-                    addresses = mGeocoder.getFromLocationName(locations.get(i), 1);
+                    List<Address> addresses = Collections.unmodifiableList(mGeocoder.getFromLocationName(locations.get(i), 1));
                     Address address = addresses.get(0);
                     Log.d(TAG, "onMapReady: " + address.toString());
 
@@ -156,13 +159,11 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                 LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
                 markerOptions
                         .position(new LatLng(user.latitude, user.longitude))
-                        .title("My location")
+                        .title("@string/mapLocationDisplay")
                         .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location)));
                 marker = mMap.addMarker(markerOptions);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user, 14));
             }
-
-
         }
 
         //Todo: Make the moving of user marker a smooth animation.

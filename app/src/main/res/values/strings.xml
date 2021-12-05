@@ -15,7 +15,7 @@
     <string name="txtClose">Close </string>
     <string name="txtFacebook">Facebook </string>
     <string name="txtInstagram">Instagram </string>
-
+    <string name="mapLocationDisplay">My location</string>
     <string name="txtCompass">Compass</string>
     <string name="txtDescription">Description: </string>
     <string name="txtFaculty">Faculty</string>
