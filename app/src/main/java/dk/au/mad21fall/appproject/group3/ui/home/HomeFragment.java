@@ -170,15 +170,21 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             mMyRatedBarsOnly = false;
             mOpenBarsOnly ^= true;
             adapter.sortByOpen(mOpenBarsOnly);
-            if(mOpenBarsOnly){item.setChecked(true);}
+            if(mOpenBarsOnly){
+                mMyRatedBarsOnly = false;
+                item.setChecked(true);
+            }
             else {item.setChecked(false);}
             return true;
         }
         if (id == R.id.sortmyrateditems) {
-            mOpenBarsOnly = false;
+
             mMyRatedBarsOnly ^= true;
             adapter.sortByOpen(mMyRatedBarsOnly);
-            if(mMyRatedBarsOnly){item.setChecked(true);}
+            if(mMyRatedBarsOnly){
+                mOpenBarsOnly = false;
+                item.setChecked(true);
+            }
             else {item.setChecked(false);}
             return true;
         }
