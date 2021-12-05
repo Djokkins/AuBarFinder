@@ -48,16 +48,9 @@ import dk.au.mad21fall.appproject.group3.ui.home.HomeFragment;
 import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 
 //TODO: add color accent in custom button <solid android:color="@color/" https://www.youtube.com/watch?v=WUJ6Ve7_mA0&ab_channel=Stevdza-San 4:25
-//TODO: make a repository class
-//TODO: make a ViewModel for the details class
-//TODO: make details get data from the ViewModel via the barID and post the info
-//TODO: get pictures down via gradle
 //TODO: Fix the mail
 //TODO: make the compass
 //TODO: Make the map
-//TODO: Fix links to facebook and instagram on details
-//TODO: Make Splash screen pretty
-//TODO: Distance to the bars on a service
 //TODO: Filter search
 //TODO: Tablet version
 //TODO: Custom logo
@@ -71,6 +64,7 @@ import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 //TODO: Use notifications
 //TODO: Resource externalization
 //TODO: 2 languages (MANGLER STADIG FILTERLAYOUTS)
+//TODO: Fix 'forgot password'
 
 
 
