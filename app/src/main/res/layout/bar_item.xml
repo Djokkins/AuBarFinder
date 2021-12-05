@@ -63,4 +63,17 @@
         app:layout_constraintTop_toTopOf="@+id/imgIcon"
         tools:text="@string/txtRating" />
 
+    <TextView
+        android:id="@+id/txtDistance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="80dp"
+        android:text="@string/txtDistance"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgIcon"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toEndOf="@+id/imgIcon"
+        app:layout_constraintTop_toTopOf="@+id/imgIcon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

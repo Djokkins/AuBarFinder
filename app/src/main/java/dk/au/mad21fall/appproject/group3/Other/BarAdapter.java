@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
+import dk.au.mad21fall.appproject.group3.Models.UserLocation;
 import dk.au.mad21fall.appproject.group3.R;
 
 
@@ -272,9 +273,14 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         //Set the text and picture.
         holder.txtName.setText(barList.get(position).getName());
         Number rating = barList.get(position).getAverage_Rating();
-        holder.txtRating.setVisibility(View.VISIBLE);
         holder.txtRating.setText("" + rating + "/5");//""+ movieList.get(position).getUserRating());
         Log.d(TAG, "onBindViewHolder: " + barList.get(position).toString());
+
+
+
+        barList.get(position).calcDistance(holder.userLocation.getCurrentLocation());
+        //Log.d(TAG, "onBindViewHolder: LOCATION = " + holder.userLocation.getCurrentLocation().toString());
+        holder.txtDistance.setText("" + barList.get(position).getDistance() + "m");
 
         //https://firebase.google.com/docs/storage/android/download-files#download_data_via_url
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
@@ -315,9 +321,9 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
     public class BarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         //Set up the widgets for the UI view.
-        TextView txtName, txtRating;
+        TextView txtName, txtRating, txtDistance;
         ImageView imgIcon, imgColor;
-
+        UserLocation userLocation;
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
 
@@ -329,12 +335,13 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
             super(itemView);
 
             //get references from the layout file
-
+            userLocation = UserLocation.getInstance();
             //TODO: Fix the picture (if internet, picture, if not, standard genre icon).
             imgIcon = itemView.findViewById(R.id.imgIcon);
             imgColor = itemView.findViewById(R.id.imgColor);
             txtName = itemView.findViewById(R.id.txtName);
             txtRating = itemView.findViewById(R.id.txtRating);
+            txtDistance = itemView.findViewById(R.id.txtDistance);
 
             listener = barItemClickedListener;
 

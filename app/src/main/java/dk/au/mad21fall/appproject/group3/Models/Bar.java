@@ -1,5 +1,8 @@
 package dk.au.mad21fall.appproject.group3.Models;
 
+import android.location.Location;
+import android.util.Log;
+
 public class Bar {
 
     private String Name;
@@ -15,17 +18,22 @@ public class Bar {
     private Number Average_Rating;
     private Number userRating;
     private String Lat;
+    private float Distance;
 
-    public String getLat() {
-        return Lat;
+    public float getDistance() {
+        return Distance;
+    }
+
+    public Float getLat() {
+        return Float.parseFloat(Lat);
     }
 
     public void setLat(String lat) {
         Lat = lat;
     }
 
-    public String getLon() {
-        return Lon;
+    public Float getLon() {
+        return Float.parseFloat(Lon);
     }
 
     public void setLon(String lon) {
@@ -161,4 +169,22 @@ public class Bar {
 
 
 
+    public void calcDistance(Location userLocation)
+    {
+        try{
+            Location locationBar = null;
+            locationBar.setLatitude(getLat());
+            locationBar.setLongitude(getLon());
+            setDistance(userLocation.distanceTo(locationBar));
+        } catch (Exception e){
+            Log.d("BLA", "calcDistance: ");
+        }
+
+
+    //    return 0;
+    }
+
+
+    public void setDistance(float distanceTo) {
+    }
 }
