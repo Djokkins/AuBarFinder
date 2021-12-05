@@ -45,6 +45,7 @@
 
         <ImageButton
             android:id="@+id/filterDrawerBtn"
+            android:visibility="invisible"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginTop="10dp"

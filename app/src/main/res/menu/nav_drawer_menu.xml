@@ -7,7 +7,7 @@
             android:title="IsOpen"
             android:checkable="true" />
         <item
-            android:id="@+id/sortmyratingitem"
+            android:id="@+id/sortmyrateditems"
             android:title="my rated bars only"
             android:checkable="true"/>
         <item

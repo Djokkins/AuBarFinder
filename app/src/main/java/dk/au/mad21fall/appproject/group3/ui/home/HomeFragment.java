@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private DrawerLayout filterDrawer;
     private FirebaseAuth mAuth;
     private Boolean mOpenBarsOnly = false;
+    private Boolean mMyRatedBarsOnly = false;
 
 
 
@@ -167,6 +168,15 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         if (id == R.id.isopenchbx) {
             mOpenBarsOnly ^= true;
             adapter.sortByOpen(mOpenBarsOnly);
+            if(mOpenBarsOnly){item.setChecked(true);}
+            else {item.setChecked(false);}
+            return true;
+        }
+        if (id == R.id.sortmyrateditems) {
+            mMyRatedBarsOnly ^= true;
+            adapter.sortByOpen(mMyRatedBarsOnly);
+            if(mMyRatedBarsOnly){item.setChecked(true);}
+            else {item.setChecked(false);}
             return true;
         }
         if (id == R.id.sortalphabetical) {
