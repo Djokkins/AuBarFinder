@@ -1,6 +1,5 @@
 package dk.au.mad21fall.appproject.group3.ui.home;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,14 +40,13 @@ import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.Other.BarAdapter;
 import dk.au.mad21fall.appproject.group3.Models.Constants;
 import dk.au.mad21fall.appproject.group3.Activities.DetailsActivity;
-import dk.au.mad21fall.appproject.group3.Other.HomeFragmentCallback;
 import dk.au.mad21fall.appproject.group3.R;
 import dk.au.mad21fall.appproject.group3.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment implements BarAdapter.IBarItemClickedListener{
 
     private static final String TAG = "1";
-    HomeFragmentCallback callback;
+
     private HomeViewModel homeViewModel;
     private RecyclerView rcvList;
     private BarAdapter adapter;
@@ -63,6 +61,8 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
+
         adapter = new BarAdapter(this);
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -95,9 +95,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         });
         Log.d(TAG, "onCreateView: " + v.findViewById(R.id.srcBars));
 
-        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-
-
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +116,8 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                 return false;
             }
         });
-        
+
+
         return v;
     }
 
@@ -142,26 +140,10 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         startActivity(intent);
     }
 
-
     public void OnClickFilterDrawer()
     {
         filterDrawer.openDrawer(Gravity.RIGHT);
-        //adapter.sortByRating();
-    }
 
-    public void Adaptorsort(){
-        adapter.sortAlphabetically();
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        callback = (HomeFragmentCallback) context; // context - is your activity, that added this fragment
-    }
-    public void someFunction() {
-        // here you want to change some in your other fragments:
-        callback.doSomeWithFragment();
         //adapter.sortAlphabetically();
         //adapter.sortByOpen(true);
     }

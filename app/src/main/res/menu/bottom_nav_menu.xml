@@ -14,7 +14,7 @@
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/beer_vector"
-        android:title="Closest bar" />
+        android:title="@string/title_closest_bar" />
         <!-- android:icon="@drawable/tdf_fragment_logo" -->
         <!--
         android:icon="@drawable/ic_notifications_black_24dp"
