@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
         // alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10 * 1000, pendingIntent);
 
         Log.d("notification", "startFridayNotification: The notification AlarmManager was initialized");
+    }
 
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
