@@ -1,8 +1,15 @@
 package dk.au.mad21fall.appproject.group3.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,12 +21,22 @@ import android.widget.ImageView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import dk.au.mad21fall.appproject.group3.Models.Repository;
+import dk.au.mad21fall.appproject.group3.Other.TrackApplication;
 import dk.au.mad21fall.appproject.group3.R;
 
 public class SplashActivity extends AppCompatActivity {
 
     Animation leftAnimation, rightAnimation, leftDropAnim, rightDropAnim;
     ImageView imgBeerLeft, imgBeerRight, imgDropsLeft, imgDropsRight;
+
+
+
+    //UserLocation services
+    private LocationManager locationManager;
+    private Location userLocation;
+    private String provider;
+    private LocationListener locationListener;
+    private Criteria criteria = new Criteria();
 
 
     //https://abhiandroid.com/programming/splashscreen
@@ -31,6 +48,8 @@ public class SplashActivity extends AppCompatActivity {
         //Get the data down by creating the repository
         Repository repository;  //repository
         repository = Repository.getInstance();  //get Repository singleton
+        TrackApplication test = new TrackApplication();
+
 
         imgBeerLeft = findViewById(R.id.imgBeerLeft);
         imgBeerRight = findViewById(R.id.imgBeerRight);
@@ -100,4 +119,5 @@ public class SplashActivity extends AppCompatActivity {
 
 
     }
+
 }

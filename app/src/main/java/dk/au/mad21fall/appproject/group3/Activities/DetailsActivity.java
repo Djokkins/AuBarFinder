@@ -28,7 +28,7 @@ import dk.au.mad21fall.appproject.group3.ViewModels.DetailsViewModel;
 public class DetailsActivity extends AppCompatActivity {
     private static final String TAG = "DetailsViewModel";
 
-    TextView txtName, txtOpening, txtAddress, txtDescription, txtMyRating;
+    TextView txtName, txtOpening, txtAddress, txtDescription, txtMyRating, txtDistance;
     Button btnFacebook, btnInstagram;
     ImageView imgIcon;
     SeekBar skbRating;
@@ -62,6 +62,8 @@ public class DetailsActivity extends AppCompatActivity {
         txtDescription = findViewById(R.id.txtDescription);
         txtAddress = findViewById(R.id.txtAddress);
         txtMyRating = findViewById(R.id.txtMyRating);
+        txtDistance = findViewById(R.id.txtDistance);
+
 
         Log.d(TAG, "setupView: Score = " + Score + " and scoreInt = " + scoreInt);
         txtMyRating.setText(getString(R.string.txtMyRating, Score.toString()));
@@ -119,9 +121,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void updateUI() {
         txtName.setText(bar.getName());
-        //txtOpening.setText(bar.getOpen() + " - " + bar.getClose());
         txtOpening.setText(getString(R.string.txtOpenHours, bar.getOpen(), bar.getClose()));
-
+        txtDistance.setText("" + bar.getDistance() + " m");
         txtDescription.setText(getString(R.string.txtDescriptionMainText, bar.getDescription()));
         txtDescription.setMovementMethod(new ScrollingMovementMethod());
         txtAddress.setText(bar.getAddress());

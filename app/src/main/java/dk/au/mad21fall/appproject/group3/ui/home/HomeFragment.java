@@ -1,6 +1,12 @@
 package dk.au.mad21fall.appproject.group3.ui.home;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -11,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,6 +60,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private LiveData<ArrayList<Bar>> bars;
     private SearchView srcBar;
     private ImageView filterBtn;
+    private TextView txtDistance;
     private RadioGroup filtersgroup;
     private DrawerLayout filterDrawer;
     private FirebaseAuth mAuth;
@@ -120,7 +128,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             }
         });
 
-
         return v;
     }
 
@@ -152,5 +159,4 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         //adapter.sortByUserRated((filterTest));
         //filterTest = !filterTest;
     }
-
 }

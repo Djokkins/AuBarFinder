@@ -83,8 +83,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         bars = mapViewModel.getBars();
         locations = mapViewModel.getBarList();
 
+        //Setup location listener, get current location and initialize map
         setupLocationListener();
-        //initialize map
         getLocation();
         initMap();
 

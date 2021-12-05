@@ -1,6 +1,7 @@
 package dk.au.mad21fall.appproject.group3.Models;
 
 import android.content.Context;
+import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ public class Repository {
     private FirebaseAuth mAuth;
 
 
+
     public static Repository getInstance() {
         if (instance == null) {
             instance = new Repository();
@@ -59,24 +61,6 @@ public class Repository {
             database = FirebaseFirestore.getInstance();
         }
 
-        database.collection("bars")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        ArrayList<Bar> updatedBars = new ArrayList<>();
-                        if(value != null && !value.isEmpty()){
-                            for(DocumentSnapshot snap : value.getDocuments()){
-                                Log.d(TAG, "onEvent: DATA = " + snap.getData());
-                                Bar bar = snap.toObject(Bar.class);
-                                bar.setBarID(snap.getId());
-                                if(bar != null){
-                                    updatedBars.add(bar);
-                                }
-                            }
-                            bars.setValue(updatedBars);
-                        }
-                    }
-                });
         database.collection("bars")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
