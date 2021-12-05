@@ -121,9 +121,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void updateUI() {
         txtName.setText(bar.getName());
-        //txtOpening.setText(bar.getOpen() + " - " + bar.getClose());
         txtOpening.setText(getString(R.string.txtOpenHours, bar.getOpen(), bar.getClose()));
-
+        txtDistance.setText("" + bar.getDistance() + " m");
         txtDescription.setText(getString(R.string.txtDescriptionMainText, bar.getDescription()));
         txtDescription.setMovementMethod(new ScrollingMovementMethod());
         txtAddress.setText(bar.getAddress());

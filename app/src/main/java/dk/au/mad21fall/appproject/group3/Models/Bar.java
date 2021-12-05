@@ -18,9 +18,9 @@ public class Bar {
     private Number Average_Rating;
     private Number userRating;
     private String Lat;
-    private float Distance;
+    private int Distance;
 
-    public float getDistance() {
+    public int getDistance() {
         return Distance;
     }
 
@@ -172,10 +172,11 @@ public class Bar {
     public void calcDistance(Location userLocation)
     {
         try{
-            Location locationBar = null;
+            Location locationBar = new Location("");
             locationBar.setLatitude(getLat());
             locationBar.setLongitude(getLon());
             setDistance(userLocation.distanceTo(locationBar));
+            Log.d("BLA", "calcDistance: distance = " + Distance);
         } catch (Exception e){
             Log.d("BLA", "calcDistance: ");
         }
@@ -186,5 +187,6 @@ public class Bar {
 
 
     public void setDistance(float distanceTo) {
+        Distance = (int)Math.round(distanceTo/10.0) * 10;
     }
 }

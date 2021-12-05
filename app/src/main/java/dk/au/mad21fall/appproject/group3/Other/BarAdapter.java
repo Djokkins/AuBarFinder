@@ -277,10 +277,11 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         Log.d(TAG, "onBindViewHolder: " + barList.get(position).toString());
 
 
-
+        Log.d(TAG, "onBindViewHolder: LOCATIOM2 = " + holder.userLocation.getCurrentLocation());
         barList.get(position).calcDistance(holder.userLocation.getCurrentLocation());
+
         //Log.d(TAG, "onBindViewHolder: LOCATION = " + holder.userLocation.getCurrentLocation().toString());
-        holder.txtDistance.setText("" + barList.get(position).getDistance() + "m");
+        holder.txtDistance.setText("" + barList.get(position).getDistance() + " m");
 
         //https://firebase.google.com/docs/storage/android/download-files#download_data_via_url
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();

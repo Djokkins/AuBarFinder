@@ -62,17 +62,15 @@ public class UserLocation {
 
     @SuppressLint("MissingPermission")
     private void getLocation() {
-        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
-
         try {
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
             //get initial userLocation
             provider = locationManager.getBestProvider(criteria, false);
             userLocation = locationManager.getLastKnownLocation(provider);
             Log.d(TAG, "onLocationChanged: LOCATIOM = " + userLocation);
 
         } catch (Exception e) {
-            Log.d(TAG, "getLocation: FUCK ME THIS DOENST WORK");
             e.printStackTrace();
         }
     }
