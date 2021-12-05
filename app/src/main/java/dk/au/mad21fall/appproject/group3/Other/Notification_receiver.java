@@ -25,7 +25,7 @@ public class Notification_receiver extends BroadcastReceiver {
         Intent notification_intent = new Intent(context, MainActivity.class);
         notification_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 201, notification_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 201, notification_intent, PendingIntent.FLAG_MUTABLE);
 
         String channelID = context.getString(R.string.notificationChannelID);
 

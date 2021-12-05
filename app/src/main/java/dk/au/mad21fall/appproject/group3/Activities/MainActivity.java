@@ -161,8 +161,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
 
         Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 201, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 201, intent, PendingIntent.FLAG_MUTABLE);
+        // FLAG_UPDATE_CURRENT
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmManager.INTERVAL_DAY, pendingIntent);
 
