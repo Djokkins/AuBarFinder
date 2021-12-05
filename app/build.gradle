@@ -44,6 +44,7 @@ dependencies {
 
     implementation 'androidx.multidex:multidex:latest.release'
     implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.android.material:material:1.5.0-alpha04'
 
     //Firebase stuff
     implementation 'com.google.firebase:firebase-auth:21.0.1'
