@@ -138,7 +138,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                     .position(user)
                     .title("My location")
                     //.snippet("My Snippet")
-                    .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
+                    .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(this.getActivity(), R.drawable.my_location))));
 
         }
 
@@ -154,7 +154,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                 markerOptions
                         .position(new LatLng(user.latitude, user.longitude))
                         .title("@string/mapLocationDisplay")
-                        .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location)));
+                        .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(getActivity(), R.drawable.my_location)));
                 marker = mMap.addMarker(markerOptions);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user, 14));
             }
@@ -216,8 +216,8 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
     //Helper function for bitmap from:
     //https://stackoverflow.com/questions/10111073/how-to-get-a-bitmap-from-a-drawable-defined-in-a-xml
-    private Bitmap getBitmap(int drawableRes) {
-        Drawable drawable = getResources().getDrawable(drawableRes);
+    private Bitmap getBitmap(Context context, int drawableRes) {
+        Drawable drawable = ActivityCompat.getDrawable(context, drawableRes);
         Canvas canvas = new Canvas();
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         canvas.setBitmap(bitmap);
