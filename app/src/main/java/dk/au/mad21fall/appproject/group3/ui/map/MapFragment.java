@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -82,6 +83,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mGeocoder = new Geocoder(this.getContext());
         bars = mapViewModel.getBars();
         locations = mapViewModel.getBarList();
+        MapsInitializer.initialize(getActivity().getApplicationContext());
 
         //Setup location listener, get current location and initialize map
         setupLocationListener();
@@ -190,7 +192,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 //Unfortunately, this method is slow on even small data sizes (31 in our case) and therefore we chose to just hardcode mapcoordinates
                 //in firebase to give a greater user experience.
 
-                
+
                 /*List<Address> addresses = Collections.unmodifiableList(mGeocoder.getFromLocationName(locations.get(i), 1));
                 Address address = addresses.get(0);
                 Log.d(TAG, "onMapReady: " + address.toString());

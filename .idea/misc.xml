@@ -31,39 +31,26 @@
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/1. Uni/5. Semester/Mobile app development/AuBarFinder github/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/1. Uni/5. Semester/Mobile app development/AuBarFinder github/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1578125" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/1. Uni/5. Semester/Mobile app development/AuBarFinder github/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1578125" />
-        <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/drawable/beer_no_drops.xml" value="0.1484375" />
-        <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/drawable/custom_button_mail.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/activity_details.xml" value="0.536" />
-        <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/activity_login.xml" value="0.17135416666666667" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/activity_splash.xml" value="0.4" />
+        <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/bar_item.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/filterlayouts.xml" value="0.13229166666666667" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/fragment_map.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/fragment_notifications.xml" value="0.14166666666666666" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/layout/nav_header.xml" value="0.1671875" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Daniel/OneDrive - Aarhus Universitet/Dokumenter/AuBarFinder github/app/src/main/res/menu/nav_drawer_menu.xml" value="0.1671875" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/drawable/beer_vector.xml" value="0.2703125" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/drawable/circle_green.xml" value="0.2703125" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/drawable/filter_drawer_2_i_guess.xml" value="0.2703125" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/drawable/ic_beer_single.xml" value="0.2703125" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2703125" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/drawable/ic_launcher_beer_foreground.xml" value="0.8800000000000001" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout-sw600dp/activity_login.xml" value="0.1799863387978142" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout-sw600dp/activity_main.xml" value="0.1799863387978142" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout/activity_details.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/jensf/Documents/GitHub/SLML/AuBarFinder/app/src/main/res/layout-sw600dp/activity_details.xml" value="0.268" />
+        <entry key="..\:/Users/jensf/Documents/GitHub/SLML/AuBarFinder/app/src/main/res/layout-sw600dp/activity_login.xml" value="0.2" />
+        <entry key="..\:/Users/jensf/Documents/GitHub/SLML/AuBarFinder/app/src/main/res/layout-sw600dp/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/jensf/Documents/GitHub/SLML/AuBarFinder/app/src/main/res/layout/activity_details.xml" value="0.268" />
+        <entry key="..\:/Users/jensf/Documents/GitHub/SLML/AuBarFinder/app/src/main/res/layout/activity_login.xml" value="0.12386018237082067" />
+        <entry key="..\:/Users/jensf/Documents/GitHub/SLML/AuBarFinder/app/src/main/res/layout/activity_main.xml" value="0.12386018237082067" />
+        <entry key="..\:/Users/jensf/Documents/GitHub/SLML/AuBarFinder/app/src/main/res/layout/bar_item.xml" value="0.4" />
         <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout/activity_main.xml" value="0.19882246376811594" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout/bar_item.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout/filterlayouts.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout/fragment_home.xml" value="0.19927536231884058" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout/fragment_map.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout/fragment_notifications.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/layout/nav_header.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/lvind/source_git/AuBarFinder/app/src/main/res/menu/nav_drawer_menu.xml" value="0.15104166666666666" />
       </map>
     </option>
   </component>
