@@ -152,11 +152,12 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
 
     public void OnClickFilterDrawer()
     {
-        filterDrawer.openDrawer(Gravity.RIGHT);
+        //filterDrawer.openDrawer(Gravity.RIGHT);
 
         //adapter.sortAlphabetically();
         //adapter.sortByOpen(filterTest);
         //adapter.sortByUserRated((filterTest));
         //filterTest = !filterTest;
+        adapter.sortByDistance();
     }
 }

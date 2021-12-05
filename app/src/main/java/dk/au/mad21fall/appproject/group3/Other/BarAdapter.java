@@ -155,6 +155,18 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         Log.d(TAG, "sortByRating: Bars successfully sorted by rating");
     }
 
+
+    public void sortByDistance()
+    {
+        barList.sort(Comparator.comparing(Bar::getDistance));
+
+
+
+        notifyDataSetChanged(); // Updating the recyclerView
+
+        Log.d(TAG, "sortByRating: Bars successfully sorted by distance");
+    }
+
     public void sortByOpen(boolean checked) {
 
         // If the checkbox is 'true' we remove the closed bars

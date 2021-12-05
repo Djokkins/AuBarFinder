@@ -72,6 +72,8 @@ public class Repository {
                                 if(bar != null){
                                     bar.setBarID(snap.getId());
                                     setAverage(bar);
+                                    bar.calcDistance(UserLocation.getInstance().getCurrentLocation());
+
                                     Log.d(TAG, "onEvent: BAR AVERAGE = " + bar.getAverage_Rating());
                                     updatedBars.add(bar);
                                 }
