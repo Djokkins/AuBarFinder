@@ -94,6 +94,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                     Manifest.permission.ACCESS_FINE_LOCATION}, 100);
         }
     }
+
     //Initialize map asynchronously
     private void initMap() {
         if (mapFragment == null) {
@@ -129,8 +130,8 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
         //Todo: Make the moving of user marker a smooth animation.
         /// inspiration from https://stackoverflow.com/questions/13728041/move-markers-in-google-map-v2-android
-        if(userLocation != null){
-            if(marker!=null){
+        if (userLocation != null) {
+            if (marker != null) {
                 marker.remove();
             }
             LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
@@ -142,24 +143,19 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
         }
 
-                    markerOptions
-                            .position(new LatLng(address.getLatitude(), address.getLongitude()))
-                            .title(bars.getValue().get(i).getName());
-                    mMap.addMarker(markerOptions);
-                } catch (IOException e) {
-                    Log.d(TAG, "There was an error trying to convert that address");
-                    e.printStackTrace();
-                }
-            }
+        markerOptions
+                .position(new LatLng(address.getLatitude(), address.getLongitude()))
+                .title(bars.getValue().get(i).getName());
+        mMap.addMarker(markerOptions);
 
-        if(initMapPins){
+        if (initMapPins) {
             //move camera to aarhus as default, set zoom level to be appropriate
-            if(userLocation == null) {
+            if (userLocation == null) {
                 LatLng aarhus = new LatLng(56.16, 10.20);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aarhus, 14));
             }
             //creation of user marker and goes to where the user is.
-            else{
+            else {
                 LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
                 markerOptions
                         .position(new LatLng(user.latitude, user.longitude))
