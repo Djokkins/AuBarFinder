@@ -1,6 +1,4 @@
-package dk.au.mad21fall.appproject.group3.ui.notifications;
-
-import static android.content.Context.SENSOR_SERVICE;
+package dk.au.mad21fall.appproject.group3.ui.compass;
 
 import android.content.Context;
 import android.hardware.Sensor;

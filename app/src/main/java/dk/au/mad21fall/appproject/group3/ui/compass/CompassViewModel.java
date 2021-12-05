@@ -1,4 +1,4 @@
-package dk.au.mad21fall.appproject.group3.ui.notifications;
+package dk.au.mad21fall.appproject.group3.ui.compass;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

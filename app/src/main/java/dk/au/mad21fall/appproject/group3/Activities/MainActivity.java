@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
 
     }
     public void doSomeWithFragment() {
-        fragment.Adaptorsort();
+      //  fragment.Adaptorsort();
     }
 
     public void onClickSortByAlfabetical(View view) {
