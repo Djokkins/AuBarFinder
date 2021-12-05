@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="map_key" templateMergeStrategy="preserve" translateable="false" >
+    <string name="map_key" templateMergeStrategy="preserve" translateable="false" translatable="false">
         AIzaSyD8N6UyPKlkodq4XkxHt-4TFB5TlethK4o
     </string>
 </resources>

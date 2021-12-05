@@ -64,7 +64,7 @@ public class DetailsActivity extends AppCompatActivity {
         txtMyRating = findViewById(R.id.txtMyRating);
 
         Log.d(TAG, "setupView: Score = " + Score + " and scoreInt = " + scoreInt);
-        txtMyRating.setText(getString(R.string.txtMyRating) + Score);
+        txtMyRating.setText(getString(R.string.txtMyRating, Score.toString()));
         skbRating = findViewById(R.id.skbRating);
         btnFacebook = findViewById(R.id.btnFacebook);
         btnFacebook.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +106,7 @@ public class DetailsActivity extends AppCompatActivity {
     private void gotoUrl(String url) {
         //https://stackoverflow.com/questions/2762861/android-goto-http-url-on-button-click
         if(url.equals("N/A") || url.equals("")){
-            Toast.makeText(getApplicationContext(), "That sadly doesn't exists.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.urlErrorToast, Toast.LENGTH_SHORT).show();
             return;
         }
         Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(url) );
@@ -114,13 +114,15 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void updateScoreUI(Number score){
-        txtMyRating.setText(getString(R.string.txtMyRating) + " " + score);
+        txtMyRating.setText(getString(R.string.txtMyRating, Score.toString()));
     }
 
     private void updateUI() {
         txtName.setText(bar.getName());
-        txtOpening.setText(bar.getOpen() + " - " + bar.getClose());
-        txtDescription.setText('"' + bar.getDescription() + '"');
+        //txtOpening.setText(bar.getOpen() + " - " + bar.getClose());
+        txtOpening.setText(getString(R.string.txtOpenHours, bar.getOpen(), bar.getClose()));
+
+        txtDescription.setText(getString(R.string.txtDescriptionMainText, bar.getDescription()));
         txtDescription.setMovementMethod(new ScrollingMovementMethod());
         txtAddress.setText(bar.getAddress());
 

@@ -46,17 +46,16 @@
         app:layout_constraintTop_toBottomOf="@id/imgBeerLeft" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/txtUsername"
         style="@style/FirebaseUI.TextInputLayout.EmailField"
-        android:hint="Username">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hintUsername">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            />
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,7 +64,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtPassword"
         style="@style/FirebaseUI.TextInputLayout.PasswordField"
-        android:hint="Password">
+        android:hint="@string/hintPassword">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -80,7 +79,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:text="Forgot password?"
+        android:text="@string/forgotPassword"
         android:elevation="0dp"
         android:backgroundTint="#FFFFFFFF"
         android:textAllCaps="false"
@@ -91,7 +90,7 @@
         android:id="@+id/btnLoginEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign in"
+        android:text="@string/signIn"
         android:elevation="0dp"
         android:textAllCaps="false"
         />
@@ -103,7 +102,7 @@
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New user? Sign up!"
+        android:text="@string/newUserSignUp"
         android:layout_marginTop="10dp"
         android:elevation="0dp"
         android:textAllCaps="false"

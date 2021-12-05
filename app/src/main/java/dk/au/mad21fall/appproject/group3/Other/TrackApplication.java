@@ -6,17 +6,18 @@ import android.util.Log;
 
 public class TrackApplication extends Application {
 
+    private static final String TAG = "TrackApplication";
     private static TrackApplication instance; //The one application project for the application lifetime
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("BLA", "getAppContext: Is this what breaks it?! 1");
+        Log.d(TAG, "getAppContext: Is this what breaks it?! 1");
         instance = this;
     }
 
     public static Context getAppContext(){
-        Log.d("BLA", "getAppContext: Is this what breaks it?! 2");
+        Log.d(TAG, "getAppContext: Is this what breaks it?! 2");
         return instance.getApplicationContext();}
 
 }

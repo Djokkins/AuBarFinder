@@ -227,34 +227,35 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         LocalTime targetTime = LocalTime.parse( currentTimeString );
 
         try{
-        if(weekDay == 6) // Day of the week (Friday == 6)
-        {
-            // We check if the bar closes after midnight, as this will mess with the isBefore() function
             int afterMidnightCheck = Integer.parseInt(String.valueOf(closeHrs.charAt(0))); // Assume that no bar is open to past 10am the next day
+            if(weekDay == 6) // Day of the week (Friday == 6)
+            {
+                // We check if the bar closes after midnight, as this will mess with the isBefore() function
 
-            if(afterMidnightCheck == 0)
+
+                if(afterMidnightCheck == 0)
+                {
+                    open = targetTime.isAfter( LocalTime.parse( openHrs ));
+                    Log.d(TAG, "isOpen: ");
+                }
+                else // If the bar closes before midnight we additionally check if targetTime is after closing hours
+                {
+                    open = (
+                            targetTime.isAfter( LocalTime.parse( openHrs ) )
+                                    &&
+                                    targetTime.isBefore( LocalTime.parse( closeHrs ) )
+                    );
+                }
+            }   else if (weekDay == 7) // Day of the week (Saturday == 7)
             {
-                open = targetTime.isAfter( LocalTime.parse( openHrs ));
-                Log.d(TAG, "isOpen: ");
+                if (afterMidnightCheck == 0) {
+                    open = targetTime.isBefore(LocalTime.parse(closeHrs));
+                } else
+                    open = false;
             }
-            else // If the bar closes before midnight we additionally check if targetTime is after closing hours
-            {
-                open = (
-                        targetTime.isAfter( LocalTime.parse( openHrs ) )
-                                &&
-                                targetTime.isBefore( LocalTime.parse( closeHrs ) )
-                );
-            }
-        }   else if (weekDay == 7) // Day of the week (Saturday == 7)
-        {
-            if (Integer.parseInt(String.valueOf(closeHrs.charAt(0))) == 0) {
-                open = targetTime.isBefore(LocalTime.parse(closeHrs));
-            } else
+            else
                 open = false;
-        }
-        else
-            open = false;
-        return open;
+            return open;
         }
 
         catch(Exception e){
@@ -293,7 +294,6 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         else holder.imgColor.setImageResource(R.drawable.circle_red);
 
 
-        // TODO: Should this comment be here?
         //I wanted to make this check for internext, and post the standard genre if not present, via
         //via the function i made on the Constants file.
         //I couldn't get the context to work properly though, so I didn't implement it.

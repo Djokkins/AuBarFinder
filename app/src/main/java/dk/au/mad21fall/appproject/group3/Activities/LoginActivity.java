@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, R.string.facebookAuthenticationFail,
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
@@ -170,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = txtPassword.getEditText().getText().toString();
 
         if(email.equals("") || password.equals("")){
-            Toast.makeText(this, "Please enter both username and password.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.mailMissingInfo, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -184,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                     GoToMain();
                 }
                 else{
-                    Toast.makeText(LoginActivity.this, "Error loggin in, please try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.loginError, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -195,11 +195,11 @@ public class LoginActivity extends AppCompatActivity {
         String password = txtPassword.getEditText().getText().toString();
 
         if(email.equals("") || password.equals("")){
-            Toast.makeText(this, "Please enter both username and password.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.mailMissingInfo, Toast.LENGTH_SHORT).show();
             return;
         }
         if(password.length() <= 6){
-            Toast.makeText(this, "Password must be more than 6 characters.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.shortPassword, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -208,11 +208,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "User created successfully!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, R.string.userCreateSuccess, Toast.LENGTH_SHORT).show();
                             GoToMain();
                         }
                         else{
-                            Toast.makeText(LoginActivity.this, "Something went wrong, please try again.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, R.string.userCreateFailure, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
