@@ -25,7 +25,7 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 //TODO: add color accent in custom button <solid android:color="@color/" https://www.youtube.com/watch?v=WUJ6Ve7_mA0&ab_channel=Stevdza-San 4:25
 //TODO: make a repository class
 //TODO: make a ViewModel for the details class
-//TODO: make details get data from the viewmodel via the barID and post the info
+//TODO: make details get data from the ViewModel via the barID and post the info
 //TODO: get pictures down via gradle
 //TODO: Fix the mail
 //TODO: make the compass
@@ -41,6 +41,10 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 //TODO: make a second language
 //TODO: Comments!
 //TODO: Fix fragment icon 'Notification' to fit the compas fragment better
+//TODO: DEN CRASHER PÅ LANDSCAPE MODE!!!!!! DEN SKAL VERTICAL-LOCKES
+//TODO: Use notifications
+//TODO: Resource externalization
+//TODO: 2 languages
 
 
 
