@@ -1,9 +1,11 @@
 package dk.au.mad21fall.appproject.group3.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -36,6 +38,7 @@ public class DetailsActivity extends AppCompatActivity {
     Bar bar;
     Number Score;
     int scoreInt;
+    private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,7 @@ public class DetailsActivity extends AppCompatActivity {
         txtAddress = findViewById(R.id.txtAddress);
         txtMyRating = findViewById(R.id.txtMyRating);
         txtDistance = findViewById(R.id.txtDistance);
-
+        setupLocationListener();
 
         Log.d(TAG, "setupView: Score = " + Score + " and scoreInt = " + scoreInt);
         txtMyRating.setText(getString(R.string.txtMyRating, Score.toString()));
@@ -146,4 +149,17 @@ public class DetailsActivity extends AppCompatActivity {
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
     }
+
+    private void setupLocationListener() {
+
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull android.location.Location location) {
+                bar.calcDistance(location);
+                updateUI();
+            }
+        };
+    }
+
+
 }
