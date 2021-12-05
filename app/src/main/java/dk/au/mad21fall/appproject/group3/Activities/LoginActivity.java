@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -26,6 +27,7 @@ import com.facebook.login.widget.LoginButton;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -41,10 +43,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "1";
 
-    FirebaseAuth auth;
-    Button btnLoginEmail, btnLoginFacebook;
-    CallbackManager mCallbackManager;
-    LoginButton loginButton;
+    private FirebaseAuth auth;
+    private Button btnLoginEmail, btnSignUp, btnLoginFacebook;
+    private CallbackManager mCallbackManager;
+    private TextInputLayout txtUsername, txtPassword;
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),   //default contract
@@ -60,18 +62,29 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //Initialize Facebook SDK
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
+        txtUsername = findViewById(R.id.txtUsername);
+        txtPassword = findViewById(R.id.txtPassword);
+
         btnLoginEmail = findViewById(R.id.btnLoginEmail);
+        Log.d(TAG, "onCreate: checkpoint 4");
         btnLoginEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Login();
+                MailLogin();
             }
         });
+        btnSignUp = findViewById(R.id.btnSignUp);
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MailSignUp();
+            }
+        });
+
 
         setupAuth();
 
@@ -152,20 +165,60 @@ public class LoginActivity extends AppCompatActivity {
 
 
     @SuppressLint("WrongConstant")
-    private void Login() {
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build()
-                //new AuthUI.IdpConfig.FacebookBuilder().build()
-        );
+    private void MailLogin() {
+        String email = txtUsername.getEditText().getText().toString();
+        String password = txtPassword.getEditText().getText().toString();
 
-        launcher.launch(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .build()
-        );
+        if(email.equals("") || password.equals("")){
+            Toast.makeText(this, "Please enter both username and password.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        Log.d(TAG, "MailLogin: MAIL = " + email);
+        Log.d(TAG, "MailLogin: PASSWORD = " + password);
+
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    GoToMain();
+                }
+                else{
+                    Toast.makeText(LoginActivity.this, "Error loggin in, please try again.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
+    private void MailSignUp() {
+        String email = txtUsername.getEditText().getText().toString();
+        String password = txtPassword.getEditText().getText().toString();
+
+        if(email.equals("") || password.equals("")){
+            Toast.makeText(this, "Please enter both username and password.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(password.length() <= 6){
+            Toast.makeText(this, "Password must be more than 6 characters.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this, "User created successfully!", Toast.LENGTH_SHORT).show();
+                            GoToMain();
+                        }
+                        else{
+                            Toast.makeText(LoginActivity.this, "Something went wrong, please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
 
     private void GoToMain() {
         Intent i = new Intent(this, MainActivity.class);

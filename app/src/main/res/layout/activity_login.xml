@@ -13,7 +13,7 @@
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="0dp"
         android:gravity="center"
         android:text="@string/txtTitle"
         android:textColor="#000000"
@@ -28,7 +28,7 @@
         android:id="@+id/imgBeerLeft"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         app:layout_constraintTop_toBottomOf="@+id/txtTitle"
         app:srcCompat="@drawable/ic_beer_single" />
@@ -40,13 +40,10 @@
         android:gravity="center"
         android:text="@string/txtUnderTitle"
         android:textColor="#000000"
-        android:textSize="20sp"
-        android:layout_gravity="center_horizontal"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgBeerLeft" />
-
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -80,31 +77,49 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="Forgot password?"
+        android:elevation="0dp"
+        android:backgroundTint="#FFFFFFFF"
+        android:textAllCaps="false"
+        android:layout_gravity="right"
+        />
 
     <Button
         android:id="@+id/btnLoginEmail"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/custom_button_mail"
-        android:text="@string/btnLoginEmail"
+        android:layout_height="wrap_content"
+        android:text="Sign in"
+        android:elevation="0dp"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgBeerLeft" />
+        />
+
+
+
 
     <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New user? Sign up!"
+        android:layout_marginTop="10dp"
+        android:elevation="0dp"
+        android:textAllCaps="false"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLoginFacebook"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:textAllCaps="false"
+        android:elevation="0dp"
+        android:textColor="#FFFFFF"
         android:text="@string/btnLoginFacebook"
-        android:background="@drawable/custom_button_fb"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLoginEmail" />
+        android:backgroundTint="@color/fb_blue"
+        />
 
 
 </LinearLayout>
