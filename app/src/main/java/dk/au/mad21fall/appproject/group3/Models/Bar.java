@@ -142,6 +142,11 @@ public class Bar {
 
 
 
+    public int calcDistance()
+    {
+
+        return 0;
+    }
 
 
 }

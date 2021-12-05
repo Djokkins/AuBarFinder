@@ -58,6 +58,9 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private FirebaseAuth mAuth;
 
 
+    private boolean filterTest = true;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -145,7 +148,9 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         filterDrawer.openDrawer(Gravity.RIGHT);
 
         //adapter.sortAlphabetically();
-        //adapter.sortByOpen(true);
+        //adapter.sortByOpen(filterTest);
+        //adapter.sortByUserRated((filterTest));
+        //filterTest = !filterTest;
     }
 
 }

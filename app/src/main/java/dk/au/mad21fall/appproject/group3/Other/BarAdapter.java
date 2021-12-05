@@ -112,21 +112,6 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
             return filterResults;
         }
 
-        /*
-        protected FilterResults sortByOpen() {
-            List<Bar> filteredList = new ArrayList<Bar>(); //only contain filtered items
-
-            for (int i = 0; i < barList.size(); i++) {
-                if (isOpen(i))
-                    filteredList.add(barList.get(i));
-            }
-            //adding the results
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filteredList;
-
-            return filterResults;
-        }
-        */
 
         //updating the recyclerview
         @Override
@@ -169,22 +154,20 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         Log.d(TAG, "sortByRating: Bars successfully sorted by rating");
     }
 
-    // TODO: Check if this works for re-entering the removed bars
     public void sortByOpen(boolean checked) {
 
         // If the checkbox is 'true' we remove the closed bars
         if (checked)
         {
-            List<Bar> sortedList = new ArrayList<>();
+            List<Bar> filterdList = new ArrayList<>();
 
             for (int i = 0; i < barList.size(); i++) {
                 if (isOpen(i))
-                    sortedList.add(barList.get(i));
+                    filterdList.add(barList.get(i));
             }
 
-            barList = sortedList;
+            barList = filterdList;
             notifyDataSetChanged();
-
             Log.d(TAG, "sortByOpen: Closed bars removed from list");
 
         } else // If the checkbox is 'false' we set the barList to be the entire list again
@@ -195,11 +178,38 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
             Log.d(TAG, "sortByOpen: Closed bars added back into list");
         }
         return;
+    }
 
+    public void sortByUserRated(boolean checked) {
+
+        // If the checkbox is 'true' we remove the closed bars
+        if (checked)
+        {
+            List<Bar> filterdList = new ArrayList<>();
+
+            // Check for each bar if the rating is not yet defined
+            for (int i = 0; i < barList.size(); i++) {
+                if (barList.get(i).getUserRating() != null)
+                    filterdList.add(barList.get(i));
+            }
+
+            barList = filterdList;
+            notifyDataSetChanged();
+            Log.d(TAG, "sortByUserRated: Non-rated bars removed from list");
+
+        } else // If the checkbox is 'false' we set the barList to be the entire list again
+        {
+            barList = storedBars;
+            notifyDataSetChanged();
+
+            Log.d(TAG, "sortByOpen: Rated bars added back into list");
+        }
+        return;
     }
 
 
-        private Boolean isOpen(int position){
+
+    private Boolean isOpen(int position){
         Boolean open;
 
         //https://stackoverflow.com/questions/17697908/check-if-a-given-time-lies-between-two-times-regardless-of-date

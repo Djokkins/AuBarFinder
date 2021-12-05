@@ -1,14 +1,19 @@
 package dk.au.mad21fall.appproject.group3.Activities;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import static android.content.ContentValues.TAG;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -17,9 +22,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.Other.HomeFragmentCallback;
+import dk.au.mad21fall.appproject.group3.Other.Notification_receiver;
 import dk.au.mad21fall.appproject.group3.ViewModels.MainViewModel;
 import dk.au.mad21fall.appproject.group3.R;
 import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
@@ -85,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        createNotificationChannel();
+        startFridayNotification();
 
     }
     public void doSomeWithFragment() {
@@ -94,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
     public void onClickSortByAlfabetical(View view) {
         Log.d(TAG, "Sortbyalfabetical");
         doSomeWithFragment();
+
+
     }
 
     public void onClickSortByRating(View view) {
@@ -102,5 +113,48 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
 
     public void onClickSortByDistance(View view) {
         Log.d(TAG, "Sortbydistance");
+    }
+
+
+    // Implemented by following the code examples in: https://developer.android.com/training/notify-user/build-notification
+    private void createNotificationChannel() {
+
+
+        CharSequence name = getString(R.string.notificationChannelName);
+        String description = getString(R.string.notificationChannelDescription);
+        String channelID = getString(R.string.notificationChannelID);
+
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(channelID, name, importance);
+        channel.setDescription(description);
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
+
+        Log.d("notification", "createNotificationChannel: The notification channel was initialized");
+    }
+
+
+    public void startFridayNotification()
+    {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        calendar.set(Calendar.MINUTE, 00);
+
+
+        Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 201, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmManager.INTERVAL_DAY, pendingIntent);
+
+
+        // For debugging
+        // alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10 * 1000, pendingIntent);
+
+        Log.d("notification", "startFridayNotification: The notification AlarmManager was initialized");
+
     }
 }

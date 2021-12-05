@@ -26,4 +26,11 @@
     <string name="txtTitle">Welcome to XXX</string>
     <string name="txtUnderTitle">Please sign in below to continue</string>
 
+    <!-- ALL THE NOTIFICATION STRINGS -->
+    <string name="notificationChannelName">AUB_NotificationChannelName</string>
+    <string name="notificationChannelDescription">AUB_NotificationChannelDescription</string>
+    <string name="notificationChannelID">AUB_NotificationChannelID</string>
+    <string name="notificationTitle">It\'s finally Friday!</string>
+    <string name="notificationText">Check out some of the open bars</string>
+
 </resources>

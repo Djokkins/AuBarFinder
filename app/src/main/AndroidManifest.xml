@@ -8,6 +8,7 @@
     <!--Used for google maps location-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <uses-feature android:name="android.hardware.location.gps"/>
 
     <application
@@ -56,6 +57,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".Other.Notification_receiver"/>
+
 
         <activity
             android:name=".Activities.DetailsActivity"
