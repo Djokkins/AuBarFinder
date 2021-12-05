@@ -8,11 +8,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -70,7 +73,6 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private MarkerOptions markerOptions = new MarkerOptions();
     //only load map pins onto map once, so we toggle it after use
     private boolean initMapPins = true;
-    Context context;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -84,11 +86,14 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
 
         //initialize map
+        getLocation();
+
         initMap();
         checkPermissions();
 
         return root;
     }
+
 
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -110,8 +115,8 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private void getLocation() {
         try {
             locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 2000, 3, MapFragment.this);
-
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+            userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,7 +133,6 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
         if(mMap == null){mMap = googleMap;}
-        getLocation();
 
         //Todo: Make the moving of user marker a smooth animation.
         /// inspiration from https://stackoverflow.com/questions/13728041/move-markers-in-google-map-v2-android
@@ -149,6 +153,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
             if (userLocation == null) {
                 LatLng aarhus = new LatLng(56.16, 10.20);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aarhus, 14));
+                //TODO: try adding userLocation here :)
             }
             //creation of user marker and goes to where the user is.
             else {
@@ -173,7 +178,9 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
                     markerOptions
                             .position(new LatLng(address.getLatitude(), address.getLongitude()))
-                            .title(bars.getValue().get(i).getName());
+                            .title(bars.getValue().get(i).getName())
+                            .icon(BitmapDescriptorFactory.defaultMarker());
+
                     mMap.addMarker(markerOptions);
                 } catch (IOException e) {
                     Log.d(TAG, "There was an error trying to convert that address");
@@ -191,10 +198,6 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         onMapReady(mMap);
     }
 
-    @Override
-    public void onLocationChanged(@NonNull List<Location> locations) {
-
-    }
 
     @Override
     public void onFlushComplete(int requestCode) {
