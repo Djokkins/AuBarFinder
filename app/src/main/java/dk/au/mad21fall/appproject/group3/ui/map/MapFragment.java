@@ -146,6 +146,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                     e.printStackTrace();
                 }
             }
+
             //move camera to aarhus as default, set zoom level to be appropriate
             if(userLocation == null) {
                 LatLng aarhus = new LatLng(56.16, 10.20);
