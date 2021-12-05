@@ -3,7 +3,6 @@ package dk.au.mad21fall.appproject.group3.ui.map;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -14,7 +13,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.CancellationSignal;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +20,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -41,14 +37,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.R;
 import dk.au.mad21fall.appproject.group3.databinding.FragmentMapBinding;
 
-public class MapFragment extends Fragment implements LocationListener, OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private static final String TAG = "2";
 
@@ -68,6 +62,11 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private Location userLocation;
     private Marker marker;
     private Geocoder mGeocoder;
+    private Criteria criteria = new Criteria();
+    private String provider;
+    private LocationListener locationListener;
+
+
     //Convert address to latitude/longitude to so we can add markers
     private ArrayList<String> locations;
     private MarkerOptions markerOptions = new MarkerOptions();
@@ -84,23 +83,40 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         bars = mapViewModel.getBars();
         locations = mapViewModel.getBarList();
 
-
+        setupLocationListener();
         //initialize map
         getLocation();
-
         initMap();
-        checkPermissions();
 
         return root;
     }
 
-
-    private void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this.getActivity(), new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION}, 100);
-        }
+    private void setupLocationListener() {
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                userLocation = location;
+                if(userLocation!=null){ setCurrentLocationOnMap(userLocation);}
+            }
+        };
     }
+
+    private void setCurrentLocationOnMap(Location location) {
+        if ((location != null) && this.getActivity() != null) {
+            if (marker != null) {
+                marker.remove();
+            }
+            LatLng user = new LatLng(location.getLatitude(), location.getLongitude());
+            Log.d(TAG, "onMapReady: We are still running");
+            marker = mMap.addMarker(new MarkerOptions()
+                    .position(user)
+                    .title("My location")
+                    .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
+
+        }
+
+    }
+
 
     //Initialize map asynchronously
     private void initMap() {
@@ -115,8 +131,12 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private void getLocation() {
         try {
             locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
-            userLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+
+            //get initial userLocation
+            provider = locationManager.getBestProvider(criteria, false);
+            userLocation = locationManager.getLastKnownLocation(provider);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,25 +149,21 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     }
 
 
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
-        if(mMap == null){mMap = googleMap;}
+        if (mMap == null) {
+            mMap = googleMap;
+        }
+        getLocation();
 
+        setupBarMarkers();
+    }
+
+    private void setupBarMarkers() {
         //Todo: Make the moving of user marker a smooth animation.
         /// inspiration from https://stackoverflow.com/questions/13728041/move-markers-in-google-map-v2-android
-        if ((userLocation != null) && this.getActivity() != null) {
-            if (marker != null) {
-                marker.remove();
-            }
-            LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
-            Log.d(TAG, "onMapReady: We are still running");
-            marker = mMap.addMarker(new MarkerOptions()
-                    .position(user)
-                    .title("My location")
-                    .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
-
-        }
         if (initMapPins) {
             //move camera to aarhus as default, set zoom level to be appropriate
             if (userLocation == null) {
@@ -191,33 +207,6 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         }
     }
 
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        Log.d(TAG, "onLocationChanged: Were moving");
-        userLocation = location;
-        onMapReady(mMap);
-    }
-
-
-    @Override
-    public void onFlushComplete(int requestCode) {
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-
-    }
 
     //Helper function for bitmap from:
     //https://stackoverflow.com/questions/10111073/how-to-get-a-bitmap-from-a-drawable-defined-in-a-xml

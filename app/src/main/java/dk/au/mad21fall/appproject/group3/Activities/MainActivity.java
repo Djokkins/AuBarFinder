@@ -1,13 +1,23 @@
 package dk.au.mad21fall.appproject.group3.Activities;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import static android.content.ContentValues.TAG;
+
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -87,9 +97,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
         NavigationUI.setupWithNavController(binding.navView, navController);
 
 
+        checkPermissions();
     }
+
     public void doSomeWithFragment() {
-      //  fragment.Adaptorsort();
+        //  fragment.Adaptorsort();
     }
 
     public void onClickSortByAlfabetical(View view) {
@@ -103,5 +115,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
 
     public void onClickSortByDistance(View view) {
         Log.d(TAG, "Sortbydistance");
+    }
+
+    private void checkPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        }
     }
 }
