@@ -142,12 +142,6 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                     .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(this.getActivity(), R.drawable.my_location))));
 
         }
-
-        markerOptions
-                .position(new LatLng(address.getLatitude(), address.getLongitude()))
-                .title(bars.getValue().get(i).getName());
-        mMap.addMarker(markerOptions);
-
         if (initMapPins) {
             //move camera to aarhus as default, set zoom level to be appropriate
             if (userLocation == null) {
