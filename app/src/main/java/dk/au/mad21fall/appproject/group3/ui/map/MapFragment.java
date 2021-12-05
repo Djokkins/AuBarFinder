@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.R;
@@ -69,6 +70,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private MarkerOptions markerOptions = new MarkerOptions();
     //only load map pins onto map once, so we toggle it after use
     private boolean initMapPins = true;
+    Context context;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -125,21 +127,21 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
-        mMap = googleMap;
+        if(mMap == null){mMap = googleMap;}
         getLocation();
 
         //Todo: Make the moving of user marker a smooth animation.
         /// inspiration from https://stackoverflow.com/questions/13728041/move-markers-in-google-map-v2-android
-        if (userLocation != null) {
+        if ((userLocation != null) && this.getActivity() != null) {
             if (marker != null) {
                 marker.remove();
             }
             LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+            Log.d(TAG, "onMapReady: We are still running");
             marker = mMap.addMarker(new MarkerOptions()
                     .position(user)
                     .title("My location")
-                    //.snippet("My Snippet")
-                    .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(this.getActivity(), R.drawable.my_location))));
+                    .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
 
         }
         if (initMapPins) {
@@ -154,7 +156,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                 markerOptions
                         .position(new LatLng(user.latitude, user.longitude))
                         .title("@string/mapLocationDisplay")
-                        .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(getActivity(), R.drawable.my_location)));
+                        .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location)));
                 marker = mMap.addMarker(markerOptions);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user, 14));
             }
@@ -216,14 +218,13 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
     //Helper function for bitmap from:
     //https://stackoverflow.com/questions/10111073/how-to-get-a-bitmap-from-a-drawable-defined-in-a-xml
-    private Bitmap getBitmap(Context context, int drawableRes) {
-        Drawable drawable = ActivityCompat.getDrawable(context, drawableRes);
+    private Bitmap getBitmap(int drawableRes) {
+        Drawable drawable = ActivityCompat.getDrawable(this.getContext(), drawableRes);
         Canvas canvas = new Canvas();
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         canvas.setBitmap(bitmap);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         drawable.draw(canvas);
-
         return bitmap;
     }
 }
