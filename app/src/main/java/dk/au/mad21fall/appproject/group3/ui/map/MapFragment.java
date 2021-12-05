@@ -191,6 +191,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     List<Address> addresses = Collections.unmodifiableList(mGeocoder.getFromLocationName(locations.get(i), 1));
                     Address address = addresses.get(0);
                     Log.d(TAG, "onMapReady: " + address.toString());
+                    Log.d(TAG, "setupBarMarkers penis: BAR:" + bars.getValue().get(i).getName());
+                    Log.d(TAG, "setupBarMarkers penis: LATITUDE+ " + address.getLatitude());
+                    Log.d(TAG, "setupBarMarkers penis: LONGITUDE+ " + address.getLongitude());
 
                     markerOptions
                             .position(new LatLng(address.getLatitude(), address.getLongitude()))

@@ -10,7 +10,7 @@
             android:layout_height="match_parent"
             android:text="Bar Filtre:"
             android:textSize="25dp"
-            android:textColorHint="@color/purple_200"/>
+            android:textColorHint="@color/black"/>
 
         <CheckBox
             android:id="@+id/isopenchbx"
