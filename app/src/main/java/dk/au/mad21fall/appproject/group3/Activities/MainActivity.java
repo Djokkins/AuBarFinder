@@ -8,6 +8,7 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -18,9 +19,12 @@ import androidx.navigation.ui.NavigationUI;
 import java.util.ArrayList;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
+import dk.au.mad21fall.appproject.group3.Other.HomeFragmentCallback;
 import dk.au.mad21fall.appproject.group3.ViewModels.MainViewModel;
 import dk.au.mad21fall.appproject.group3.R;
 import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
+import dk.au.mad21fall.appproject.group3.ui.home.HomeFragment;
+import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 
 //TODO: add color accent in custom button <solid android:color="@color/" https://www.youtube.com/watch?v=WUJ6Ve7_mA0&ab_channel=Stevdza-San 4:25
 //TODO: make a repository class
@@ -44,18 +48,19 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HomeFragmentCallback {
 
     private ActivityMainBinding binding;
     FirebaseAuth auth;
     MainViewModel mainVM;
+    HomeViewModel homeVM;
+    HomeFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         mainVM = new ViewModelProvider(this).get(MainViewModel.class);
+
         mainVM.getBars().observe(this, new Observer<ArrayList<Bar>>() {
             @Override
             public void onChanged(ArrayList<Bar> bars) {
@@ -63,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 //TODO: Perhaps move this to the fragments?
             }
         });
-
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -79,9 +83,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    public void doSomeWithFragment() {
+        fragment.Adaptorsort();
+    }
 
     public void onClickSortByAlfabetical(View view) {
         Log.d(TAG, "Sortbyalfabetical");
+        doSomeWithFragment();
     }
 
     public void onClickSortByRating(View view) {
