@@ -14,6 +14,25 @@ public class Bar {
     private String barID;
     private Number Average_Rating;
     private Number userRating;
+    private String Lat;
+
+    public String getLat() {
+        return Lat;
+    }
+
+    public void setLat(String lat) {
+        Lat = lat;
+    }
+
+    public String getLon() {
+        return Lon;
+    }
+
+    public void setLon(String lon) {
+        Lon = lon;
+    }
+
+    private String Lon;
 
     public Number getUserRating() {
         return userRating;
