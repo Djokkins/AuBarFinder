@@ -67,6 +67,8 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     //Convert address to latitude/longitude to so we can add markers
     private ArrayList<String> locations;
     private MarkerOptions markerOptions = new MarkerOptions();
+    //only load map pins onto map once, so we toggle it after use
+    private boolean initMapPins = true;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -82,8 +84,6 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         //initialize map
         initMap();
         checkPermissions();
-        getLocation();
-
 
         return root;
     }
@@ -125,10 +125,39 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
         mMap = googleMap;
+        getLocation();
 
-        if(mMap == null){
+        //Todo: Make the moving of user marker a smooth animation.
+        /// inspiration from https://stackoverflow.com/questions/13728041/move-markers-in-google-map-v2-android
+        if(userLocation != null){
+            if(marker!=null){
+                marker.remove();
+            }
+            LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+            marker = mMap.addMarker(new MarkerOptions()
+                    .position(user)
+                    .title("My location")
+                    //.snippet("My Snippet")
+                    .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
 
-            mMap = googleMap;
+        }
+
+        if(initMapPins){
+            //move camera to aarhus as default, set zoom level to be appropriate
+            if(userLocation == null) {
+                LatLng aarhus = new LatLng(56.16, 10.20);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aarhus, 14));
+            }
+            //creation of user marker and goes to where the user is.
+            else{
+                LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
+                markerOptions
+                        .position(new LatLng(user.latitude, user.longitude))
+                        .title("@string/mapLocationDisplay")
+                        .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location)));
+                marker = mMap.addMarker(markerOptions);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user, 14));
+            }
 
             Log.d(TAG, "onMapReady: " + locations.get(2) + "location size: " + locations.size());
             Log.d(TAG, "onMapReady: " + Geocoder.isPresent());
@@ -149,36 +178,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                     e.printStackTrace();
                 }
             }
-            //move camera to aarhus as default, set zoom level to be appropriate
-            if(userLocation == null) {
-                LatLng aarhus = new LatLng(56.16, 10.20);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aarhus, 14));
-            }
-            //creation of user marker and goes to where the user is.
-            else{
-                LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
-                markerOptions
-                        .position(new LatLng(user.latitude, user.longitude))
-                        .title("@string/mapLocationDisplay")
-                        .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location)));
-                marker = mMap.addMarker(markerOptions);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(user, 14));
-            }
-        }
-
-        //Todo: Make the moving of user marker a smooth animation.
-        /// inspiration from https://stackoverflow.com/questions/13728041/move-markers-in-google-map-v2-android
-        if(userLocation != null){
-            if(marker!=null){
-                marker.remove();
-            }
-            LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
-            marker = mMap.addMarker(new MarkerOptions()
-                    .position(user)
-                    .title("My location")
-                    //.snippet("My Snippet")
-                    .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
-
+            initMapPins = false;
         }
     }
 
