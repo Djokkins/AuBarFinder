@@ -4,6 +4,7 @@
     package="dk.au.mad21fall.appproject.group3">
 
    <uses-permission android:name="android.permission.INTERNET"/>
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!--Used for google maps location-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

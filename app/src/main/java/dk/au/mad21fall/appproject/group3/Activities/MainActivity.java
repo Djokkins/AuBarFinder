@@ -8,12 +8,25 @@ import android.content.Intent;
 import static android.content.ContentValues.TAG;
 
 import android.os.Build;
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import static android.content.ContentValues.TAG;
+
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -50,6 +63,7 @@ import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 //TODO: Dark theme
 //TODO: Make facebook login work?!
 //TODO: make a second language
+//TODO: Change the name
 //TODO: Comments!
 //TODO: Fix fragment icon 'Notification' to fit the compas fragment better
 //TODO: DEN CRASHER PÅ LANDSCAPE MODE!!!!!! DEN SKAL VERTICAL-LOCKES
@@ -95,9 +109,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
         createNotificationChannel();
         startFridayNotification();
 
+        checkPermissions();
     }
+
     public void doSomeWithFragment() {
-      //  fragment.Adaptorsort();
+        //  fragment.Adaptorsort();
     }
 
     public void onClickSortByAlfabetical(View view) {
@@ -156,5 +172,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
 
         Log.d("notification", "startFridayNotification: The notification AlarmManager was initialized");
 
+    private void checkPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+        }
     }
 }

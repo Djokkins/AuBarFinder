@@ -3,11 +3,11 @@ package dk.au.mad21fall.appproject.group3.ui.map;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -38,13 +37,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.R;
 import dk.au.mad21fall.appproject.group3.databinding.FragmentMapBinding;
 
-public class MapFragment extends Fragment implements LocationListener, OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private static final String TAG = "2";
 
@@ -64,6 +62,11 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private Location userLocation;
     private Marker marker;
     private Geocoder mGeocoder;
+    private Criteria criteria = new Criteria();
+    private String provider;
+    private LocationListener locationListener;
+
+
     //Convert address to latitude/longitude to so we can add markers
     private ArrayList<String> locations;
     private MarkerOptions markerOptions = new MarkerOptions();
@@ -80,20 +83,41 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         bars = mapViewModel.getBars();
         locations = mapViewModel.getBarList();
 
-
+        setupLocationListener();
         //initialize map
+        getLocation();
         initMap();
-        checkPermissions();
 
         return root;
     }
 
-    private void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this.getActivity(), new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION}, 100);
-        }
+    private void setupLocationListener() {
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                userLocation = location;
+                if(userLocation!=null){ setCurrentLocationOnMap(userLocation);}
+            }
+        };
     }
+
+    private void setCurrentLocationOnMap(Location location) {
+        if ((location != null) && this.getActivity() != null) {
+            if (marker != null) {
+                marker.remove();
+            }
+            LatLng user = new LatLng(location.getLatitude(), location.getLongitude());
+            Log.d(TAG, "onMapReady: We are still running");
+            marker = mMap.addMarker(new MarkerOptions()
+                    .position(user)
+                    .title("My location")
+                    .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
+
+        }
+
+    }
+
+
     //Initialize map asynchronously
     private void initMap() {
         if (mapFragment == null) {
@@ -107,7 +131,11 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private void getLocation() {
         try {
             locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 2000, 3, MapFragment.this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+
+            //get initial userLocation
+            provider = locationManager.getBestProvider(criteria, false);
+            userLocation = locationManager.getLastKnownLocation(provider);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,35 +149,30 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     }
 
 
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
-        mMap = googleMap;
+        if (mMap == null) {
+            mMap = googleMap;
+        }
         getLocation();
 
+        setupBarMarkers();
+    }
+
+    private void setupBarMarkers() {
         //Todo: Make the moving of user marker a smooth animation.
         /// inspiration from https://stackoverflow.com/questions/13728041/move-markers-in-google-map-v2-android
-        if(userLocation != null){
-            if(marker!=null){
-                marker.remove();
-            }
-            LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
-            marker = mMap.addMarker(new MarkerOptions()
-                    .position(user)
-                    .title("My location")
-                    //.snippet("My Snippet")
-                    .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
-
-        }
-
-        if(initMapPins){
+        if (initMapPins) {
             //move camera to aarhus as default, set zoom level to be appropriate
-            if(userLocation == null) {
+            if (userLocation == null) {
                 LatLng aarhus = new LatLng(56.16, 10.20);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aarhus, 14));
+                //TODO: try adding userLocation here :)
             }
             //creation of user marker and goes to where the user is.
-            else{
+            else {
                 LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
                 markerOptions
                         .position(new LatLng(user.latitude, user.longitude))
@@ -171,7 +194,9 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
                     markerOptions
                             .position(new LatLng(address.getLatitude(), address.getLongitude()))
-                            .title(bars.getValue().get(i).getName());
+                            .title(bars.getValue().get(i).getName())
+                            .icon(BitmapDescriptorFactory.defaultMarker());
+
                     mMap.addMarker(markerOptions);
                 } catch (IOException e) {
                     Log.d(TAG, "There was an error trying to convert that address");
@@ -182,48 +207,16 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         }
     }
 
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        Log.d(TAG, "onLocationChanged: Were moving");
-        userLocation = location;
-        onMapReady(mMap);
-    }
-
-    @Override
-    public void onLocationChanged(@NonNull List<Location> locations) {
-
-    }
-
-    @Override
-    public void onFlushComplete(int requestCode) {
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-
-    }
 
     //Helper function for bitmap from:
     //https://stackoverflow.com/questions/10111073/how-to-get-a-bitmap-from-a-drawable-defined-in-a-xml
     private Bitmap getBitmap(int drawableRes) {
-        Drawable drawable = getResources().getDrawable(drawableRes);
+        Drawable drawable = ActivityCompat.getDrawable(this.getContext(), drawableRes);
         Canvas canvas = new Canvas();
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         canvas.setBitmap(bitmap);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         drawable.draw(canvas);
-
         return bitmap;
     }
 }
