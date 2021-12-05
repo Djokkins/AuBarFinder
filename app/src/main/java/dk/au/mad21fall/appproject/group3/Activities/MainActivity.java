@@ -6,14 +6,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import static android.content.ContentValues.TAG;
-
 import android.os.Build;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import static android.content.ContentValues.TAG;
-
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -23,9 +21,11 @@ import android.util.Log;
 import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -69,7 +69,7 @@ import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 
 
 
-public class MainActivity extends AppCompatActivity implements HomeFragmentCallback {
+public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     FirebaseAuth auth;
@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        invalidateOptionsMenu();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -105,24 +106,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
         createNotificationChannel();
         startFridayNotification();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+
         checkPermissions();
-    }
-
-    public void doSomeWithFragment() {
-        //  fragment.Adaptorsort();
-    }
-
-    public void onClickSortByAlfabetical(View view) {
-        Log.d(TAG, "Sortbyalfabetical");
-        doSomeWithFragment();
-    }
-
-    public void onClickSortByRating(View view) {
-        Log.d(TAG, "Sortbyrating");
-    }
-
-    public void onClickSortByDistance(View view) {
-        Log.d(TAG, "Sortbydistance");
     }
 
 
