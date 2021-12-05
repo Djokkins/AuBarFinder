@@ -2,10 +2,23 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item
+            android:id="@+id/isopenchbx"
+            android:title="IsOpen"
+            android:checkable="true" />
+        <item
+            android:id="@+id/sortmyrateditems"
+            android:title="my rated bars only"
+            android:checkable="true"/>
+        <item
+            android:id="@+id/sortalphabetical"
+            android:title="Alfabetical" />
+        <item
+            android:id="@+id/sortratingitem"
+            android:title="Best Rated" />
 
         <item
-            android:id="@+id/nav_radios"
-            android:title=""
-            app:actionLayout="@layout/filterlayouts" />
+            android:id="@+id/sortdistanceitem"
+            android:title="Closes by" />
 
 </menu>

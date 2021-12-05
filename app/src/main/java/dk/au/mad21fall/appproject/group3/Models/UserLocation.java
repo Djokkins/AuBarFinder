@@ -55,7 +55,6 @@ public class UserLocation {
             @Override
             public void onLocationChanged(@NonNull android.location.Location location) {
                 userLocation = location;
-
             }
         };
     }

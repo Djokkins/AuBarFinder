@@ -6,14 +6,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import static android.content.ContentValues.TAG;
-
 import android.os.Build;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import static android.content.ContentValues.TAG;
-
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -23,9 +21,11 @@ import android.util.Log;
 import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -48,16 +48,9 @@ import dk.au.mad21fall.appproject.group3.ui.home.HomeFragment;
 import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 
 //TODO: add color accent in custom button <solid android:color="@color/" https://www.youtube.com/watch?v=WUJ6Ve7_mA0&ab_channel=Stevdza-San 4:25
-//TODO: make a repository class
-//TODO: make a ViewModel for the details class
-//TODO: make details get data from the ViewModel via the barID and post the info
-//TODO: get pictures down via gradle
 //TODO: Fix the mail
 //TODO: make the compass
 //TODO: Make the map
-//TODO: Fix links to facebook and instagram on details
-//TODO: Make Splash screen pretty
-//TODO: Distance to the bars on a service
 //TODO: Filter search
 //TODO: Tablet version
 //TODO: Custom logo
@@ -71,11 +64,12 @@ import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 //TODO: Use notifications
 //TODO: Resource externalization
 //TODO: 2 languages (MANGLER STADIG FILTERLAYOUTS)
+//TODO: Fix 'forgot password'
 
 
 
 
-public class MainActivity extends AppCompatActivity implements HomeFragmentCallback {
+public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     FirebaseAuth auth;
@@ -98,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        invalidateOptionsMenu();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -111,24 +106,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
         createNotificationChannel();
         startFridayNotification();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+
         checkPermissions();
-    }
-
-    public void doSomeWithFragment() {
-        //  fragment.Adaptorsort();
-    }
-
-    public void onClickSortByAlfabetical(View view) {
-        Log.d(TAG, "Sortbyalfabetical");
-        doSomeWithFragment();
-    }
-
-    public void onClickSortByRating(View view) {
-        Log.d(TAG, "Sortbyrating");
-    }
-
-    public void onClickSortByDistance(View view) {
-        Log.d(TAG, "Sortbydistance");
     }
 
 

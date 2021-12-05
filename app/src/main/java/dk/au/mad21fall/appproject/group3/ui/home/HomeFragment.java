@@ -11,6 +11,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,13 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.legacy.app.ActionBarDrawerToggle;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -38,17 +39,12 @@ import com.facebook.login.Login;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.concurrent.TimeUnit;
 
-import dk.au.mad21fall.appproject.group3.Activities.MainActivity;
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.Other.BarAdapter;
 import dk.au.mad21fall.appproject.group3.Models.Constants;
 import dk.au.mad21fall.appproject.group3.Activities.DetailsActivity;
 import dk.au.mad21fall.appproject.group3.R;
-import dk.au.mad21fall.appproject.group3.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment implements BarAdapter.IBarItemClickedListener{
 
@@ -64,6 +60,9 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private RadioGroup filtersgroup;
     private DrawerLayout filterDrawer;
     private FirebaseAuth mAuth;
+    private Boolean mOpenBarsOnly = false;
+    private Boolean mMyRatedBarsOnly = false;
+
 
 
     private boolean filterTest = true;
@@ -72,7 +71,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
+        setHasOptionsMenu(true);
 
         adapter = new BarAdapter(this);
         View v = inflater.inflate(R.layout.fragment_home, container, false);
@@ -82,16 +81,12 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             gotoLogin();
         }
         Log.d(TAG, "onCreateView: UserID = " + mAuth.getCurrentUser().getUid());
-
         filterDrawer = v.findViewById(R.id.drawerlayout);
         srcBar = (SearchView) v.findViewById(R.id.srcBars);
         rcvList = v.findViewById(R.id.rcvBars);
         rcvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvList.setAdapter(adapter);
-        filtersgroup = (RadioGroup) v.findViewById(R.id.filtergrup);
         filterBtn = v.findViewById(R.id.filterDrawerBtn);
-
-
         //To make a list between each element in the list, for prettiness
         DividerItemDecoration itemDecor = new DividerItemDecoration(rcvList.getContext(), LinearLayout.VERTICAL);
         rcvList.addItemDecoration(itemDecor);
@@ -112,8 +107,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                 OnClickFilterDrawer();
             }
         });
-
-
 
         srcBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -160,4 +153,47 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         //filterTest = !filterTest;
         adapter.sortByDistance();
     }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.nav_drawer_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: loaded");
+        int id = item.getItemId();
+        if (id == R.id.isopenchbx) {
+            mOpenBarsOnly ^= true;
+            adapter.sortByOpen(mOpenBarsOnly);
+            if(mOpenBarsOnly){item.setChecked(true);}
+            else {item.setChecked(false);}
+            return true;
+        }
+        if (id == R.id.sortmyrateditems) {
+            mMyRatedBarsOnly ^= true;
+            adapter.sortByOpen(mMyRatedBarsOnly);
+            if(mMyRatedBarsOnly){item.setChecked(true);}
+            else {item.setChecked(false);}
+            return true;
+        }
+        if (id == R.id.sortalphabetical) {
+            adapter.sortAlphabetically();
+            Log.d(TAG, "onOptionsItemSelected: YESYEYSYESYES");
+            return true;
+        }
+        if (id == R.id.sortratingitem) {
+            adapter.sortByRating();
+            return true;
+        }
+        if (id == R.id.sortdistanceitem) {
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

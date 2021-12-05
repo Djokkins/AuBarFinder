@@ -1,9 +1,12 @@
 package dk.au.mad21fall.appproject.group3.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -22,6 +25,7 @@ import com.google.firebase.storage.StorageReference;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.Models.Constants;
+import dk.au.mad21fall.appproject.group3.Models.UserLocation;
 import dk.au.mad21fall.appproject.group3.R;
 import dk.au.mad21fall.appproject.group3.ViewModels.DetailsViewModel;
 
@@ -36,6 +40,8 @@ public class DetailsActivity extends AppCompatActivity {
     Bar bar;
     Number Score;
     int scoreInt;
+    Location userLocation;
+    private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,9 @@ public class DetailsActivity extends AppCompatActivity {
         txtMyRating = findViewById(R.id.txtMyRating);
         txtDistance = findViewById(R.id.txtDistance);
 
+        setupLocationListener();
+        userLocation = UserLocation.getInstance().getCurrentLocation();
+        bar.calcDistance(userLocation);
 
         Log.d(TAG, "setupView: Score = " + Score + " and scoreInt = " + scoreInt);
         txtMyRating.setText(getString(R.string.txtMyRating, Score.toString()));
@@ -146,4 +155,20 @@ public class DetailsActivity extends AppCompatActivity {
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
     }
+
+    private void setupLocationListener() {
+
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull android.location.Location location) {
+                Log.d(TAG, "onLocationChanged: Location changed!");
+                bar.calcDistance(location);
+                updateUI();
+            }
+        };
+    }
+
+
+
+
 }
