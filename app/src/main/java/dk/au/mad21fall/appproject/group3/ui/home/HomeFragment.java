@@ -190,7 +190,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             return true;
         }
         if (id == R.id.sortdistanceitem) {
-
+            adapter.sortByDistance();
             return true;
         }
         return super.onOptionsItemSelected(item);
