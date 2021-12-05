@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat;
 import java.util.Calendar;
 
 import dk.au.mad21fall.appproject.group3.Activities.MainActivity;
+import dk.au.mad21fall.appproject.group3.Models.Constants;
 import dk.au.mad21fall.appproject.group3.R;
 
 public class Notification_receiver extends BroadcastReceiver {
@@ -44,7 +45,7 @@ public class Notification_receiver extends BroadcastReceiver {
             notificationManager.notify(201, builder.build());
         }
 
-        Log.d("notification", "A new notification was posted");
+        Log.d(Constants.NOTIFICATION_TAG, "A new notification was posted");
 
     }
 }

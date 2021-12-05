@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aarhus University Freitag Bar Gezucken</string>
+    <string name="title_home">Hjem</string>
+    <string name="title_notifications">Notifikationer</string>
+    <string name="title_map">Kort</string>
+    <string name="title_closest_bar">Nærmeste bar</string>
+    <string name="btnLoginEmail">Log in med email</string>
+    <string name="txtName">Bar Navn</string>
+    <string name="txtRating">Bar bedømmelse</string>
+    <string name="btnLoginFacebook">Log ind med Facebook</string>
+    <string name="txtOpen">Åben</string>
+    <string name="txtClose">Lukket</string>
+    <string name="mapLocationDisplay">Min lokation</string>
+    <string name="txtCompass">Kompas</string>
+    <string name="txtDescription">Beskrivelse:</string>
+    <string name="txtFaculty">Fakultet</string>
+    <string name="txtDistance">Afstand</string>
+    <string name="btnNavigate">Find vej</string>
+    <string name="txtMyRating">Min bedømmelse: %1$s</string>
+    <string name="urlErrorToast">Det findes desværre ikke</string>
+    <string name="txtWelcome">Velkommen!</string>
+    <string name="txtTitle">Velkommen til XXX</string>
+    <string name="txtUnderTitle">Log ind for at fortsætte</string>
+    <string name="facebookAuthenticationFail">Ikke godkendt</string>
+    <string name="mailMissingInfo">Brugernavn eller adgangskode mangler</string>
+    <string name="loginError">Forkert brugernavn eller adgangskode</string>
+    <string name="shortPassword">Adgangskode skal være over 6 tegn</string>
+    <string name="userCreateSuccess">Bruger oprettet!</string>
+    <string name="userCreateFailure">Der skete en fejl, prøv venligst igen</string>
+    <string name="notificationTitle">Det er endelig fredag!</string>
+    <string name="notificationText">Find ud af hvilke fredagsbarer der er åbne</string>
+    <string name="txtFacebook">Facebook</string>
+    <string name="hintUsername">Brugernavn</string>
+    <string name="hintPassword">Adgangskode</string>
+    <string name="forgotPassword">Glemt adgangskode?</string>
+    <string name="signIn">Log ind</string>
+    <string name="newUserSignUp">Ny bruger? Opret konto!</string>
+    <string name="txtInstagram">Instagram</string>
+</resources>

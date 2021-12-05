@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
+import dk.au.mad21fall.appproject.group3.Models.Constants;
 import dk.au.mad21fall.appproject.group3.Other.HomeFragmentCallback;
 import dk.au.mad21fall.appproject.group3.Other.Notification_receiver;
 import dk.au.mad21fall.appproject.group3.ViewModels.MainViewModel;
@@ -69,7 +70,8 @@ import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 //TODO: DEN CRASHER PÅ LANDSCAPE MODE!!!!!! DEN SKAL VERTICAL-LOCKES
 //TODO: Use notifications
 //TODO: Resource externalization
-//TODO: 2 languages
+//TODO: 2 languages (MANGLER STADIG FILTERLAYOUTS)
+
 
 
 
@@ -119,8 +121,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
     public void onClickSortByAlfabetical(View view) {
         Log.d(TAG, "Sortbyalfabetical");
         doSomeWithFragment();
-
-
     }
 
     public void onClickSortByRating(View view) {
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
 
-        Log.d("notification", "createNotificationChannel: The notification channel was initialized");
+        Log.d(Constants.NOTIFICATION_TAG, "createNotificationChannel: The notification channel was initialized");
     }
 
 
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
         Calendar calendar = Calendar.getInstance();
 
         calendar.set(Calendar.HOUR_OF_DAY, 16);
-        calendar.set(Calendar.MINUTE, 00);
+        calendar.set(Calendar.MINUTE, 00); // Not necessary, but used to force notification in testing
 
 
         Intent intent = new Intent(getApplicationContext(), Notification_receiver.class);
@@ -166,11 +166,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragmentCallb
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmManager.INTERVAL_DAY, pendingIntent);
 
-
         // For debugging
         // alarmManager.setInexactRepeating(alarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10 * 1000, pendingIntent);
 
-        Log.d("notification", "startFridayNotification: The notification AlarmManager was initialized");
+        Log.d(Constants.NOTIFICATION_TAG, "startFridayNotification: The notification AlarmManager was initialized");
     }
 
     private void checkPermissions() {

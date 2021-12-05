@@ -44,7 +44,7 @@ import dk.au.mad21fall.appproject.group3.databinding.FragmentMapBinding;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    private static final String TAG = "2";
+    private static final String TAG = "MAP_FRAGMENT";
 
     private LiveData<ArrayList<Bar>> bars;
 
@@ -110,7 +110,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             Log.d(TAG, "onMapReady: We are still running");
             marker = mMap.addMarker(new MarkerOptions()
                     .position(user)
-                    .title("My location")
+                    .title("@string/mapLocationDisplay")
                     .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
 
         }
@@ -169,7 +169,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             if (userLocation == null) {
                 LatLng aarhus = new LatLng(56.16, 10.20);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aarhus, 14));
-                //TODO: try adding userLocation here :)
             }
             //creation of user marker and goes to where the user is.
             else {
