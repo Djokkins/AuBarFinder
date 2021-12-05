@@ -43,6 +43,7 @@ import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 //TODO: Dark theme
 //TODO: Make facebook login work?!
 //TODO: make a second language
+//TODO: Change the name
 //TODO: Comments!
 //TODO: Fix fragment icon 'Notification' to fit the compas fragment better
 //TODO: DEN CRASHER PÅ LANDSCAPE MODE!!!!!! DEN SKAL VERTICAL-LOCKES

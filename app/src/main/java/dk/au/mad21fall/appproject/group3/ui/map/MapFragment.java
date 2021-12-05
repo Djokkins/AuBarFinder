@@ -142,6 +142,16 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
         }
 
+                    markerOptions
+                            .position(new LatLng(address.getLatitude(), address.getLongitude()))
+                            .title(bars.getValue().get(i).getName());
+                    mMap.addMarker(markerOptions);
+                } catch (IOException e) {
+                    Log.d(TAG, "There was an error trying to convert that address");
+                    e.printStackTrace();
+                }
+            }
+
         if(initMapPins){
             //move camera to aarhus as default, set zoom level to be appropriate
             if(userLocation == null) {
