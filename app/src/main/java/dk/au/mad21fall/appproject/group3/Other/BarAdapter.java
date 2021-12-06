@@ -241,7 +241,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
 
         try{
             int afterMidnightCheck = Integer.parseInt(String.valueOf(closeHrs.charAt(0))); // Assume that no bar is open to past 10am the next day
-            if(weekDay == 1) // Day of the week (Friday == 6)
+            if(weekDay == 6) // Day of the week (Friday == 6)
             {
                 // We check if the bar closes after midnight, as this will mess with the isBefore() function
 
@@ -259,7 +259,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
                                     targetTime.isBefore( LocalTime.parse( closeHrs ) )
                     );
                 }
-            }   else if (weekDay == 2) // Day of the week (Saturday == 7)
+            }   else if (weekDay == 7) // Day of the week (Saturday == 7)
             {
                 if (afterMidnightCheck == 0) {
                     open = targetTime.isBefore(LocalTime.parse(closeHrs));
