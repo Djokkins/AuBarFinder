@@ -39,15 +39,20 @@ import dk.au.mad21fall.appproject.group3.ViewModels.DetailsViewModel;
 public class DetailsActivity extends AppCompatActivity {
     private static final String TAG = "DetailsViewModel";
 
+    //Variables
+    Number Score;
+    int scoreInt;
+
+    //Widgets
     TextView txtName, txtOpening, txtAddress, txtDescription, txtMyRating, txtDistance;
     Button btnFacebook, btnInstagram;
     ImageView imgIcon;
     SeekBar skbRating;
-    private DetailsViewModel detailsViewModel;
+
+    //Other
     Bar bar;
-    Number Score;
-    int scoreInt;
     Location userLocation;
+    private DetailsViewModel detailsViewModel;
     private LocationListener locationListener;
     private LocationManager locationManager;
     private Criteria criteria = new Criteria();
@@ -58,33 +63,37 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        //Get data for the specific bar
         Intent data = getIntent();
         String barName = data.getStringExtra(Constants.BAR_NAME);
         Log.d(TAG, "onCreate: The name is " + barName);
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         bar = detailsViewModel.getBar(barName);
 
+        //Set an observer on the current location which updates every ~10 seconds
         UserLocation.getInstance().getLocationLive().observe(this, new Observer<Location>() {
             @Override
             public void onChanged(Location location) {
-                Log.d(TAG, "onChanged: DOES LIVE DATA WORK?!");
+                //Update location and distance to the bar -> change the UI
                 userLocation = location;
-                Log.d(TAG, "onChanged: DOES " + userLocation.toString());
                 bar.calcDistance(userLocation);
                 updateUI();
             }
         });
 
 
-        Score = bar.getUserRating();
-        if(Score == null) Score = 0.0;
-        scoreInt = Score.intValue() * 10;
 
         setupView();
         updateUI();
     }
 
     private void setupView() {
+        //Get the current rating and the int version
+        Score = bar.getUserRating();
+        if(Score == null) Score = 0.0;
+        scoreInt = Score.intValue() * 10;
+
+        //Setup widgets
         txtName = findViewById(R.id.txtNameDetails);
         txtOpening = findViewById(R.id.txtOpening);
         txtDescription = findViewById(R.id.txtDescription);
@@ -95,6 +104,8 @@ public class DetailsActivity extends AppCompatActivity {
         Log.d(TAG, "setupView: Score = " + Score + " and scoreInt = " + scoreInt);
         txtMyRating.setText(getString(R.string.txtMyRating, Score.toString()));
         skbRating = findViewById(R.id.skbRating);
+
+        //If clicked go to the Facebook site
         btnFacebook = findViewById(R.id.btnFacebook);
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +113,8 @@ public class DetailsActivity extends AppCompatActivity {
                 gotoUrl(bar.getFacebook());
             }
         });
+
+        //If clicked go to the Instagram site
         btnInstagram = findViewById(R.id.btnInstagram);
         btnInstagram.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,10 +124,12 @@ public class DetailsActivity extends AppCompatActivity {
         });
         imgIcon = findViewById(R.id.imgLogoDetails);
 
+        //Set the progress and setup the seekbar
         skbRating.setProgress(scoreInt);
         skbRating.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                //When the score changes change the UI.
                 Score = (i / 10.0);
                 updateScoreUI(Score);
             }
@@ -126,26 +141,32 @@ public class DetailsActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                //When released publish the rating to Firebase
                 detailsViewModel.rateBar(Score, bar.getBarID());
             }
         });
 
     }
 
+    //For going to the Facebook and Instagram websites.
     private void gotoUrl(String url) {
         //https://stackoverflow.com/questions/2762861/android-goto-http-url-on-button-click
+        //If they dont exist.
         if(url.equals("N/A") || url.equals("")){
             Toast.makeText(getApplicationContext(), R.string.urlErrorToast, Toast.LENGTH_SHORT).show();
             return;
         }
+        //Go to the website
         Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(url) );
         startActivity( browse );
     }
 
+    //Update the score only
     private void updateScoreUI(Number score){
         txtMyRating.setText(getString(R.string.txtMyRating, Score.toString()));
     }
 
+    //Update every UI element.
     private void updateUI() {
         txtName.setText(bar.getName());
         txtOpening.setText(getString(R.string.txtOpenHours, bar.getOpen(), bar.getClose()));
@@ -167,6 +188,7 @@ public class DetailsActivity extends AppCompatActivity {
         });
     }
 
+    //Go to google maps which navigates to the address of the bar
     public void Navigate(View view) {
         Uri gmmIntentUri = Uri.parse("geo:0,0?q="+bar.getAddress());
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);

@@ -167,10 +167,14 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+
+    //For the filters
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(TAG, "onOptionsItemSelected: loaded");
         int id = item.getItemId();
+
+        //If filtered by open use the corresponding adapter filter function
         if (id == R.id.isopenchbx) {
             mOpenBarsOnly ^= true;
             adapter.sortByOpen(mOpenBarsOnly);
@@ -180,6 +184,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             else {item.setChecked(false);}
             return true;
         }
+        //If filtered by rated bars use the corresponding adapter filter function
         if (id == R.id.sortmyrateditems) {
             mMyRatedBarsOnly ^= true;
             adapter.sortByUserRated(mMyRatedBarsOnly);
@@ -189,6 +194,8 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             else {item.setChecked(false);}
             return true;
         }
+
+        //If filtered alphabetically use the corresponding adapter filter function
         if (id == R.id.sortalphabetical) {
             mOpenBarsOnly = false;
             mMyRatedBarsOnly = false;
@@ -196,12 +203,16 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             Log.d(TAG, "onOptionsItemSelected: YESYEYSYESYES");
             return true;
         }
+
+        //If filtered by ratings use the corresponding adapter filter function
         if (id == R.id.sortratingitem) {
             mOpenBarsOnly = false;
             mMyRatedBarsOnly = false;
             adapter.sortByRating();
             return true;
         }
+
+        //If filtered by distance use the corresponding adapter filter function
         if (id == R.id.sortdistanceitem) {
             mOpenBarsOnly = false;
             mMyRatedBarsOnly = false;
@@ -209,16 +220,15 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             return true;
         }
 
+        //A logout button, as we didn't have anywhere else to place it that made sense
         if (id == R.id.logout) {
             logOut();
-
-
-
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    //Standard way to log out
     private void logOut() {
         mAuth.signOut();
         Intent i = new Intent(getActivity(), LoginActivity.class);

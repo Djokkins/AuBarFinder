@@ -41,63 +41,27 @@ import dk.au.mad21fall.appproject.group3.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "1";
+    private static final String TAG = "LoginActivity";
+
 
     private FirebaseAuth auth;
     private Button btnLoginEmail, btnSignUp, btnLoginFacebook, btnForgotPassword;
     private CallbackManager mCallbackManager;
     private TextInputLayout txtUsername, txtPassword;
 
-    ActivityResultLauncher<Intent> launcher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),   //default contract
-            new ActivityResultCallback<ActivityResult>() {          //our callback
-                @Override
-                public void onActivityResult(ActivityResult result) {   //result contains result code and data
-                    if (result.getResultCode() == RESULT_OK) {
-                        GoToMain();
-                    }
-                }
-            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Initialize Facebook SDK
+        //Initialize Facebook SDK - depricated but we didnt know what else to use
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
-        txtUsername = findViewById(R.id.txtUsername);
-        txtPassword = findViewById(R.id.txtPassword);
-
-        btnLoginEmail = findViewById(R.id.btnLoginEmail);
-        Log.d(TAG, "onCreate: checkpoint 4");
-        btnLoginEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MailLogin();
-            }
-        });
-        btnSignUp = findViewById(R.id.btnSignUp);
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MailSignUp();
-            }
-        });
-
-        btnForgotPassword = findViewById(R.id.btnForgotPassword);
-        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                GoToForgotPassword();
-            }
-        });
-
+        setupUI();
         setupAuth();
 
 
-        //TODO: put this inside a function when facebook login button is clicked
-        // Initialize Facebook Login button
+        //Initialize facebook stuff
         //https://firebase.google.com/docs/auth/android/facebook-login?hl=da
         mCallbackManager = CallbackManager.Factory.create();
         btnLoginFacebook = findViewById(R.id.btnLoginFacebook);
@@ -127,31 +91,59 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Setting up all the UI.
+    private void setupUI() {
+        txtUsername = findViewById(R.id.txtUsername);
+        txtPassword = findViewById(R.id.txtPassword);
 
+        btnLoginEmail = findViewById(R.id.btnLoginEmail);
+        btnLoginEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MailLogin();
+            }
+        });
+        btnSignUp = findViewById(R.id.btnSignUp);
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MailSignUp();
+            }
+        });
+
+        btnForgotPassword = findViewById(R.id.btnForgotPassword);
+        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoToForgotPassword();
+            }
+        });
+    }
+
+
+    //Facebook login method as standard.
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
-
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            // Sign in success, go to main
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = auth.getCurrentUser();
                             GoToMain();
-                            //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, R.string.facebookAuthenticationFail,
                                     Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
                         }
                     }
                 });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -159,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //Setup the authentication, and check if a user is already logged in in which case go to main activity
     private void setupAuth() {
         if(auth==null){
             auth = FirebaseAuth.getInstance();
@@ -171,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
+    //Login with mail as taken from week 10 live code #2
     @SuppressLint("WrongConstant")
     private void MailLogin() {
         String email = txtUsername.getEditText().getText().toString();
@@ -198,6 +191,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Sign up with mail as taken from week 10 live code #2
     private void MailSignUp() {
         String email = txtUsername.getEditText().getText().toString();
         String password = txtPassword.getEditText().getText().toString();
@@ -227,13 +221,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
+    //Go to main activity
     private void GoToMain() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
     }
 
+    //Go to forgot password activity.
     private void GoToForgotPassword() {
         Intent i = new Intent(this, ForgotPasswordActivity.class);
         startActivity(i);

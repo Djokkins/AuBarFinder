@@ -5,6 +5,8 @@ import android.util.Log;
 
 public class Bar {
 
+
+    //Bar class which the firebase data is loaded into. Loads of getters and setter
     private String Name;
     private String Description;
     private String Address;
@@ -19,57 +21,6 @@ public class Bar {
     private Number userRating;
     private String Lat;
     private int Distance;
-
-    public int getDistance() {
-        return Distance;
-    }
-
-    public Float getLat() {
-        return Float.parseFloat(Lat);
-    }
-
-    public void setLat(String lat) {
-        Lat = lat;
-    }
-
-    public Float getLon() {
-        return Float.parseFloat(Lon);
-    }
-
-    public void setLon(String lon) {
-        Lon = lon;
-    }
-
-    private String Lon;
-
-    public Number getUserRating() {
-        return userRating;
-    }
-
-    public void setUserRating(Number userRating) {
-        this.userRating = userRating;
-    }
-
-    public Number getAverage_Rating() {
-        return Average_Rating;
-    }
-
-    public void setAverage_Rating(Number average_Rating) {
-        Average_Rating = average_Rating;
-    }
-
-    public String getBarID() {
-        return barID;
-    }
-
-    public void setBarID(String barID) {
-        this.barID = barID;
-    }
-
-
-
-    //In coordinates? Use this to calculate distance at least, if we
-    //cant do it by the address.
 
     public Bar(){
         Name = "";
@@ -167,8 +118,53 @@ public class Bar {
         return Close;
     }
 
+    public int getDistance() {
+        return Distance;
+    }
 
+    public Float getLat() {
+        return Float.parseFloat(Lat);
+    }
 
+    public void setLat(String lat) {
+        Lat = lat;
+    }
+
+    public Float getLon() {
+        return Float.parseFloat(Lon);
+    }
+
+    public void setLon(String lon) {
+        Lon = lon;
+    }
+
+    private String Lon;
+
+    public Number getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(Number userRating) {
+        this.userRating = userRating;
+    }
+
+    public Number getAverage_Rating() {
+        return Average_Rating;
+    }
+
+    public void setAverage_Rating(Number average_Rating) {
+        Average_Rating = average_Rating;
+    }
+
+    public String getBarID() {
+        return barID;
+    }
+
+    public void setBarID(String barID) {
+        this.barID = barID;
+    }
+
+    //Calculate the distance to the users location and store it inside the bar.
     public void calcDistance(Location userLocation)
     {
         try{
@@ -185,7 +181,7 @@ public class Bar {
     //    return 0;
     }
 
-
+    //Set the distance rounded to 10 meters.
     public void setDistance(float distanceTo) {
         Distance = (int)Math.round(distanceTo/10.0) * 10;
     }

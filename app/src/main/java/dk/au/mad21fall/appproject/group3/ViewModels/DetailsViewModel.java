@@ -11,6 +11,7 @@ package dk.au.mad21fall.appproject.group3.ViewModels;
 
 public class DetailsViewModel extends ViewModel {
 
+    //A standard viewmodel pulling data from the viewmodel
 
     private static final String TAG = "DetailsViewModel";
     LiveData<ArrayList<Bar>> bars;
@@ -31,7 +32,7 @@ public class DetailsViewModel extends ViewModel {
     }
 
     public Bar getBar(String name){
-        Log.d(TAG, "getBar: Bar = " + name);
+
         return repository.getBar(name);
     }
 

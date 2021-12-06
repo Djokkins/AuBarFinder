@@ -33,6 +33,10 @@ import java.util.concurrent.ExecutorService;
 
 public class Repository {
 
+    //A standard repository pattern which handles the transfering of data between firebase and
+    //the application.
+
+
     private static final String TAG = "Repository";
 
     FirebaseFirestore database;
@@ -41,7 +45,7 @@ public class Repository {
     private FirebaseAuth mAuth;
 
 
-
+    //Singletop pattern
     public static Repository getInstance() {
         if (instance == null) {
             instance = new Repository();
@@ -54,6 +58,7 @@ public class Repository {
         LoadData();
     }
 
+    //Load in the data
     private void LoadData() {
 
         bars = new MediatorLiveData<ArrayList<Bar>>();
@@ -61,6 +66,7 @@ public class Repository {
             database = FirebaseFirestore.getInstance();
         }
 
+        //Standard way of loading from week 10
         database.collection("bars")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -71,10 +77,9 @@ public class Repository {
                                 Bar bar = snap.toObject(Bar.class);
                                 if(bar != null){
                                     bar.setBarID(snap.getId());
+                                    //Set the distance and the average.
                                     setAverage(bar);
                                     bar.calcDistance(UserLocation.getInstance().getCurrentLocation());
-
-                                    Log.d(TAG, "onEvent: BAR AVERAGE = " + bar.getAverage_Rating());
                                     updatedBars.add(bar);
                                 }
                             }
@@ -84,8 +89,8 @@ public class Repository {
                 });
     }
 
+    //Take the bar as inputs and gets the sub-collection of ratings inside of it.
     public void setAverage(Bar bar){
-
         database.collection("bars").document(bar.getBarID()).collection("ratings")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -94,6 +99,7 @@ public class Repository {
                         if(value != null && !value.isEmpty()){
                             double average = 0;
                             int counter = 0;
+                            //Add together all the raiting
                             for(DocumentSnapshot snap : value.getDocuments()){
                                 if(snap.getId().equals(mAuth.getUid())){
                                     bar.setUserRating(snap.getDouble("rating"));
@@ -103,23 +109,26 @@ public class Repository {
                                 Log.d(TAG, "onEvent: RATINGS DATA = " + snap.getDouble("rating"));
 
                             }
-                            //Round and store the number
+                            //Round and store the number to 1 decimal
                             average = round(average/counter, 1);
 
+                            //Set the found average
                             bar.setAverage_Rating(average);
 
 
-                        } else bar.setAverage_Rating(0.0);
+                        } else bar.setAverage_Rating(0.0); //If no ratings set the score to 0.0
                     }
                 });
     }
 
+    //Rounding function taken from:
     //https://stackoverflow.com/questions/22186778/using-math-round-to-round-to-one-decimal-place
     private static double round (double value, int precision) {
         int scale = (int) Math.pow(10, precision);
         return (double) Math.round(value * scale) / scale;
     }
 
+    //Returns a bar from a name
     public Bar getBar(String name){
         for(Bar bar : bars.getValue()){
             if(bar.getName().equals(name)){
@@ -130,34 +139,36 @@ public class Repository {
     }
 
 
+    //Returns the bar list as live data
     public LiveData<ArrayList<Bar>> getBars(){
         return bars;
     }
 
+    //Takes in the bars ID and the rating of the bar
     public void rateBar(Number rating, String barID){
         String uID = mAuth.getCurrentUser().getUid();
         Log.d(TAG, "rateBar: Rating = " + rating);
         Log.d(TAG, "rateBar: UserID = " + uID);
         Log.d(TAG, "rateBar: Bar ID = " + barID);
 
+        //Makes a new object for the specific user, only one per user allowed.
         Map<String, Object> newRating = new HashMap<>();
         newRating.put("rating", rating);
 
+        //If such a document allready exists it overrides.
         database.collection("bars").document(barID).collection("ratings")
         .document(uID).set(newRating)
         .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Log.d(TAG, "onSuccess: SUCCESS!!!!!!!!!!!!!!!!");
+                Log.d(TAG, "onSuccess: Rated successfully");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: FAILLLLLLLLLLLLLLL!!!!!!!!!!!!!");
+                Log.d(TAG, "onFailure: Fail");
             }
         });
-
-
 
     }
 

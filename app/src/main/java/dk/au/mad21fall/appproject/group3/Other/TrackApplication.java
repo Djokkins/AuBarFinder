@@ -6,6 +6,8 @@ import android.util.Log;
 
 public class TrackApplication extends Application {
 
+    //A standard pattern for getting the context inside of non-activities.
+
     private static final String TAG = "TrackApplication";
     private static TrackApplication instance; //The one application project for the application lifetime
 

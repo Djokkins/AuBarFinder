@@ -14,7 +14,7 @@ import dk.au.mad21fall.appproject.group3.Models.Repository;
 
 public class MapViewModel extends ViewModel {
 
-
+    //A standard viewmodel pulling data from the viewmodel
 
     private static final String TAG = "MapFragmentViewModel";
     LiveData<ArrayList<Bar>> bars;

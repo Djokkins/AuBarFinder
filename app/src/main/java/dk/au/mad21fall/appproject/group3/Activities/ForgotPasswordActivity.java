@@ -17,6 +17,8 @@ import dk.au.mad21fall.appproject.group3.R;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
+    //A simple activity for resetting the password.
+
     private EditText txtEmail;
     private Button btnSubmit;
 
@@ -36,16 +38,19 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     }
 
+    //When an input is given and submit is clicked, use Firebase in build function to reset password.
     private void SendMail() {
         String mail = txtEmail.getText().toString();
         FirebaseAuth.getInstance().sendPasswordResetEmail(mail)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        //If success go back to login
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), R.string.MailSent, Toast.LENGTH_SHORT).show();
                             finish();
                         } else{
+                            //Else try again
                             Toast.makeText(getApplicationContext(), R.string.Error, Toast.LENGTH_SHORT).show();
                         }
                     }

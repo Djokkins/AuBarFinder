@@ -18,6 +18,10 @@ import dk.au.mad21fall.appproject.group3.R;
 
 public class Notification_receiver extends BroadcastReceiver {
 
+    //Implemented much the same as done in:
+    //https://www.youtube.com/watch?v=1fV9NmvxXJo&ab_channel=FilipVujovic
+    //https://developer.android.com/training/scheduling/alarms?fbclid=IwAR0SaKn8v3uo2RI3D0KkCv2vfZfE8B4Aodr74UYChcJJ_QhDq8znt3Q5gho
+
     @Override
     public void onReceive(Context context, Intent intent) {
 

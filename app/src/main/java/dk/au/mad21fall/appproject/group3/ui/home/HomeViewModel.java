@@ -11,7 +11,7 @@ import dk.au.mad21fall.appproject.group3.Models.Repository;
 
 public class HomeViewModel extends ViewModel {
 
-
+    //A standard viewmodel that pulls data from the repository.
     private static final String TAG = "HomefragmentViewModel";
     LiveData<ArrayList<Bar>> bars;
 

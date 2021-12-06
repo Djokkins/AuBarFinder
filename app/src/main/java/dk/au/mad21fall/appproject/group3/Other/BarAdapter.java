@@ -36,6 +36,9 @@ import dk.au.mad21fall.appproject.group3.Models.UserLocation;
 import dk.au.mad21fall.appproject.group3.R;
 
 
+//Most of this is a simple RecyclerView which dont require a lot of comments, but we also implemented
+//certain filters and checks.
+
 public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> implements Filterable  {
 
     private static final String TAG = "BAR_ADAPTER";
@@ -81,6 +84,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         return vh;
     }
 
+    //A standard filter pattern for searching for keywords
     @Override
     public Filter getFilter() {
         return filter;
@@ -221,7 +225,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
     }
 
 
-
+    //A function for checking if a bar is open, used to either displaying the green or red circle.
     private Boolean isOpen(int position){
         Boolean open;
 
@@ -280,19 +284,16 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
     @Override
     public void onBindViewHolder(@NonNull BarViewHolder holder, int position) {
 
-        //TODO: make this display items
+        //Displaying items
 
         //Set the text and picture.
         holder.txtName.setText(barList.get(position).getName());
         Number rating = barList.get(position).getAverage_Rating();
-        holder.txtRating.setText("" + rating + "/5");//""+ movieList.get(position).getUserRating());
-        Log.d(TAG, "onBindViewHolder: " + barList.get(position).toString());
+        holder.txtRating.setText("" + rating + "/5");
 
 
-        Log.d(TAG, "onBindViewHolder: LOCATIOM2 = " + holder.userLocation.getCurrentLocation());
+        //Calculate the distance and display it
         barList.get(position).calcDistance(holder.userLocation.getCurrentLocation());
-
-        //Log.d(TAG, "onBindViewHolder: LOCATION = " + holder.userLocation.getCurrentLocation().toString());
         holder.txtDistance.setText("" + barList.get(position).getDistance() + " m");
 
         //https://firebase.google.com/docs/storage/android/download-files#download_data_via_url
@@ -308,17 +309,11 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
             }
         });
 
-
+        //check if the bar is open or closed.
         if(isOpen(position)) holder.imgColor.setImageResource(R.drawable.circle_green);
         else holder.imgColor.setImageResource(R.drawable.circle_red);
-
-
-        //I wanted to make this check for internext, and post the standard genre if not present, via
-        //via the function i made on the Constants file.
-        //I couldn't get the context to work properly though, so I didn't implement it.
-        //BarGlide.with(holder.imgIcon.getContext()).load(barList.get(position).getPoster()).into(holder.imgIcon);
-        //holder.imgIcon.setImageResource(movieList.get(position).drawable(movieList.get(position).getGenre()));
     }
+
 
     //override this to return size of list
     @Override
@@ -337,7 +332,6 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
         TextView txtName, txtRating, txtDistance;
         ImageView imgIcon, imgColor;
         UserLocation userLocation;
-        FirebaseAuth auth = FirebaseAuth.getInstance();
 
 
         //custom callback interface for user actions done the view holder item
@@ -349,7 +343,6 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> i
 
             //get references from the layout file
             userLocation = UserLocation.getInstance();
-            //TODO: Fix the picture (if internet, picture, if not, standard genre icon).
             imgIcon = itemView.findViewById(R.id.imgIcon);
             imgColor = itemView.findViewById(R.id.imgColor);
             txtName = itemView.findViewById(R.id.txtName);

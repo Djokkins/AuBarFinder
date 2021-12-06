@@ -23,6 +23,7 @@ import dk.au.mad21fall.appproject.group3.databinding.FragmentNotificationsBindin
 
 public class CompassFragment extends Fragment {
 
+
     private CompassViewModel compassViewModel;
     private FragmentNotificationsBinding binding;
     private ImageView compasspointer;

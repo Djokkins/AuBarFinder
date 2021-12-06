@@ -19,6 +19,8 @@ import dk.au.mad21fall.appproject.group3.Other.TrackApplication;
 
 public class UserLocation {
 
+    //A class implemented with a singleton pattern for getting live data of the current location.
+
     private static UserLocation instance;
 
     //UserLocation services
@@ -31,38 +33,34 @@ public class UserLocation {
     private MutableLiveData<android.location.Location> locationLiveData;
 
 
+    //Singleton pattern
     public static UserLocation getInstance(){
-        Log.d(TAG, "getInstance: Checkpoint 1");
         if(instance == null) {
-
             instance = new UserLocation();
         }
-        Log.d(TAG, "getInstance: Checkpoint 2");
         return instance;
     }
 
     UserLocation(){
-        Log.d(TAG, "getInstance: Checkpoint 3");
         instance = this;
         context = TrackApplication.getAppContext();
-        Log.d(TAG, "getInstance: Checkpoint 4");
         setupLocationListener();
         locationLiveData = new MutableLiveData<android.location.Location>();
-        Log.d(TAG, "getInstance: Checkpoint 5");
         getLocation();
-        Log.d(TAG, "getInstance: Checkpoint 6");
     }
 
+    //Return the live data
     public LiveData<android.location.Location> getLocationLive(){
         Log.d(TAG, "getLocationLive: " + userLocation.toString());
         return locationLiveData;
     }
 
-
+    //Get the current location
     public android.location.Location getCurrentLocation(){
         return userLocation;
     }
 
+    //Set a listener on the location and update the live data along with it.
     private void setupLocationListener() {
         locationListener = new LocationListener() {
             @Override
@@ -73,14 +71,17 @@ public class UserLocation {
         };
     }
 
+    //Starts the listening on the loaction.
     @SuppressLint("MissingPermission")
     private void getLocation() {
         try {
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            //Check every 10 seconds/10000 milliseconds
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locationListener);
             //get initial userLocation
             provider = locationManager.getBestProvider(criteria, false);
             userLocation = locationManager.getLastKnownLocation(provider);
+            //Store the location
             locationLiveData.setValue(userLocation);
         } catch (Exception e) {
             e.printStackTrace();

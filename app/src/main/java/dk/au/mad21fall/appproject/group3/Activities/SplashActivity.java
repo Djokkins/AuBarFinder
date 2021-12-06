@@ -30,17 +30,11 @@ import dk.au.mad21fall.appproject.group3.R;
 
 public class SplashActivity extends AppCompatActivity {
 
+    //Made to load the data before showing the app. This is a simple animation that run for 3 secdons.
+
+
     Animation leftAnimation, rightAnimation, leftDropAnim, rightDropAnim;
     ImageView imgBeerLeft, imgBeerRight, imgDropsLeft, imgDropsRight;
-
-
-
-    //UserLocation services
-    private LocationManager locationManager;
-    private Location userLocation;
-    private String provider;
-    private LocationListener locationListener;
-    private Criteria criteria = new Criteria();
 
 
     //https://abhiandroid.com/programming/splashscreen
@@ -52,11 +46,13 @@ public class SplashActivity extends AppCompatActivity {
         //Get the data down by creating the repository
         Repository repository;  //repository
         repository = Repository.getInstance();  //get Repository singleton
+        //Instantiate the singleton track application
         TrackApplication test = new TrackApplication();
 
-
+        //Check permissions so they load before the list view
         checkPermissions();
 
+        //This could be moved into a function, but it's all there is to the activity.
         imgBeerLeft = findViewById(R.id.imgBeerLeft);
         imgBeerRight = findViewById(R.id.imgBeerRight);
         imgDropsLeft = findViewById(R.id.imgDropsLeft);
@@ -72,6 +68,7 @@ public class SplashActivity extends AppCompatActivity {
         imgBeerLeft.setAnimation(leftAnimation);
         imgBeerRight.setAnimation(rightAnimation);
 
+        //Listen to the animation so we know when the beers are centered, and then move the drops.
         leftAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -118,13 +115,14 @@ public class SplashActivity extends AppCompatActivity {
                 } else i = new Intent(SplashActivity.this,LoginActivity.class);
 
                 startActivity(i);
-                //overridePendingTransition(R.anim.activity_change_zoom, 300);
                 finish();
             }
         }, 3000); //Time for it to run
 
 
     }
+
+    //Check for location permission
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{
