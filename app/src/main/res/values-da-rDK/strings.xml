@@ -36,6 +36,7 @@
     <string name="forgotPassword">Glemt adgangskode?</string>
     <string name="MailSent">Mail sendt</string>
     <string name="Error">Fejl, prøv venligst igen.</string>
+    <string name="logout">Log ud</string>
     <string name="signIn">Log ind</string>
     <string name="newUserSignUp">Ny bruger? Opret konto!</string>
     <string name="txtInstagram">Instagram</string>

@@ -43,6 +43,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+import dk.au.mad21fall.appproject.group3.Activities.LoginActivity;
+import dk.au.mad21fall.appproject.group3.Activities.MainActivity;
 import dk.au.mad21fall.appproject.group3.Models.Bar;
 import dk.au.mad21fall.appproject.group3.Models.UserLocation;
 import dk.au.mad21fall.appproject.group3.Other.BarAdapter;
@@ -208,10 +210,20 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         }
 
         if (id == R.id.logout) {
-            //run your method
+            logOut();
+
+
+
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logOut() {
+        mAuth.signOut();
+        Intent i = new Intent(getActivity(), LoginActivity.class);
+        startActivity(i);
+        getActivity().finish();
     }
 
 }

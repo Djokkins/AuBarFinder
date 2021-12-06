@@ -22,6 +22,6 @@
             android:title="Closets by" />
         <item
             android:id="@+id/logout"
-            android:title="logout" />
+            android:title="@string/logout" />
 
 </menu>

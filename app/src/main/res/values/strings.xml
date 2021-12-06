@@ -21,6 +21,7 @@
     <string name="txtFaculty">Faculty</string>
     <string name="txtDistance">Distance</string>
     <string name="btnNavigate">Navigate</string>
+    <string name="logout">Logout</string>
 
     <string name="txtMyRating">My rating: %1$s</string>
     <string name="urlErrorToast">That sadly doesn\'t exists.</string>
