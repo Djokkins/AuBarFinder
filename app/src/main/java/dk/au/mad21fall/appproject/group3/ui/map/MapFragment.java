@@ -93,22 +93,27 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         return root;
     }
 
+    //listen to changes in location
     private void setupLocationListener() {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 Log.d(TAG, "onLocationChanged: Location changed fragment");
                 userLocation = location;
+                //If our location changed, and it didnt change to null, update our location on map
                 if(userLocation!=null){ setCurrentLocationOnMap(userLocation);}
             }
         };
     }
 
+    //move current location map pin as the user moves
     private void setCurrentLocationOnMap(Location location) {
+       //remove the old location marker
         if ((location != null) && this.getActivity() != null) {
             if (marker != null) {
                 marker.remove();
             }
+            //place new location marker
             LatLng user = new LatLng(location.getLatitude(), location.getLongitude());
             Log.d(TAG, "onMapReady: We are still running");
             marker = mMap.addMarker(new MarkerOptions()
@@ -132,8 +137,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     //function that gets the users location,
     @SuppressLint("MissingPermission")
     private void getLocation() {
+
         try {
             locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+            //LocationManager's GPS_PROVIDER is what provides the location, mintime is time between updates, minDistance, is distance between update, locationListener is listening on these changes
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
 
             //get initial userLocation
@@ -156,24 +163,27 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
+        //pretty self explanatory
         if (mMap == null) {
             mMap = googleMap;
         }
         getLocation();
 
+        //place markers of each bar on the map on creation
         setupBarMarkers();
     }
 
     private void setupBarMarkers() {
         //Todo: Make the moving of user marker a smooth animation.
         /// inspiration from https://stackoverflow.com/questions/13728041/move-markers-in-google-map-v2-android
+        //bool so we only do it once for every map creation (we destroy when leaving the fragment)
         if (initMapPins) {
             //move camera to aarhus as default, set zoom level to be appropriate
             if (userLocation == null) {
                 LatLng aarhus = new LatLng(56.16, 10.20);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aarhus, 14));
             }
-            //creation of user marker and goes to where the user is.
+            //if we have a userLocation at this point, we create a marker for it and centers the camera aroudn it
             else {
                 LatLng user = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
                 markerOptions
@@ -187,7 +197,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             Log.d(TAG, "onMapReady: " + locations.get(2) + "location size: " + locations.size());
             Log.d(TAG, "onMapReady: " + Geocoder.isPresent());
 
-            //translating addresses from human readable to coordinates and marks each bar on the map
+            //The for loop creating each bars map marker
             for (int i = 0; i < locations.size(); i++) {
                 //This block of code is more scalable as it uses the geolocation to translate the readable address to google maps coordinates
                 //Unfortunately, this method is slow on even small data sizes (31 in our case) and therefore we chose to just hardcode mapcoordinates
