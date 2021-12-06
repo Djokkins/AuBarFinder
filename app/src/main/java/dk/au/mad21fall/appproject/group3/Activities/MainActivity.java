@@ -31,14 +31,6 @@ import dk.au.mad21fall.appproject.group3.databinding.ActivityMainBinding;
 import dk.au.mad21fall.appproject.group3.ui.home.HomeFragment;
 import dk.au.mad21fall.appproject.group3.ui.home.HomeViewModel;
 
-
-//TODO: make the compass
-//TODO: Change the name
-//TODO: Comments!
-
-
-
-
 public class MainActivity extends AppCompatActivity {
 
     //Template stuff for fragments
