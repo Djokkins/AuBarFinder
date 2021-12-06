@@ -23,7 +23,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
@@ -72,7 +75,6 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         setHasOptionsMenu(true);
-
         adapter = new BarAdapter(this);
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -120,7 +122,9 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                 return false;
             }
         });
-
+        Toolbar myToolbar = (Toolbar) v.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(myToolbar);
+        setHasOptionsMenu(true);
         return v;
     }
 
@@ -167,22 +171,18 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         Log.d(TAG, "onOptionsItemSelected: loaded");
         int id = item.getItemId();
         if (id == R.id.isopenchbx) {
-            mMyRatedBarsOnly = false;
             mOpenBarsOnly ^= true;
             adapter.sortByOpen(mOpenBarsOnly);
             if(mOpenBarsOnly){
-                mMyRatedBarsOnly = false;
                 item.setChecked(true);
             }
             else {item.setChecked(false);}
             return true;
         }
         if (id == R.id.sortmyrateditems) {
-
             mMyRatedBarsOnly ^= true;
-            adapter.sortByOpen(mMyRatedBarsOnly);
+            adapter.sortByUserRated(mMyRatedBarsOnly);
             if(mMyRatedBarsOnly){
-                mOpenBarsOnly = false;
                 item.setChecked(true);
             }
             else {item.setChecked(false);}
@@ -205,6 +205,11 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
             mOpenBarsOnly = false;
             mMyRatedBarsOnly = false;
             adapter.sortByDistance();
+            return true;
+        }
+
+        if (id == R.id.logout) {
+            //run your method
             return true;
         }
         return super.onOptionsItemSelected(item);
