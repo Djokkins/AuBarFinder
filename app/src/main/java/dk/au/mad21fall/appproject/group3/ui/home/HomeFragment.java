@@ -41,6 +41,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import dk.au.mad21fall.appproject.group3.Models.Bar;
+import dk.au.mad21fall.appproject.group3.Models.UserLocation;
 import dk.au.mad21fall.appproject.group3.Other.BarAdapter;
 import dk.au.mad21fall.appproject.group3.Models.Constants;
 import dk.au.mad21fall.appproject.group3.Activities.DetailsActivity;
@@ -56,13 +57,10 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
     private LiveData<ArrayList<Bar>> bars;
     private SearchView srcBar;
     private ImageView filterBtn;
-    private TextView txtDistance;
-    private RadioGroup filtersgroup;
     private DrawerLayout filterDrawer;
     private FirebaseAuth mAuth;
     private Boolean mOpenBarsOnly = false;
     private Boolean mMyRatedBarsOnly = false;
-
 
 
     private boolean filterTest = true;
@@ -107,6 +105,7 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
                 OnClickFilterDrawer();
             }
         });
+
 
         srcBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -167,29 +166,43 @@ public class HomeFragment extends Fragment implements BarAdapter.IBarItemClicked
         Log.d(TAG, "onOptionsItemSelected: loaded");
         int id = item.getItemId();
         if (id == R.id.isopenchbx) {
+            mMyRatedBarsOnly = false;
             mOpenBarsOnly ^= true;
             adapter.sortByOpen(mOpenBarsOnly);
-            if(mOpenBarsOnly){item.setChecked(true);}
+            if(mOpenBarsOnly){
+                mMyRatedBarsOnly = false;
+                item.setChecked(true);
+            }
             else {item.setChecked(false);}
             return true;
         }
         if (id == R.id.sortmyrateditems) {
+
             mMyRatedBarsOnly ^= true;
             adapter.sortByOpen(mMyRatedBarsOnly);
-            if(mMyRatedBarsOnly){item.setChecked(true);}
+            if(mMyRatedBarsOnly){
+                mOpenBarsOnly = false;
+                item.setChecked(true);
+            }
             else {item.setChecked(false);}
             return true;
         }
         if (id == R.id.sortalphabetical) {
+            mOpenBarsOnly = false;
+            mMyRatedBarsOnly = false;
             adapter.sortAlphabetically();
             Log.d(TAG, "onOptionsItemSelected: YESYEYSYESYES");
             return true;
         }
         if (id == R.id.sortratingitem) {
+            mOpenBarsOnly = false;
+            mMyRatedBarsOnly = false;
             adapter.sortByRating();
             return true;
         }
         if (id == R.id.sortdistanceitem) {
+            mOpenBarsOnly = false;
+            mMyRatedBarsOnly = false;
             adapter.sortByDistance();
             return true;
         }

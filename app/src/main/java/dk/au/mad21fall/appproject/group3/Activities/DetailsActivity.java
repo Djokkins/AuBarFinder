@@ -2,11 +2,17 @@ package dk.au.mad21fall.appproject.group3.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -19,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -42,6 +49,9 @@ public class DetailsActivity extends AppCompatActivity {
     int scoreInt;
     Location userLocation;
     private LocationListener locationListener;
+    private LocationManager locationManager;
+    private Criteria criteria = new Criteria();
+    private String provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +63,18 @@ public class DetailsActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: The name is " + barName);
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
         bar = detailsViewModel.getBar(barName);
+
+        UserLocation.getInstance().getLocationLive().observe(this, new Observer<Location>() {
+            @Override
+            public void onChanged(Location location) {
+                Log.d(TAG, "onChanged: DOES LIVE DATA WORK?!");
+                userLocation = location;
+                Log.d(TAG, "onChanged: DOES " + userLocation.toString());
+                bar.calcDistance(userLocation);
+                updateUI();
+            }
+        });
+
 
         Score = bar.getUserRating();
         if(Score == null) Score = 0.0;
@@ -69,10 +91,6 @@ public class DetailsActivity extends AppCompatActivity {
         txtAddress = findViewById(R.id.txtAddress);
         txtMyRating = findViewById(R.id.txtMyRating);
         txtDistance = findViewById(R.id.txtDistance);
-
-        setupLocationListener();
-        userLocation = UserLocation.getInstance().getCurrentLocation();
-        bar.calcDistance(userLocation);
 
         Log.d(TAG, "setupView: Score = " + Score + " and scoreInt = " + scoreInt);
         txtMyRating.setText(getString(R.string.txtMyRating, Score.toString()));
@@ -155,20 +173,5 @@ public class DetailsActivity extends AppCompatActivity {
         mapIntent.setPackage("com.google.android.apps.maps");
         startActivity(mapIntent);
     }
-
-    private void setupLocationListener() {
-
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull android.location.Location location) {
-                Log.d(TAG, "onLocationChanged: Location changed!");
-                bar.calcDistance(location);
-                updateUI();
-            }
-        };
-    }
-
-
-
 
 }

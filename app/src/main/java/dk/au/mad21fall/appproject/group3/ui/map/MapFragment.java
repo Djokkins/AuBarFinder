@@ -97,6 +97,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
+                Log.d(TAG, "onLocationChanged: Location changed fragment");
                 userLocation = location;
                 if(userLocation!=null){ setCurrentLocationOnMap(userLocation);}
             }
