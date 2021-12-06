@@ -113,7 +113,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             Log.d(TAG, "onMapReady: We are still running");
             marker = mMap.addMarker(new MarkerOptions()
                     .position(user)
-                    .title("@string/mapLocationDisplay")
+                    .title(getString(R.string.mapLocationDisplay))
                     .icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.my_location))));
 
         }
