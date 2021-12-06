@@ -4,22 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
             android:id="@+id/isopenchbx"
-            android:title="Is Open"
-            android:checkable="true" />
+            android:checkable="true"
+            android:title="@string/filterIsOpen" />
         <item
             android:id="@+id/sortmyrateditems"
-            android:title="My rated bars only"
-            android:checkable="true"/>
+            android:checkable="true"
+            android:title="@string/filterMyRated" />
         <item
             android:id="@+id/sortalphabetical"
-            android:title="Alfabetical" />
+            android:title="@string/filterAlphabetical" />
         <item
             android:id="@+id/sortratingitem"
-            android:title="Best Rated" />
+            android:title="@string/filterRated" />
 
         <item
             android:id="@+id/sortdistanceitem"
-            android:title="Closets by" />
+            android:title="@string/filterDistance" />
         <item
             android:id="@+id/logout"
             android:title="@string/logout" />

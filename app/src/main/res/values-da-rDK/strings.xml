@@ -40,4 +40,11 @@
     <string name="signIn">Log ind</string>
     <string name="newUserSignUp">Ny bruger? Opret konto!</string>
     <string name="txtInstagram">Instagram</string>
+    <string name="txtRestore">Venligst skriv din mail</string>
+    <string name="txtSubmit">Send mail</string>
+    <string name="filterMyRated">Barer jeg har vurderet</string>
+    <string name="filterIsOpen">Åben</string>
+    <string name="filterAlphabetical">Alfabetisk</string>
+    <string name="filterRated">Højest vurderet</string>
+    <string name="filterDistance">Distance</string>
 </resources>

@@ -56,5 +56,10 @@
     <string name="notificationText">Check out some of the open bars</string>
     <string name="txtRestore">Please enter your email</string>
     <string name="txtSubmit">Send restore mail</string>
+    <string name="filterMyRated">My rated bars only</string>
+    <string name="filterIsOpen">Is open</string>
+    <string name="filterAlphabetical">Alphabetically</string>
+    <string name="filterRated">Highest rated</string>
+    <string name="filterDistance">Distance</string>
 
 </resources>
