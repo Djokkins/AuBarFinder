@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "1";
 
     private FirebaseAuth auth;
-    private Button btnLoginEmail, btnSignUp, btnLoginFacebook;
+    private Button btnLoginEmail, btnSignUp, btnLoginFacebook, btnForgotPassword;
     private CallbackManager mCallbackManager;
     private TextInputLayout txtUsername, txtPassword;
 
@@ -85,6 +85,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        btnForgotPassword = findViewById(R.id.btnForgotPassword);
+        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GoToForgotPassword();
+            }
+        });
 
         setupAuth();
 
@@ -119,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
@@ -225,4 +233,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(i);
         finish();
     }
+
+    private void GoToForgotPassword() {
+        Intent i = new Intent(this, ForgotPasswordActivity.class);
+        startActivity(i);
+    }
+
 }

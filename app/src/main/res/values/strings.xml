@@ -24,21 +24,23 @@
 
     <string name="txtMyRating">My rating: %1$s</string>
     <string name="urlErrorToast">That sadly doesn\'t exists.</string>
+    <string name="MailSent">Mail sent</string>
 
     <string name="txtOpenHours" translatable="false">%1$s - %2$s</string>
     <string name="txtDescriptionMainText" translatable="false">"%1$s"</string>
 
     <!-- LOGIN_ACTIVITY STRINGS -->
     <string name="txtWelcome">Welcome!</string>
-    <string name="txtTitle">Welcome to XXX</string>
+    <string name="txtTitle">Welcome to AU Bar Finder</string>
     <string name="txtUnderTitle">Please sign in below to continue</string>
     <string name="facebookAuthenticationFail">Authentication failed</string>
-    <string name="mailMissingInfo">Please enter both username and password.</string>
+    <string name="mailMissingInfo">Please enter both email and password.</string>
     <string name="loginError">Error loggin in, please try again.</string>
+    <string name="Error">Error, please try again.</string>
     <string name="shortPassword">Password must be more than 6 characters.</string>
     <string name="userCreateSuccess">User created successfully!</string>
     <string name="userCreateFailure">Something went wrong, please try again.</string>
-    <string name="hintUsername">Username</string>
+    <string name="hintUsername">Email</string>
     <string name="hintPassword">Password</string>
     <string name="forgotPassword">Forgot password?</string>
     <string name="signIn">Sign in</string>
@@ -51,5 +53,7 @@
     <string name="notificationChannelID" translatable="false">AUB_NotificationChannelID</string>
     <string name="notificationTitle">It\'s finally Friday!</string>
     <string name="notificationText">Check out some of the open bars</string>
+    <string name="txtRestore">Please enter your email</string>
+    <string name="txtSubmit">Send restore mail</string>
 
 </resources>

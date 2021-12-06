@@ -3,29 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="dk.au.mad21fall.appproject.group3">
 
-   <uses-permission android:name="android.permission.INTERNET"/>
-   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Used for google maps location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
-    <!--Used for google maps location-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
-    <uses-feature android:name="android.hardware.location.gps"/>
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
+        android:name=".Other.TrackApplication"
         android:allowBackup="true"
+        android:configChanges="orientation|keyboardHidden"
         android:icon="@mipmap/ic_launcher_beer"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_beer_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.AarhusUniversityFreitagBarGezucken"
         android:screenOrientation="portrait"
-        android:name=".Other.TrackApplication"
-        android:configChanges="orientation|keyboardHidden">
-
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AarhusUniversityFreitagBarGezucken">
+        <activity
+            android:name=".Activities.ForgotPasswordActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.SplashActivity"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,44 +34,45 @@
             </intent-filter>
         </activity>
 
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/map_key"/>
+            android:value="@string/map_key" />
+
         <activity
             android:name=".Activities.LoginActivity"
-            android:exported="true"/>
+            android:exported="true" />
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            tools:replace="android:value"
-            android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"
+            tools:replace="android:value" />
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
 
-        <receiver android:name=".Other.Notification_receiver"/>
-
+        <receiver android:name=".Other.Notification_receiver" />
 
         <activity
             android:name=".Activities.DetailsActivity"
             android:exported="false" />
-
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

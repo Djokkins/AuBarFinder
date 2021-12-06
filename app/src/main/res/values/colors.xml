@@ -12,5 +12,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="fb_blue">#4267B2</color>
+    <color name="darkmode_primary">#4e342e</color>
+    <color name="darkmode_primary_dark">#260e04</color>
+    <color name="darkmode_primary_light">#7b5e57</color>
 
 </resources>
